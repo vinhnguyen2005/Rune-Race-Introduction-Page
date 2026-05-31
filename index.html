@@ -3,1978 +3,1324 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rune Race – Where Luck Meets Strategy</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>Rune Race – Online Multiplayer Board Game</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <style>
-  :root {
-    --primary: #7C4DFF;
-    --primary-dark: #5E35B1;
-    --cyan: #00E5FF;
-    --cyan-dark: #00B8D4;
-    --gold: #FFD54F;
-    --gold-dark: #FFB300;
-    --bg-deep: #0B1020;
-    --bg-mid: #111827;
-    --bg-card: #1a2235;
-    --bg-glass: rgba(255,255,255,0.05);
-    --border-glass: rgba(255,255,255,0.08);
-    --text-primary: #F0F4FF;
-    --text-muted: #8896b0;
-    --rune-glow: 0 0 20px rgba(124,77,255,0.6), 0 0 60px rgba(124,77,255,0.2);
-    --cyan-glow: 0 0 20px rgba(0,229,255,0.5), 0 0 60px rgba(0,229,255,0.15);
-    --gold-glow: 0 0 20px rgba(255,213,79,0.5), 0 0 60px rgba(255,213,79,0.15);
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg-deep);
-    color: var(--text-primary);
-    font-family: 'Nunito', sans-serif;
-    overflow-x: hidden;
-    line-height: 1.6;
-  }
-
-  /* ═══════════════════════════════════════════
-     PARTICLES & BACKGROUND
-  ═══════════════════════════════════════════ */
-  #particles-canvas {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* ═══════════════════════════════════════════
-     NAV
-  ═══════════════════════════════════════════ */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 18px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(11, 16, 32, 0.7);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border-glass);
-    transition: all 0.3s ease;
-  }
-
-  nav.scrolled {
-    padding: 12px 40px;
-    background: rgba(11, 16, 32, 0.92);
-  }
-
-  .nav-logo {
-    font-family: 'Cinzel Decorative', cursive;
-    font-size: 1.4rem;
-    font-weight: 700;
-    background: linear-gradient(135deg, var(--primary), var(--cyan));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: none;
-    letter-spacing: 1px;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 32px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    color: var(--text-muted);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    letter-spacing: 0.5px;
-    transition: color 0.3s;
-    text-transform: uppercase;
-  }
-
-  .nav-links a:hover { color: var(--cyan); }
-
-  .nav-cta {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: white !important;
-    padding: 10px 24px;
-    border-radius: 50px;
-    box-shadow: 0 0 20px rgba(124,77,255,0.4);
-    transition: all 0.3s !important;
-  }
-
-  .nav-cta:hover {
-    box-shadow: 0 0 35px rgba(124,77,255,0.7) !important;
-    transform: translateY(-1px);
-    color: white !important;
-  }
-
-  .nav-hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    padding: 4px;
-  }
-
-  .nav-hamburger span {
-    display: block;
-    width: 24px; height: 2px;
-    background: var(--text-primary);
-    border-radius: 2px;
-    transition: all 0.3s;
-  }
-
-  /* ═══════════════════════════════════════════
-     HERO
-  ═══════════════════════════════════════════ */
-  .hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    overflow: hidden;
-    padding: 120px 24px 80px;
-  }
-
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background-image: url('assets/hero.jpg');
-    background-size: cover;
-    background-position: center;
-    filter: brightness(0.25) saturate(1.4);
-    transform: scale(1.05);
-    z-index: 1;
-  }
-
-  .hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at center top, rgba(124,77,255,0.25) 0%, transparent 60%),
-                radial-gradient(ellipse at center bottom, rgba(0,229,255,0.1) 0%, transparent 60%),
-                linear-gradient(to bottom, rgba(11,16,32,0) 50%, rgba(11,16,32,1) 100%);
-    z-index: 2;
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 3;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(124,77,255,0.15);
-    border: 1px solid rgba(124,77,255,0.4);
-    border-radius: 50px;
-    padding: 8px 20px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--primary);
-    margin-bottom: 28px;
-    animation: fadeDown 0.8s ease both;
-  }
-
-  .hero-badge::before {
-    content: '';
-    width: 6px; height: 6px;
-    background: var(--cyan);
-    border-radius: 50%;
-    box-shadow: 0 0 10px var(--cyan);
-    animation: pulse 2s infinite;
-  }
-
-  .hero-title {
-    font-family: 'Cinzel Decorative', cursive;
-    font-size: clamp(3.5rem, 10vw, 8rem);
-    font-weight: 900;
-    line-height: 1;
-    margin-bottom: 16px;
-    animation: fadeDown 0.8s 0.1s ease both;
-  }
-
-  .hero-title .rune { color: var(--primary); text-shadow: var(--rune-glow); }
-  .hero-title .race { color: var(--cyan); text-shadow: var(--cyan-glow); }
-
-  .hero-tagline {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(1rem, 2.5vw, 1.4rem);
-    color: var(--gold);
-    font-style: italic;
-    margin-bottom: 24px;
-    letter-spacing: 1px;
-    animation: fadeDown 0.8s 0.2s ease both;
-  }
-
-  .hero-desc {
-    font-size: clamp(0.95rem, 1.8vw, 1.1rem);
-    color: var(--text-muted);
-    max-width: 600px;
-    margin: 0 auto 48px;
-    animation: fadeDown 0.8s 0.3s ease both;
-  }
-
-  .hero-ctas {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-    animation: fadeDown 0.8s 0.4s ease both;
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: white;
-    padding: 16px 36px;
-    border-radius: 50px;
-    font-weight: 800;
-    font-size: 1rem;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 0 30px rgba(124,77,255,0.5), 0 4px 20px rgba(0,0,0,0.4);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    letter-spacing: 0.5px;
-  }
-
-  .btn-primary::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 0 50px rgba(124,77,255,0.8), 0 8px 30px rgba(0,0,0,0.5);
-  }
-
-  .btn-primary:hover::before { opacity: 1; }
-
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: transparent;
-    color: var(--text-primary);
-    padding: 15px 36px;
-    border-radius: 50px;
-    font-weight: 700;
-    font-size: 1rem;
-    text-decoration: none;
-    border: 1px solid rgba(255,255,255,0.2);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    letter-spacing: 0.5px;
-  }
-
-  .btn-secondary:hover {
-    border-color: var(--cyan);
-    color: var(--cyan);
-    box-shadow: 0 0 25px rgba(0,229,255,0.2);
-    transform: translateY(-2px);
-  }
-
-  .btn-gold {
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-    color: #1a1000;
-    box-shadow: 0 0 30px rgba(255,213,79,0.4), 0 4px 20px rgba(0,0,0,0.4);
-  }
-
-  .btn-gold:hover {
-    box-shadow: 0 0 50px rgba(255,213,79,0.7), 0 8px 30px rgba(0,0,0,0.5);
-  }
-
-  .hero-scroll {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 3;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    animation: fadeDown 1s 0.8s ease both;
-  }
-
-  .hero-scroll span {
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    letter-spacing: 3px;
-    text-transform: uppercase;
-  }
-
-  .scroll-dot {
-    width: 2px;
-    height: 40px;
-    background: linear-gradient(to bottom, var(--primary), transparent);
-    border-radius: 2px;
-    animation: scrollAnim 2s infinite;
-  }
-
-  /* ═══════════════════════════════════════════
-     SECTIONS SHARED
-  ═══════════════════════════════════════════ */
-  section {
-    position: relative;
-    z-index: 2;
-  }
-
-  .section-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
-
-  .section-header {
-    text-align: center;
-    margin-bottom: 64px;
-  }
-
-  .section-eyebrow {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 800;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--primary);
-    margin-bottom: 16px;
-    position: relative;
-  }
-
-  .section-eyebrow::before,
-  .section-eyebrow::after {
-    content: '—';
-    margin: 0 10px;
-    color: rgba(124,77,255,0.4);
-  }
-
-  .section-title {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(1.8rem, 4vw, 3rem);
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 16px;
-  }
-
-  .section-title .highlight {
-    background: linear-gradient(135deg, var(--primary), var(--cyan));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .section-subtitle {
-    font-size: 1.05rem;
-    color: var(--text-muted);
-    max-width: 560px;
-    margin: 0 auto;
-  }
-
-  /* ═══════════════════════════════════════════
-     ABOUT
-  ═══════════════════════════════════════════ */
-  .about {
-    padding: 120px 0 80px;
-    background: linear-gradient(to bottom, var(--bg-deep), var(--bg-mid));
-  }
-
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-  }
-
-  .about-image-stack {
-    position: relative;
-    height: 420px;
-  }
-
-  .about-img-main {
-    width: 80%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 20px;
-    border: 1px solid var(--border-glass);
-    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
-    position: relative;
-    z-index: 2;
-  }
-
-  .about-img-bg {
-    position: absolute;
-    right: 0;
-    top: 30px;
-    width: 70%;
-    height: 90%;
-    border-radius: 20px;
-    background: linear-gradient(135deg, var(--primary-dark), var(--bg-mid));
-    opacity: 0.3;
-    z-index: 1;
-  }
-
-  .about-rune-badge {
-    position: absolute;
-    bottom: 30px;
-    right: 20px;
-    z-index: 3;
-    background: var(--bg-card);
-    border: 1px solid var(--border-glass);
-    border-radius: 16px;
-    padding: 16px 20px;
-    backdrop-filter: blur(20px);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-  }
-
-  .about-rune-badge .stat-num {
-    font-family: 'Cinzel', serif;
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--gold);
-    text-shadow: var(--gold-glow);
-    display: block;
-  }
-
-  .about-rune-badge .stat-label {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .about-text h2 {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(1.6rem, 3vw, 2.5rem);
-    font-weight: 700;
-    margin-bottom: 24px;
-    line-height: 1.3;
-  }
-
-  .about-text p {
-    color: var(--text-muted);
-    margin-bottom: 20px;
-    font-size: 1.05rem;
-  }
-
-  .about-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 32px;
-  }
-
-  .tag {
-    background: rgba(124,77,255,0.1);
-    border: 1px solid rgba(124,77,255,0.3);
-    color: var(--primary);
-    padding: 6px 16px;
-    border-radius: 50px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    transition: all 0.3s;
-  }
-
-  .tag:hover {
-    background: rgba(124,77,255,0.2);
-    box-shadow: 0 0 15px rgba(124,77,255,0.3);
-  }
-
-  /* ═══════════════════════════════════════════
-     FEATURES
-  ═══════════════════════════════════════════ */
-  .features {
-    padding: 100px 0;
-    background: var(--bg-mid);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .features::before {
-    content: '';
-    position: absolute;
-    top: -100px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 800px;
-    height: 400px;
-    background: radial-gradient(ellipse, rgba(124,77,255,0.08) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
-
-  .feature-card {
-    background: var(--bg-glass);
-    border: 1px solid var(--border-glass);
-    border-radius: 20px;
-    padding: 32px 28px;
-    backdrop-filter: blur(10px);
-    transition: all 0.4s ease;
-    position: relative;
-    overflow: hidden;
-    cursor: default;
-  }
-
-  .feature-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(124,77,255,0.05), transparent);
-    opacity: 0;
-    transition: opacity 0.4s;
-  }
-
-  .feature-card:hover {
-    transform: translateY(-8px);
-    border-color: rgba(124,77,255,0.3);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(124,77,255,0.1);
-  }
-
-  .feature-card:hover::before { opacity: 1; }
-
-  .feature-icon {
-    width: 56px; height: 56px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.6rem;
-    margin-bottom: 20px;
-    position: relative;
-  }
-
-  .feature-icon.purple { background: rgba(124,77,255,0.15); box-shadow: 0 0 20px rgba(124,77,255,0.2); }
-  .feature-icon.cyan { background: rgba(0,229,255,0.1); box-shadow: 0 0 20px rgba(0,229,255,0.15); }
-  .feature-icon.gold { background: rgba(255,213,79,0.1); box-shadow: 0 0 20px rgba(255,213,79,0.15); }
-
-  .feature-title {
-    font-family: 'Cinzel', serif;
-    font-size: 1.05rem;
-    font-weight: 700;
-    margin-bottom: 12px;
-    color: var(--text-primary);
-  }
-
-  .feature-desc {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    line-height: 1.7;
-  }
-
-  /* ═══════════════════════════════════════════
-     GALLERY
-  ═══════════════════════════════════════════ */
-  .gallery {
-    padding: 100px 0;
-    background: linear-gradient(to bottom, var(--bg-mid), var(--bg-deep));
-  }
-
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: auto auto;
-    gap: 16px;
-  }
-
-  .gallery-item {
-    border-radius: 16px;
-    overflow: hidden;
-    border: 1px solid var(--border-glass);
-    position: relative;
-    cursor: pointer;
-    transition: all 0.4s ease;
-  }
-
-  .gallery-item::after {
-    content: '⛶';
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    color: white;
-    background: rgba(124,77,255,0.4);
-    opacity: 0;
-    transition: opacity 0.3s;
-    backdrop-filter: blur(4px);
-  }
-
-  .gallery-item:hover { transform: scale(1.02); box-shadow: 0 20px 60px rgba(0,0,0,0.6); }
-  .gallery-item:hover::after { opacity: 1; }
-
-  .gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.6s ease;
-  }
-
-  .gallery-item:hover img { transform: scale(1.05); }
-
-  .gi-1 { grid-column: 1 / 8; grid-row: 1; height: 320px; }
-  .gi-2 { grid-column: 8 / 13; grid-row: 1; height: 320px; }
-  .gi-3 { grid-column: 1 / 5; grid-row: 2; height: 240px; }
-  .gi-4 { grid-column: 5 / 9; grid-row: 2; height: 240px; }
-  .gi-5 { grid-column: 9 / 13; grid-row: 2; height: 240px; }
-
-  /* ═══════════════════════════════════════════
-     MECHANICS / RUNE CARDS
-  ═══════════════════════════════════════════ */
-  .mechanics {
-    padding: 100px 0;
-    background: var(--bg-deep);
-  }
-
-  .mechanics-tabs {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-    margin-bottom: 48px;
-    flex-wrap: wrap;
-  }
-
-  .tab-btn {
-    padding: 10px 24px;
-    border-radius: 50px;
-    border: 1px solid var(--border-glass);
-    background: transparent;
-    color: var(--text-muted);
-    font-family: 'Nunito', sans-serif;
-    font-weight: 700;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.3s;
-    letter-spacing: 0.5px;
-  }
-
-  .tab-btn.active {
-    background: var(--primary);
-    border-color: var(--primary);
-    color: white;
-    box-shadow: 0 0 20px rgba(124,77,255,0.5);
-  }
-
-  .tab-btn:hover:not(.active) {
-    border-color: var(--primary);
-    color: var(--primary);
-  }
-
-  .rune-cards-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-
-  .rune-card {
-    background: var(--bg-card);
-    border-radius: 20px;
-    padding: 28px 24px;
-    border: 1px solid var(--border-glass);
-    transition: all 0.4s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .rune-card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, var(--card-color, rgba(124,77,255,0.1)) 0%, transparent 60%);
-    opacity: 0;
-    transition: opacity 0.5s;
-  }
-
-  .rune-card:hover {
-    transform: translateY(-6px) scale(1.02);
-    border-color: var(--card-border, rgba(124,77,255,0.4));
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5), var(--card-shadow, var(--rune-glow));
-  }
-
-  .rune-card:hover::before { opacity: 1; }
-
-  .rune-card.support { --card-color: rgba(0,229,255,0.1); --card-border: rgba(0,229,255,0.4); --card-shadow: var(--cyan-glow); }
-  .rune-card.trap { --card-color: rgba(255,82,82,0.1); --card-border: rgba(255,82,82,0.4); --card-shadow: 0 0 20px rgba(255,82,82,0.4); }
-  .rune-card.special { --card-color: rgba(255,213,79,0.1); --card-border: rgba(255,213,79,0.4); --card-shadow: var(--gold-glow); }
-
-  .rune-card-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 16px;
-  }
-
-  .rune-symbol {
-    width: 48px; height: 48px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4rem;
-    flex-shrink: 0;
-  }
-
-  .rune-card.support .rune-symbol { background: rgba(0,229,255,0.15); }
-  .rune-card.trap .rune-symbol { background: rgba(255,82,82,0.15); }
-  .rune-card.special .rune-symbol { background: rgba(255,213,79,0.15); }
-
-  .rune-card-type {
-    font-size: 0.7rem;
-    font-weight: 800;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-
-  .rune-card.support .rune-card-type { color: var(--cyan); }
-  .rune-card.trap .rune-card-type { color: #FF5252; }
-  .rune-card.special .rune-card-type { color: var(--gold); }
-
-  .rune-card-name {
-    font-family: 'Cinzel', serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--text-primary);
-  }
-
-  .rune-card-desc {
-    font-size: 0.88rem;
-    color: var(--text-muted);
-    line-height: 1.65;
-  }
-
-  /* ═══════════════════════════════════════════
-     DISGUISE SYSTEM
-  ═══════════════════════════════════════════ */
-  .disguise {
-    padding: 100px 0;
-    background: linear-gradient(135deg, #0a0f1e 0%, #0d1426 50%, #0a0f1e 100%);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .disguise::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(124,77,255,0.08) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .disguise-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-  }
-
-  .disguise-visual {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .disguise-card-showcase {
-    background: var(--bg-card);
-    border: 1px solid rgba(124,77,255,0.3);
-    border-radius: 24px;
-    padding: 40px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    box-shadow: var(--rune-glow);
-  }
-
-  .disguise-mask {
-    font-size: 5rem;
-    margin-bottom: 16px;
-    animation: floatAnim 4s ease-in-out infinite;
-    filter: drop-shadow(0 0 20px rgba(124,77,255,0.6));
-  }
-
-  .disguise-card-title {
-    font-family: 'Cinzel', serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 8px;
-  }
-
-  .disguise-card-subtitle {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-  }
-
-  .disguise-stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-
-  .d-stat {
-    background: var(--bg-glass);
-    border: 1px solid var(--border-glass);
-    border-radius: 16px;
-    padding: 20px;
-    text-align: center;
-    transition: all 0.3s;
-  }
-
-  .d-stat:hover {
-    border-color: rgba(124,77,255,0.3);
-    transform: translateY(-3px);
-  }
-
-  .d-stat-num {
-    font-family: 'Cinzel', serif;
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--gold);
-    display: block;
-  }
-
-  .d-stat-label {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .disguise-content h2 {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(1.6rem, 3vw, 2.4rem);
-    font-weight: 700;
-    margin-bottom: 24px;
-    line-height: 1.3;
-  }
-
-  .disguise-content p {
-    color: var(--text-muted);
-    margin-bottom: 20px;
-    font-size: 1rem;
-  }
-
-  .disguise-pillars {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin-top: 32px;
-  }
-
-  .pillar {
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    background: var(--bg-glass);
-    border: 1px solid var(--border-glass);
-    border-radius: 16px;
-    padding: 18px 20px;
-    transition: all 0.3s;
-  }
-
-  .pillar:hover {
-    border-color: rgba(124,77,255,0.3);
-    transform: translateX(6px);
-  }
-
-  .pillar-icon {
-    font-size: 1.4rem;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-
-  .pillar h4 {
-    font-family: 'Cinzel', serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    margin-bottom: 4px;
-  }
-
-  .pillar p {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin: 0;
-  }
-
-  /* ═══════════════════════════════════════════
-     AUDIENCE
-  ═══════════════════════════════════════════ */
-  .audience {
-    padding: 100px 0;
-    background: var(--bg-mid);
-  }
-
-  .audience-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 16px;
-  }
-
-  .audience-card {
-    background: var(--bg-glass);
-    border: 1px solid var(--border-glass);
-    border-radius: 20px;
-    padding: 28px 16px;
-    text-align: center;
-    transition: all 0.4s ease;
-    cursor: default;
-  }
-
-  .audience-card:hover {
-    transform: translateY(-8px);
-    border-color: rgba(0,229,255,0.3);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.4), var(--cyan-glow);
-    background: rgba(0,229,255,0.04);
-  }
-
-  .audience-emoji {
-    font-size: 2.2rem;
-    margin-bottom: 12px;
-    display: block;
-  }
-
-  .audience-name {
-    font-family: 'Cinzel', serif;
-    font-size: 0.9rem;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-
-  .audience-desc {
-    font-size: 0.78rem;
-    color: var(--text-muted);
-    line-height: 1.5;
-  }
-
-  /* ═══════════════════════════════════════════
-     COMPARISON
-  ═══════════════════════════════════════════ */
-  .comparison {
-    padding: 100px 0;
-    background: var(--bg-deep);
-  }
-
-  .comparison-table {
-    width: 100%;
-    border-collapse: collapse;
-    border-radius: 20px;
-    overflow: hidden;
-    background: var(--bg-card);
-    border: 1px solid var(--border-glass);
-  }
-
-  .comparison-table thead tr {
-    background: linear-gradient(135deg, rgba(124,77,255,0.2), rgba(94,53,177,0.1));
-  }
-
-  .comparison-table th {
-    padding: 20px 24px;
-    font-family: 'Cinzel', serif;
-    font-size: 0.9rem;
-    font-weight: 700;
-    text-align: center;
-    color: var(--text-primary);
-    letter-spacing: 1px;
-    border-bottom: 1px solid var(--border-glass);
-  }
-
-  .comparison-table th:first-child { text-align: left; }
-
-  .comparison-table th.highlight-col { color: var(--primary); }
-
-  .comparison-table td {
-    padding: 18px 24px;
-    text-align: center;
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    transition: background 0.3s;
-  }
-
-  .comparison-table td:first-child {
-    text-align: left;
-    font-weight: 700;
-    color: var(--text-primary);
-    font-size: 0.95rem;
-  }
-
-  .comparison-table tr:last-child td { border-bottom: none; }
-
-  .comparison-table tr:hover td { background: rgba(255,255,255,0.02); }
-
-  .check { color: #4CAF50; font-size: 1.2rem; }
-  .cross { color: #ef5350; font-size: 1.2rem; }
-  .partial { color: var(--gold); font-size: 1.1rem; }
-
-  .col-rune { background: rgba(124,77,255,0.05); }
-
-  /* ═══════════════════════════════════════════
-     TECH STACK
-  ═══════════════════════════════════════════ */
-  .tech {
-    padding: 100px 0;
-    background: var(--bg-mid);
-  }
-
-  .tech-layers {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-
-  .tech-layer {
-    background: var(--bg-glass);
-    border: 1px solid var(--border-glass);
-    border-radius: 20px;
-    padding: 32px 40px;
-    display: flex;
-    align-items: center;
-    gap: 40px;
-    transition: all 0.3s;
-  }
-
-  .tech-layer:hover {
-    border-color: rgba(124,77,255,0.3);
-    transform: translateX(8px);
-  }
-
-  .tech-layer-label {
-    min-width: 120px;
-    font-family: 'Cinzel', serif;
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-  }
-
-  .tech-items {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    flex: 1;
-  }
-
-  .tech-badge {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--bg-card);
-    border: 1px solid var(--border-glass);
-    border-radius: 12px;
-    padding: 10px 18px;
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    transition: all 0.3s;
-  }
-
-  .tech-badge:hover {
-    border-color: var(--primary);
-    color: var(--primary);
-    box-shadow: 0 0 15px rgba(124,77,255,0.2);
-  }
-
-  .tech-badge .t-icon { font-size: 1.1rem; }
-
-
-  /* ═══════════════════════════════════════════
-     CTA FINAL
-  ═══════════════════════════════════════════ */
-  .cta-final {
-    padding: 120px 0;
-    background: linear-gradient(135deg, #0B1020, #12193a);
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-  }
-
-  .cta-final::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 700px; height: 700px;
-    background: radial-gradient(circle, rgba(124,77,255,0.12) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .cta-rune-deco {
-    font-size: 5rem;
-    margin-bottom: 24px;
-    filter: drop-shadow(var(--rune-glow));
-    animation: floatAnim 5s ease-in-out infinite;
-  }
-
-  .cta-final h2 {
-    font-family: 'Cinzel Decorative', cursive;
-    font-size: clamp(2rem, 5vw, 4rem);
-    font-weight: 700;
-    margin-bottom: 16px;
-    line-height: 1.2;
-  }
-
-  .cta-final p {
-    font-size: 1.1rem;
-    color: var(--text-muted);
-    max-width: 500px;
-    margin: 0 auto 48px;
-  }
-
-  .cta-buttons {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  /* ═══════════════════════════════════════════
-     FOOTER
-  ═══════════════════════════════════════════ */
-  footer {
-    padding: 60px 0 40px;
-    background: #070c1a;
-    border-top: 1px solid var(--border-glass);
-  }
-
-  .footer-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px;
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 60px;
-    margin-bottom: 48px;
-  }
-
-  .footer-brand p {
-    color: var(--text-muted);
-    font-size: 0.88rem;
-    margin: 16px 0;
-    line-height: 1.7;
-    max-width: 280px;
-  }
-
-  .footer-social {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-  }
-
-  .social-btn {
-    width: 38px; height: 38px;
-    border-radius: 10px;
-    background: var(--bg-glass);
-    border: 1px solid var(--border-glass);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-    text-decoration: none;
-    transition: all 0.3s;
-    color: var(--text-muted);
-  }
-
-  .social-btn:hover {
-    border-color: var(--primary);
-    color: var(--primary);
-    box-shadow: 0 0 15px rgba(124,77,255,0.3);
-  }
-
-  .footer-col h4 {
-    font-family: 'Cinzel', serif;
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 20px;
-  }
-
-  .footer-col a {
-    display: block;
-    color: var(--text-muted);
-    text-decoration: none;
-    font-size: 0.88rem;
-    padding: 5px 0;
-    transition: color 0.3s;
-  }
-
-  .footer-col a:hover { color: var(--cyan); }
-
-  .footer-bottom {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 24px 24px 0;
-    border-top: 1px solid var(--border-glass);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .footer-bottom p {
-    font-size: 0.82rem;
-    color: var(--text-muted);
-  }
-
-  /* ═══════════════════════════════════════════
-     ANIMATIONS
-  ═══════════════════════════════════════════ */
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(40px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.5); opacity: 0.5; }
-  }
-
-  @keyframes pulseDot {
-    0%, 100% { box-shadow: var(--cyan-glow); }
-    50% { box-shadow: 0 0 40px rgba(0,229,255,0.8), 0 0 80px rgba(0,229,255,0.3); }
-  }
-
-  @keyframes floatAnim {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
-  }
-
-  @keyframes scrollAnim {
-    0% { opacity: 1; transform: scaleY(1); transform-origin: top; }
-    100% { opacity: 0; transform: scaleY(0); transform-origin: top; }
-  }
-
-  @keyframes runeRotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
-  @keyframes shimmer {
-    0% { background-position: -200% center; }
-    100% { background-position: 200% center; }
-  }
-
-  /* Reveal on scroll */
-  .reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
-  .reveal-delay-4 { transition-delay: 0.4s; }
-  .reveal-delay-5 { transition-delay: 0.5s; }
-
-  /* ═══════════════════════════════════════════
-     LIGHTBOX
-  ═══════════════════════════════════════════ */
-  .lightbox {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.95);
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s;
-    backdrop-filter: blur(20px);
-  }
-
-  .lightbox.open { opacity: 1; pointer-events: all; }
-
-  .lightbox img {
-    max-width: 90vw;
-    max-height: 85vh;
-    object-fit: contain;
-    border-radius: 12px;
-    border: 1px solid var(--border-glass);
-    box-shadow: 0 30px 100px rgba(0,0,0,0.8);
-  }
-
-  .lightbox-close {
-    position: absolute;
-    top: 24px; right: 24px;
-    width: 44px; height: 44px;
-    border-radius: 50%;
-    background: var(--bg-card);
-    border: 1px solid var(--border-glass);
-    color: white;
-    font-size: 1.2rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s;
-  }
-
-  .lightbox-close:hover {
-    background: var(--primary);
-    border-color: var(--primary);
-  }
-
-  /* ═══════════════════════════════════════════
-     RUNE DIVIDER
-  ═══════════════════════════════════════════ */
-  .rune-divider {
-    text-align: center;
-    padding: 20px 0;
-    color: rgba(124,77,255,0.4);
-    font-size: 1.2rem;
-    letter-spacing: 20px;
-    user-select: none;
-  }
-
-  /* ═══════════════════════════════════════════
-     RESPONSIVE
-  ═══════════════════════════════════════════ */
-  @media (max-width: 1024px) {
-    .features-grid { grid-template-columns: repeat(2, 1fr); }
-    .about-grid { grid-template-columns: 1fr; gap: 40px; }
-    .about-image-stack { height: 280px; }
-    .disguise-grid { grid-template-columns: 1fr; gap: 40px; }
-    .audience-grid { grid-template-columns: repeat(3, 1fr); }
-    .footer-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
-    .tech-layer { flex-direction: column; align-items: flex-start; gap: 16px; }
-  }
-
-  @media (max-width: 768px) {
-    nav { padding: 16px 20px; }
-    .nav-links { display: none; }
-    .nav-hamburger { display: flex; }
-
-    .features-grid { grid-template-columns: 1fr; }
-    .rune-cards-grid { grid-template-columns: 1fr; }
-    .audience-grid { grid-template-columns: repeat(2, 1fr); }
-    .gallery-grid { grid-template-columns: 1fr; }
-    .gi-1,.gi-2,.gi-3,.gi-4,.gi-5 { grid-column: 1; grid-row: auto; height: 220px; }
-    .footer-inner { grid-template-columns: 1fr; gap: 32px; }
-    .comparison-table { font-size: 0.82rem; }
-    .comparison-table th, .comparison-table td { padding: 12px 14px; }
-  }
-
-  @media (max-width: 480px) {
-    .hero-ctas { flex-direction: column; align-items: center; }
-    .audience-grid { grid-template-columns: repeat(2, 1fr); }
-    .footer-bottom { flex-direction: column; text-align: center; }
-    .cta-buttons { flex-direction: column; align-items: center; }
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --sky1: #5BC8F5;
+  --sky2: #87DCFF;
+  --sky3: #B8EEFF;
+  --panel-bg: #FFFEF0;
+  --panel-border: #FFD97D;
+  --panel-shadow: #F4A623;
+  --green: #3BAB5C;
+  --green2: #52C973;
+  --red: #E8463A;
+  --blue: #3A8FE8;
+  --yellow: #F5C518;
+  --yellow2: #FFD740;
+  --purple: #7C5CE8;
+  --text-dark: #3B2D1F;
+  --text-mid: #7A5C3A;
+  --white: #FFFFFF;
+  --cloud: rgba(255,255,255,0.92);
+}
+
+html { scroll-behavior: smooth; }
+
+html, body {
+  min-height: 100%;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  overflow-x: hidden;
+}
+
+body {
+  background: linear-gradient(180deg, #4EB8F0 0%, #7DD3F8 40%, #A8E8FF 75%, #CBF0FF 100%);
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Sun */
+body::before {
+  content: '';
+  position: fixed;
+  top: 30px; right: 80px;
+  width: 70px; height: 70px;
+  background: radial-gradient(circle, #FFE566 40%, #FFD700 70%, rgba(255,220,0,0) 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 40px 20px rgba(255,230,60,0.35), 0 0 80px 40px rgba(255,200,0,0.15);
+  animation: sun-pulse 4s ease-in-out infinite;
+  z-index: 0;
+}
+@keyframes sun-pulse {
+  0%,100%{transform:scale(1);opacity:1}
+  50%{transform:scale(1.05);opacity:0.9}
+}
+
+/* Night mode */
+body { transition: background 5s ease; }
+body::before { transition: all 5s ease; }
+body.dusk { background: linear-gradient(180deg,#6fb8da 0%,#356b91 45%,#143a55 100%); }
+body.dusk::before { width:46px;height:46px;background:radial-gradient(circle,#FFF2C6 0%,#FFE4A0 60%,rgba(255,230,170,0) 100%);box-shadow:0 0 18px 4px rgba(255,200,120,0.08);top:34px;right:76px;opacity:0.9; }
+body.night { background: linear-gradient(180deg,#07182b 0%,#0a2540 45%,#071427 100%); }
+body.night::before { width:52px;height:52px;background:radial-gradient(circle,#FFFFFF 0%,#E6F0FF 60%,rgba(230,240,255,0) 100%);box-shadow:0 0 24px 6px rgba(200,220,255,0.12);top:36px;right:72px;transform:none;animation:none;z-index:2; }
+body.dawn { background: linear-gradient(180deg,#7ecff6 0%,#8edfff 40%,#cdeeff 75%,#e7f8ff 100%); }
+body.dawn::before { width:64px;height:64px;background:radial-gradient(circle,#FFE566 40%,#FFD700 70%,rgba(255,220,0,0) 100%);border-radius:50%;box-shadow:0 0 44px 22px rgba(255,230,60,0.25);top:30px;right:80px;animation:sun-pulse 4s ease-in-out infinite;z-index:0; }
+
+.stars { position:fixed;inset:0;pointer-events:none;z-index:3;opacity:0;transition:opacity 3s ease; }
+body.night .stars { opacity:1; }
+.star { position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(255,255,255,0.95);box-shadow:0 0 6px rgba(255,255,255,0.9);opacity:0;animation:twinkle 2.6s infinite ease-in-out; }
+@keyframes twinkle { 0%,100%{opacity:0;transform:scale(0.8)} 40%{opacity:1;transform:scale(1.2)} 60%{opacity:0.6;transform:scale(1)} }
+
+/* CLOUDS */
+.clouds-layer { position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden;transition:opacity 4s ease,filter 4s ease; }
+body.dusk .clouds-layer { opacity:0.85;filter:brightness(0.85) saturate(0.9); }
+body.night .clouds-layer { opacity:0.6;filter:brightness(0.7) saturate(0.85); }
+.cloud { position:absolute;background:var(--cloud);border-radius:50px;filter:drop-shadow(0 4px 8px rgba(100,180,220,0.2));animation:cloud-drift linear infinite; }
+.cloud::before,.cloud::after { content:'';position:absolute;background:var(--cloud);border-radius:50%; }
+.c1{width:100px;height:40px;top:8%;animation-duration:35s;animation-delay:-5s}.c1::before{width:50px;height:50px;top:-22px;left:15px}.c1::after{width:35px;height:35px;top:-15px;left:50px}
+.c2{width:140px;height:45px;top:18%;animation-duration:50s;animation-delay:-18s}.c2::before{width:70px;height:65px;top:-30px;left:20px}.c2::after{width:55px;height:50px;top:-22px;left:70px}
+.c3{width:80px;height:30px;top:5%;animation-duration:28s;animation-delay:-10s}.c3::before{width:40px;height:40px;top:-18px;left:10px}.c3::after{width:30px;height:30px;top:-13px;left:42px}
+.c4{width:160px;height:50px;top:28%;animation-duration:60s;animation-delay:-30s}.c4::before{width:80px;height:75px;top:-35px;left:25px}.c4::after{width:65px;height:60px;top:-28px;left:85px}
+.c5{width:90px;height:35px;top:12%;animation-duration:42s;animation-delay:-22s}.c5::before{width:45px;height:45px;top:-20px;left:12px}.c5::after{width:38px;height:38px;top:-16px;left:50px}
+.c6{width:120px;height:42px;top:35%;animation-duration:55s;animation-delay:-8s}.c6::before{width:60px;height:58px;top:-26px;left:18px}.c6::after{width:48px;height:46px;top:-20px;left:65px}
+.c7{width:75px;height:28px;top:22%;animation-duration:32s;animation-delay:-14s}.c7::before{width:38px;height:38px;top:-17px;left:10px}.c7::after{width:28px;height:28px;top:-12px;left:42px}
+.c8{width:110px;height:38px;top:42%;animation-duration:48s;animation-delay:-35s}.c8::before{width:55px;height:52px;top:-24px;left:15px}.c8::after{width:44px;height:42px;top:-18px;left:60px}
+@keyframes cloud-drift { from{transform:translateX(-280px)} to{transform:translateX(calc(100vw + 280px))} }
+
+/* HILLS */
+.hills { position:fixed;bottom:0;left:0;right:0;height:120px;z-index:1;pointer-events:none; }
+.hill { position:absolute;bottom:0;border-radius:50% 50% 0 0; }
+.hill1{width:380px;height:100px;background:#4AC76A;left:-40px}
+.hill2{width:320px;height:80px;background:#52D475;left:200px}
+.hill3{width:400px;height:90px;background:#45BE63;right:-60px}
+.hill4{width:250px;height:70px;background:#3EAF5A;left:50%;transform:translateX(-50%)}
+.hill5{width:300px;height:82px;background:#48BF67;left:58%;transform:translateX(-50%)}
+.tree{position:absolute;bottom:0}
+.tree-trunk{width:8px;height:14px;background:#8B5E3C;margin:0 auto}
+.tree-top{width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-bottom:22px solid #2E8B3A;margin:-8px auto 0}
+.tree-top2{width:0;height:0;border-left:11px solid transparent;border-right:11px solid transparent;border-bottom:18px solid #37A345;margin:-12px auto 0}
+
+/* NAV */
+.top-nav { position:fixed;top:16px;left:16px;display:flex;gap:8px;z-index:20; }
+.nav-btn { background:rgba(255,255,255,0.6);border:2px solid rgba(255,255,255,0.9);border-radius:999px;padding:6px 16px;font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:12px;color:#3B5BA0;cursor:pointer;backdrop-filter:blur(4px);transition:all 0.15s;box-shadow:0 2px 8px rgba(60,100,180,0.15); }
+.nav-btn:hover { background:white;transform:translateY(-2px);box-shadow:0 4px 12px rgba(60,100,180,0.25); }
+
+/* FIXED STICKY NAV (landing page) */
+.sticky-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 32px;
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(12px);
+  border-bottom: 2px solid rgba(255,255,255,0.7);
+  box-shadow: 0 2px 16px rgba(60,120,200,0.1);
+}
+.sticky-logo {
+  font-family: 'Fredoka One', cursive;
+  font-size: 22px;
+  color: #6B3A00;
+  letter-spacing: 1px;
+}
+.sticky-links { display:flex;gap:6px;align-items:center; }
+.sticky-link {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  color: #3B5BA0;
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 999px;
+  transition: all 0.15s;
+}
+.sticky-link:hover { background: rgba(255,255,255,0.7); }
+.sticky-cta {
+  background: linear-gradient(160deg,#52D475,#28944C);
+  color: white !important;
+  border-radius: 999px;
+  padding: 8px 20px;
+  font-weight: 800;
+  box-shadow: 0 3px 0 #1A6E35;
+  transition: all 0.15s;
+  font-size: 13px;
+  text-decoration: none;
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+.sticky-cta:hover { transform:translateY(-2px);box-shadow:0 5px 0 #1A6E35; }
+
+/* PAGE WRAPPER */
+.landing-page {
+  position: relative;
+  z-index: 10;
+  padding-top: 56px;
+}
+
+/* =====================
+   PANEL (shared)
+===================== */
+.panel {
+  background: linear-gradient(160deg,#FFFEF5 0%,#FFF8E0 100%);
+  border: 4px solid var(--panel-border);
+  border-radius: 24px;
+  box-shadow: 0 8px 0 var(--panel-shadow), 0 12px 32px rgba(0,0,0,0.12);
+  overflow: hidden;
+  position: relative;
+}
+.panel::before { content:'';position:absolute;top:0;left:0;right:0;height:5px;border-radius:20px 20px 0 0; }
+.panel.p-blue::before   { background:linear-gradient(90deg,#4A9CF5,#71B8FF); }
+.panel.p-green::before  { background:linear-gradient(90deg,#3BAB5C,#52D475); }
+.panel.p-yellow::before { background:linear-gradient(90deg,#F5C518,#FFD740); }
+.panel.p-red::before    { background:linear-gradient(90deg,#E8463A,#F07068); }
+.panel.p-purple::before { background:linear-gradient(90deg,#7C5CE8,#A487FF); }
+
+.panel-head { display:flex;align-items:center;gap:12px;padding:16px 20px 12px;border-bottom:3px dashed rgba(255,200,60,0.4); }
+.panel-icon { width:42px;height:42px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;box-shadow:0 3px 0 rgba(0,0,0,0.1),inset 0 1px 2px rgba(255,255,255,0.5); }
+.panel-icon i { font-size:19px;line-height:1;color:#FFFFFF;text-shadow:0 1px 2px rgba(0,0,0,0.2); }
+.icon-blue   { background:linear-gradient(135deg,#5BA8FF,#3A7BE8); }
+.icon-green  { background:linear-gradient(135deg,#4FD47A,#2E9452); }
+.icon-yellow { background:linear-gradient(135deg,#FFD740,#E8A800); }
+.icon-red    { background:linear-gradient(135deg,#FF6B60,#D93025); }
+.icon-purple { background:linear-gradient(135deg,#A487FF,#6B3FD8); }
+.panel-title { font-family:'Be Vietnam Pro',sans-serif;font-size:20px;font-weight:800;color:var(--text-dark);letter-spacing:0.2px;line-height:1; }
+.panel-subtitle { font-size:12px;font-weight:600;color:var(--text-mid);margin-top:2px; }
+.panel-body { padding:14px 20px 18px;display:flex;flex-direction:column;gap:10px; }
+
+/* BUTTONS */
+.game-btn { width:100%;border:none;border-radius:16px;padding:14px 20px;font-family:'Be Vietnam Pro',sans-serif;font-size:17px;font-weight:800;letter-spacing:1px;cursor:pointer;transition:all 0.15s;position:relative;display:flex;align-items:center;justify-content:center;gap:8px;overflow:hidden; }
+.game-btn::after { content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,0.25) 0%,transparent 50%);border-radius:16px;pointer-events:none; }
+.game-btn:active { transform:translateY(3px) scale(0.98); }
+.game-btn span { position:relative;z-index:1; }
+.btn-blue { background:linear-gradient(160deg,#5BA8FF,#2E78D0);border-bottom:5px solid #1A5BA8;color:white;text-shadow:0 1px 2px rgba(0,0,0,0.2);box-shadow:0 4px 16px rgba(46,120,208,0.35); }
+.btn-blue:hover { background:linear-gradient(160deg,#72B6FF,#3A87E0);transform:translateY(-2px);box-shadow:0 6px 20px rgba(46,120,208,0.45); }
+.btn-green { background:linear-gradient(160deg,#52D475,#28944C);border-bottom:5px solid #1A6E35;color:white;text-shadow:0 1px 2px rgba(0,0,0,0.2);box-shadow:0 4px 16px rgba(40,148,76,0.35); }
+.btn-green:hover { background:linear-gradient(160deg,#65E088,#35AA5C);transform:translateY(-2px);box-shadow:0 6px 20px rgba(40,148,76,0.45); }
+.btn-yellow { background:linear-gradient(160deg,#FFD740,#E8A000);border-bottom:5px solid #B07800;color:#5A3500;text-shadow:0 1px 1px rgba(255,255,255,0.3);box-shadow:0 4px 16px rgba(232,160,0,0.35); }
+.btn-yellow:hover { background:linear-gradient(160deg,#FFE060,#F0B020);transform:translateY(-2px);box-shadow:0 6px 20px rgba(232,160,0,0.45); }
+.btn-icon-emoji,.btn-icon { font-size:18px;line-height:1;display:inline-flex; }
+
+/* =====================
+   HERO
+===================== */
+.hero {
+  min-height: calc(100vh - 56px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px 160px;
+  text-align: center;
+  position: relative;
+}
+
+/* LOGO BOARD */
+.logo-board {
+  background: linear-gradient(160deg,#FFE566 0%,#FFB300 100%);
+  border: 4px solid #CC8800;
+  border-radius: 20px;
+  padding: 12px 40px 14px;
+  box-shadow: 0 6px 0 #A06000, 0 10px 20px rgba(0,0,0,0.2);
+  display: inline-block;
+  position: relative;
+  margin-bottom: 16px;
+}
+.logo-board::before,.logo-board::after { content:'\f586';position:absolute;font-family:'bootstrap-icons';font-size:20px;font-style:normal;font-weight:400;color:#8B5000;top:50%;transform:translateY(-50%); }
+.logo-board::before { left:-14px; }
+.logo-board::after  { right:-14px; }
+.game-title { font-family:'Fredoka One',cursive;font-size:52px;color:#6B3A00;letter-spacing:2px;line-height:1;text-shadow:2px 3px 0 rgba(255,255,255,0.4); }
+.game-tagline { font-family:'Be Vietnam Pro',sans-serif;font-size:14px;font-weight:800;color:#8B5000;letter-spacing:0.3px;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:6px; }
+
+/* PAWN PARADE */
+.pawn-parade { display:flex;justify-content:center;gap:18px;margin-top:14px; }
+.pawn-figure { display:flex;flex-direction:column;align-items:center;gap:2px;animation:pawn-bounce 1.6s ease-in-out infinite; }
+.pawn-figure:nth-child(1){animation-delay:0s}.pawn-figure:nth-child(2){animation-delay:0.2s}.pawn-figure:nth-child(3){animation-delay:0.4s}.pawn-figure:nth-child(4){animation-delay:0.6s}
+@keyframes pawn-bounce { 0%,100%{transform:translateY(0)} 40%{transform:translateY(-8px)} }
+.pawn-head { width:22px;height:22px;border-radius:50%;border:3px solid rgba(0,0,0,0.15);box-shadow:0 3px 6px rgba(0,0,0,0.2),inset 0 -2px 4px rgba(0,0,0,0.15),inset 0 2px 4px rgba(255,255,255,0.3); }
+.pawn-neck { width:10px;height:7px;border-radius:2px;opacity:0.8; }
+.pawn-body { width:20px;height:12px;border-radius:4px 4px 2px 2px;opacity:0.85; }
+.pawn-shadow-el { width:18px;height:5px;border-radius:50%;background:rgba(0,0,0,0.15);margin-top:1px; }
+
+.hero-tagline-box {
+  margin-top: 20px;
+  background: rgba(255,255,255,0.55);
+  border: 2px solid rgba(255,255,255,0.8);
+  border-radius: 16px;
+  padding: 12px 24px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #2A4880;
+  max-width: 480px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 16px rgba(60,120,200,0.12);
+  font-style: italic;
+}
+
+.hero-desc {
+  margin-top: 14px;
+  max-width: 520px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #3B5BA0;
+  line-height: 1.6;
+  background: rgba(255,255,255,0.45);
+  border-radius: 14px;
+  padding: 10px 20px;
+  backdrop-filter: blur(4px);
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cta-big {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  border-radius: 16px;
+  padding: 14px 30px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s;
+  letter-spacing: 0.5px;
+}
+.cta-big::after { content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,0.2) 0%,transparent 50%);border-radius:16px;pointer-events:none; }
+.cta-big { position:relative; overflow:hidden; }
+.cta-green { background:linear-gradient(160deg,#52D475,#28944C);border-bottom:5px solid #1A6E35;color:white;text-shadow:0 1px 2px rgba(0,0,0,0.2);box-shadow:0 4px 16px rgba(40,148,76,0.4); }
+.cta-green:hover { transform:translateY(-3px);box-shadow:0 8px 20px rgba(40,148,76,0.5); }
+.cta-blue { background:linear-gradient(160deg,#5BA8FF,#2E78D0);border-bottom:5px solid #1A5BA8;color:white;text-shadow:0 1px 2px rgba(0,0,0,0.2);box-shadow:0 4px 16px rgba(46,120,208,0.4); }
+.cta-blue:hover { transform:translateY(-3px);box-shadow:0 8px 20px rgba(46,120,208,0.5); }
+.cta-yellow { background:linear-gradient(160deg,#FFD740,#E8A000);border-bottom:5px solid #B07800;color:#5A3500;text-shadow:0 1px 1px rgba(255,255,255,0.3);box-shadow:0 4px 16px rgba(232,160,0,0.4); }
+.cta-yellow:hover { transform:translateY(-3px);box-shadow:0 8px 20px rgba(232,160,0,0.5); }
+
+.scroll-hint {
+  position: absolute;
+  bottom: 140px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.7;
+}
+.scroll-hint span { font-size:11px;font-weight:800;color:#3B5BA0;letter-spacing:2px;text-transform:uppercase; }
+.scroll-arrow { font-size:20px;color:#3B5BA0;animation:bounce-down 1.4s ease-in-out infinite; }
+@keyframes bounce-down { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+
+/* =====================
+   SECTION SHARED
+===================== */
+.section {
+  position: relative;
+  z-index: 10;
+  padding: 80px 20px;
+}
+
+.section-inner { max-width: 1100px; margin: 0 auto; }
+
+.section-header { text-align:center; margin-bottom: 48px; }
+
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.6);
+  border: 2px solid rgba(255,255,255,0.9);
+  border-radius: 999px;
+  padding: 5px 16px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+  color: #3B5BA0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  backdrop-filter: blur(4px);
+}
+
+.section-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(28px, 5vw, 42px);
+  color: var(--text-dark);
+  line-height: 1.15;
+  letter-spacing: 0.5px;
+}
+.section-title .hi-blue  { color: #2E78D0; }
+.section-title .hi-green { color: #28944C; }
+.section-title .hi-red   { color: #D93025; }
+.section-title .hi-gold  { color: #CC8800; }
+
+.section-sub {
+  font-size: 15px;
+  font-weight: 600;
+  color: #3B5BA0;
+  max-width: 540px;
+  margin: 10px auto 0;
+  background: rgba(255,255,255,0.45);
+  border-radius: 12px;
+  padding: 8px 18px;
+  backdrop-filter: blur(4px);
+}
+
+/* =====================
+   ABOUT
+===================== */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: center;
+}
+
+.about-img-wrap {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 4px solid var(--panel-border);
+  box-shadow: 0 8px 0 var(--panel-shadow), 0 16px 32px rgba(0,0,0,0.15);
+  aspect-ratio: 1;
+}
+
+.about-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.about-img-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg,#C8E6FF,#A0D8FF);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+}
+
+.about-badge {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  background: linear-gradient(160deg,#FFFEF5,#FFF8E0);
+  border: 3px solid var(--panel-border);
+  border-radius: 16px;
+  padding: 10px 16px;
+  box-shadow: 0 4px 0 var(--panel-shadow);
+  text-align: center;
+}
+.about-badge-num { font-family:'Fredoka One',cursive;font-size:28px;color:#CC8800;display:block;line-height:1; }
+.about-badge-lbl { font-size:11px;font-weight:800;color:var(--text-mid);text-transform:uppercase;letter-spacing:1px; }
+
+.about-text .panel { margin-bottom: 0; }
+
+.about-bullets { display:flex;flex-direction:column;gap:10px;padding:14px 20px 18px; }
+.about-bullet {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(255,255,255,0.6);
+  border: 2px solid rgba(255,220,80,0.5);
+  border-radius: 14px;
+  padding: 12px 14px;
+  transition: all 0.15s;
+}
+.about-bullet:hover { background:rgba(255,255,255,0.85);transform:translateX(4px); }
+.about-bullet-icon { font-size:20px;flex-shrink:0;margin-top:1px; }
+.about-bullet h4 { font-family:'Be Vietnam Pro',sans-serif;font-size:14px;font-weight:800;color:var(--text-dark);margin-bottom:2px; }
+.about-bullet p { font-size:12px;font-weight:600;color:var(--text-mid);line-height:1.5; }
+
+/* =====================
+   FEATURE CARDS
+===================== */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.feature-card {
+  background: linear-gradient(160deg,#FFFEF5,#FFF8E0);
+  border: 3px solid var(--panel-border);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 5px 0 var(--panel-shadow), 0 8px 20px rgba(0,0,0,0.08);
+  transition: all 0.2s;
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+.feature-card::before { content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:20px 20px 0 0;background:var(--fc-color,#FFD740); }
+.feature-card:hover { transform:translateY(-6px);box-shadow:0 10px 0 var(--panel-shadow),0 16px 32px rgba(0,0,0,0.14); }
+
+.fc-icon {
+  width:48px;height:48px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;margin-bottom:12px;
+  box-shadow:0 3px 0 rgba(0,0,0,0.1);
+}
+.fc-title { font-family:'Be Vietnam Pro',sans-serif;font-size:16px;font-weight:800;color:var(--text-dark);margin-bottom:6px; }
+.fc-desc { font-size:13px;font-weight:600;color:var(--text-mid);line-height:1.6; }
+
+/* =====================
+   GALLERY
+===================== */
+.gallery-section { padding: 80px 20px; }
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 12px;
+}
+
+.gallery-item {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 3px solid var(--panel-border);
+  box-shadow: 0 5px 0 var(--panel-shadow), 0 8px 20px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+.gallery-item:hover { transform:translateY(-6px) scale(1.01);box-shadow:0 10px 0 var(--panel-shadow),0 16px 32px rgba(0,0,0,0.18); }
+.gallery-item::after { content:'\F52A';font-family:'bootstrap-icons';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2rem;color:white;background:rgba(255,200,60,0.4);opacity:0;transition:opacity 0.2s;backdrop-filter:blur(3px); }
+.gallery-item:hover::after { opacity:1; }
+.gallery-item img { width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s; }
+.gallery-item:hover img { transform:scale(1.04); }
+.gallery-item .placeholder { width:100%;height:100%;background:linear-gradient(135deg,#C8E6FF,#A0D8FF);display:flex;align-items:center;justify-content:center;font-size:3rem; }
+
+.gi1 { grid-column:1/8;height:300px; }
+.gi2 { grid-column:8/13;height:300px; }
+.gi3 { grid-column:1/5;height:220px; }
+.gi4 { grid-column:5/9;height:220px; }
+.gi5 { grid-column:9/13;height:220px; }
+
+/* =====================
+   RUNE CARDS
+===================== */
+.rune-tabs {
+  display:flex;gap:8px;justify-content:center;margin-bottom:28px;flex-wrap:wrap;
+}
+.rune-tab {
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,0.6);border:2px solid rgba(255,255,255,0.9);
+  border-radius:999px;padding:7px 18px;
+  font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:13px;
+  color:#3B5BA0;cursor:pointer;transition:all 0.15s;backdrop-filter:blur(4px);
+  box-shadow:0 2px 8px rgba(60,100,180,0.1);
+}
+.rune-tab.active { background:white;box-shadow:0 4px 12px rgba(60,100,180,0.2);color:#1A3A7A; }
+.rune-tab:hover:not(.active) { background:rgba(255,255,255,0.8); }
+
+.rune-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:16px; }
+
+.rune-card {
+  background:linear-gradient(160deg,#FFFEF5,#FFF8E0);
+  border:3px solid var(--panel-border);
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 5px 0 var(--panel-shadow),0 8px 20px rgba(0,0,0,0.08);
+  transition:all 0.2s;
+  position:relative;
+  overflow:hidden;
+}
+.rune-card::before { content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:20px 20px 0 0;background:var(--rc-color,#FFD740); }
+.rune-card:hover { transform:translateY(-6px);box-shadow:0 10px 0 var(--panel-shadow),0 16px 32px rgba(0,0,0,0.14); }
+
+.rune-card-header { display:flex;align-items:center;gap:12px;margin-bottom:12px; }
+.rune-symbol { width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;box-shadow:0 2px 0 rgba(0,0,0,0.1); }
+.rune-type { font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px; }
+.rune-name { font-family:'Be Vietnam Pro',sans-serif;font-size:15px;font-weight:800;color:var(--text-dark); }
+.rune-desc { font-size:12px;font-weight:600;color:var(--text-mid);line-height:1.6; }
+
+/* =====================
+   DISGUISE SECTION
+===================== */
+.disguise-grid { display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start; }
+
+.disguise-showcase {
+  background:linear-gradient(160deg,#FFFEF5,#FFF8E0);
+  border:4px solid var(--panel-border);
+  border-radius:24px;
+  box-shadow:0 8px 0 var(--panel-shadow),0 16px 32px rgba(0,0,0,0.12);
+  overflow:hidden;
+  padding:0;
+}
+.disguise-showcase::before { content:'';display:block;height:5px;background:linear-gradient(90deg,#7C5CE8,#A487FF); }
+
+.disguise-mask-area {
+  text-align:center;
+  padding:32px 20px 20px;
+  border-bottom:3px dashed rgba(255,200,60,0.4);
+}
+.disguise-emoji {
+  font-size:64px;
+  display:block;
+  margin-bottom:12px;
+  animation:float-mask 3s ease-in-out infinite;
+  filter:drop-shadow(0 6px 12px rgba(0,0,0,0.15));
+}
+@keyframes float-mask { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+.disguise-showcase-title { font-family:'Fredoka One',cursive;font-size:24px;color:#6B3A00;margin-bottom:4px; }
+.disguise-showcase-sub { font-size:13px;font-weight:700;color:var(--text-mid); }
+
+.disguise-stats-grid { display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:3px dashed rgba(255,200,60,0.4); }
+.d-stat { padding:16px;text-align:center;border-right:2px dashed rgba(255,200,60,0.3);border-bottom:2px dashed rgba(255,200,60,0.3); }
+.d-stat:nth-child(2n) { border-right:none; }
+.d-stat:nth-child(3),.d-stat:nth-child(4) { border-bottom:none; }
+.d-stat-num { font-family:'Fredoka One',cursive;font-size:28px;color:#CC8800;display:block;line-height:1; }
+.d-stat-lbl { font-size:10px;font-weight:800;color:var(--text-mid);text-transform:uppercase;letter-spacing:1px;margin-top:2px; }
+
+.disguise-pillars { display:flex;flex-direction:column;gap:12px; }
+
+.pillar {
+  background:linear-gradient(160deg,#FFFEF5,#FFF8E0);
+  border:3px solid var(--panel-border);
+  border-radius:16px;
+  padding:14px 16px;
+  display:flex;align-items:flex-start;gap:12px;
+  box-shadow:0 4px 0 var(--panel-shadow);
+  transition:all 0.15s;
+}
+.pillar:hover { transform:translateX(6px); }
+.pillar-icon { font-size:22px;flex-shrink:0;margin-top:1px; }
+.pillar h4 { font-family:'Be Vietnam Pro',sans-serif;font-size:14px;font-weight:800;color:var(--text-dark);margin-bottom:3px; }
+.pillar p { font-size:12px;font-weight:600;color:var(--text-mid);line-height:1.5; }
+
+/* =====================
+   AUDIENCE
+===================== */
+.audience-grid { display:grid;grid-template-columns:repeat(6,1fr);gap:12px; }
+
+.audience-card {
+  background:linear-gradient(160deg,#FFFEF5,#FFF8E0);
+  border:3px solid var(--panel-border);
+  border-radius:20px;
+  padding:20px 12px;
+  text-align:center;
+  box-shadow:0 5px 0 var(--panel-shadow);
+  transition:all 0.2s;
+  cursor:default;
+}
+.audience-card:hover { transform:translateY(-6px);box-shadow:0 10px 0 var(--panel-shadow); }
+.audience-emoji { font-size:2rem;display:block;margin-bottom:8px;animation:pawn-bounce 2s ease-in-out infinite; }
+.audience-card:nth-child(2) .audience-emoji { animation-delay:0.2s; }
+.audience-card:nth-child(3) .audience-emoji { animation-delay:0.4s; }
+.audience-card:nth-child(4) .audience-emoji { animation-delay:0.6s; }
+.audience-card:nth-child(5) .audience-emoji { animation-delay:0.8s; }
+.audience-card:nth-child(6) .audience-emoji { animation-delay:1.0s; }
+.audience-name { font-family:'Be Vietnam Pro',sans-serif;font-size:14px;font-weight:800;color:var(--text-dark);margin-bottom:5px; }
+.audience-desc { font-size:11px;font-weight:600;color:var(--text-mid);line-height:1.5; }
+
+/* =====================
+   COMPARISON
+===================== */
+.compare-panel {
+  background:linear-gradient(160deg,#FFFEF5,#FFF8E0);
+  border:4px solid var(--panel-border);
+  border-radius:24px;
+  box-shadow:0 8px 0 var(--panel-shadow),0 12px 32px rgba(0,0,0,0.12);
+  overflow:hidden;
+}
+.compare-panel::before { content:'';display:block;height:5px;background:linear-gradient(90deg,#F5C518,#FFD740); }
+
+.compare-table { width:100%;border-collapse:collapse; }
+.compare-table th,.compare-table td { padding:14px 20px;text-align:center;border-bottom:2px dashed rgba(255,200,60,0.35); }
+.compare-table th:first-child,.compare-table td:first-child { text-align:left; }
+.compare-table tr:last-child td { border-bottom:none; }
+.compare-table thead tr { background:linear-gradient(160deg,rgba(255,215,64,0.15),transparent); }
+.compare-table th { font-family:'Be Vietnam Pro',sans-serif;font-size:14px;font-weight:800;color:var(--text-dark); }
+.compare-table th.col-rune { color:#28944C; }
+.compare-table td { font-size:13px;font-weight:700;color:var(--text-mid); }
+.compare-table td:first-child { font-weight:800;color:var(--text-dark);font-size:14px; }
+.compare-table tr:hover td { background:rgba(255,220,80,0.06); }
+.col-rune-cell { background:rgba(82,212,117,0.06); }
+.check-y { color:#28944C;font-size:18px; }
+.check-n { color:#D93025;font-size:18px; }
+.check-p { color:#CC8800;font-size:16px; }
+
+/* =====================
+   TECH STACK
+===================== */
+.tech-layers { display:flex;flex-direction:column;gap:14px; }
+
+.tech-layer {
+  background:linear-gradient(160deg,#FFFEF5,#FFF8E0);
+  border:3px solid var(--panel-border);
+  border-radius:18px;
+  padding:18px 22px;
+  display:flex;align-items:center;gap:24px;
+  box-shadow:0 5px 0 var(--panel-shadow);
+  transition:all 0.15s;
+}
+.tech-layer:hover { transform:translateX(6px); }
+.tech-layer-label { min-width:110px;font-family:'Be Vietnam Pro',sans-serif;font-size:13px;font-weight:800;color:var(--text-mid);text-transform:uppercase;letter-spacing:1.5px;display:flex;align-items:center;gap:6px;flex-shrink:0; }
+.tech-badges { display:flex;gap:10px;flex-wrap:wrap; }
+.tech-badge {
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(255,255,255,0.8);border:2px solid rgba(255,210,60,0.5);
+  border-radius:12px;padding:7px 14px;
+  font-family:'Be Vietnam Pro',sans-serif;font-size:13px;font-weight:800;color:var(--text-dark);
+  box-shadow:0 2px 0 rgba(200,160,0,0.2);
+  transition:all 0.15s;
+}
+.tech-badge:hover { background:white;transform:translateY(-2px);box-shadow:0 4px 0 rgba(200,160,0,0.2); }
+.tech-badge span { font-size:16px; }
+
+/* =====================
+   FINAL CTA
+===================== */
+.cta-final {
+  padding: 100px 20px 200px;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+
+.cta-final-panel {
+  max-width: 600px;
+  margin: 0 auto;
+  background: linear-gradient(160deg,#FFFEF5,#FFF8E0);
+  border: 4px solid var(--panel-border);
+  border-radius: 28px;
+  box-shadow: 0 10px 0 var(--panel-shadow), 0 20px 40px rgba(0,0,0,0.15);
+  padding: 48px 40px;
+  position: relative;
+  overflow: hidden;
+}
+.cta-final-panel::before { content:'';position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,#52D475,#5BA8FF,#FFD740,#E8463A);border-radius:28px 28px 0 0; }
+
+.cta-emoji { font-size:56px;display:block;margin-bottom:16px;animation:float-mask 3s ease-in-out infinite; }
+.cta-title { font-family:'Fredoka One',cursive;font-size:clamp(28px,5vw,40px);color:var(--text-dark);margin-bottom:10px; }
+.cta-sub { font-size:15px;font-weight:600;color:var(--text-mid);margin-bottom:28px;line-height:1.6; }
+.cta-buttons { display:flex;gap:12px;justify-content:center;flex-wrap:wrap; }
+
+/* =====================
+   FOOTER
+===================== */
+footer {
+  position: relative;
+  z-index: 10;
+  background: rgba(255,255,255,0.5);
+  backdrop-filter: blur(10px);
+  border-top: 3px dashed rgba(255,200,60,0.4);
+  padding: 48px 20px 120px;
+}
+
+.footer-inner { max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:32px; }
+.footer-brand .game-title { font-size:28px; }
+.footer-brand p { font-size:13px;font-weight:600;color:var(--text-mid);margin:12px 0;line-height:1.7;max-width:260px; }
+.footer-social { display:flex;gap:8px;margin-top:12px; }
+.social-btn { width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.7);border:2px solid rgba(255,200,60,0.5);display:flex;align-items:center;justify-content:center;font-size:16px;text-decoration:none;color:var(--text-mid);box-shadow:0 2px 0 rgba(200,160,0,0.15);transition:all 0.15s; }
+.social-btn:hover { background:white;transform:translateY(-3px);box-shadow:0 5px 0 rgba(200,160,0,0.2); }
+.footer-col h4 { font-family:'Be Vietnam Pro',sans-serif;font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--text-mid);margin-bottom:14px; }
+.footer-col a { display:block;font-size:13px;font-weight:700;color:var(--text-mid);text-decoration:none;padding:4px 0;transition:color 0.15s; }
+.footer-col a:hover { color:#2E78D0; }
+.footer-bottom { max-width:1100px;margin:0 auto;padding-top:20px;border-top:2px dashed rgba(255,200,60,0.3);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px; }
+.footer-bottom p { font-size:12px;font-weight:700;color:var(--text-mid); }
+
+/* =====================
+   LIGHTBOX
+===================== */
+.lightbox { position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:200;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.25s;backdrop-filter:blur(8px); }
+.lightbox.open { opacity:1;pointer-events:all; }
+.lightbox img { max-width:90vw;max-height:86vh;object-fit:contain;border-radius:16px;border:4px solid var(--panel-border);box-shadow:0 10px 0 var(--panel-shadow),0 20px 60px rgba(0,0,0,0.5); }
+.lightbox-close { position:absolute;top:20px;right:20px;width:42px;height:42px;border-radius:12px;background:linear-gradient(160deg,#FFFEF5,#FFF8E0);border:3px solid var(--panel-border);box-shadow:0 3px 0 var(--panel-shadow);color:var(--text-dark);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;font-weight:800; }
+.lightbox-close:hover { transform:translateY(-2px);background:white; }
+
+/* =====================
+   SCROLL REVEAL
+===================== */
+.reveal { opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease; }
+.reveal.visible { opacity:1;transform:translateY(0); }
+.delay-1 { transition-delay:0.1s; }
+.delay-2 { transition-delay:0.2s; }
+.delay-3 { transition-delay:0.3s; }
+.delay-4 { transition-delay:0.4s; }
+.delay-5 { transition-delay:0.5s; }
+
+/* =====================
+   RESPONSIVE
+===================== */
+@media (max-width:1024px) {
+  .features-grid { grid-template-columns:repeat(2,1fr); }
+  .about-grid { grid-template-columns:1fr; }
+  .disguise-grid { grid-template-columns:1fr; }
+  .audience-grid { grid-template-columns:repeat(3,1fr); }
+  .footer-inner { grid-template-columns:1fr 1fr;gap:28px; }
+  .tech-layer { flex-direction:column;align-items:flex-start;gap:10px; }
+}
+@media (max-width:768px) {
+  .sticky-links { display:none; }
+  .features-grid { grid-template-columns:1fr; }
+  .rune-grid { grid-template-columns:1fr; }
+  .audience-grid { grid-template-columns:repeat(2,1fr); }
+  .gallery-grid { grid-template-columns:1fr; }
+  .gi1,.gi2,.gi3,.gi4,.gi5 { grid-column:1;height:200px; }
+  .footer-inner { grid-template-columns:1fr; }
+  .footer-bottom { flex-direction:column;text-align:center; }
+  .cta-buttons { flex-direction:column;align-items:center; }
+  .hero-ctas { flex-direction:column;align-items:center; }
+  .compare-table th,.compare-table td { padding:10px 12px;font-size:12px; }
+}
 </style>
 </head>
 <body>
 
-<!-- Particles Canvas -->
-<canvas id="particles-canvas"></canvas>
-
-<!-- Lightbox -->
-<div class="lightbox" id="lightbox">
-  <button class="lightbox-close" id="lightbox-close">✕</button>
-  <img src="" id="lightbox-img" alt="">
+<!-- SKY LAYERS -->
+<div class="clouds-layer">
+  <div class="cloud c1" style="left:-200px"></div>
+  <div class="cloud c2" style="left:-200px"></div>
+  <div class="cloud c3" style="left:-200px"></div>
+  <div class="cloud c4" style="left:-200px"></div>
+  <div class="cloud c5" style="left:-200px"></div>
+  <div class="cloud c6" style="left:-200px"></div>
+  <div class="cloud c7" style="left:-200px"></div>
+  <div class="cloud c8" style="left:-200px"></div>
+  <div class="cloud c2" style="left:-200px;animation-delay:-40s"></div>
+  <div class="cloud c4" style="left:-200px;animation-delay:-20s"></div>
+</div>
+<div class="stars" aria-hidden="true"></div>
+<div class="hills">
+  <div class="hill hill1"><div class="tree" style="left:40px"><div class="tree-top2"></div><div class="tree-top"></div><div class="tree-trunk"></div></div><div class="tree" style="left:90px"><div class="tree-top2"></div><div class="tree-top"></div><div class="tree-trunk"></div></div></div>
+  <div class="hill hill2"><div class="tree" style="left:60px"><div class="tree-top2"></div><div class="tree-top"></div><div class="tree-trunk"></div></div></div>
+  <div class="hill hill3"><div class="tree" style="right:50px"><div class="tree-top2"></div><div class="tree-top"></div><div class="tree-trunk"></div></div><div class="tree" style="right:100px"><div class="tree-top2"></div><div class="tree-top"></div><div class="tree-trunk"></div></div></div>
+  <div class="hill hill5"></div>
+  <div class="hill hill4"></div>
 </div>
 
-<!-- Navigation -->
-<nav id="navbar">
-  <div class="nav-logo">⚡ Rune Race</div>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#features">Features</a></li>
-    <li><a href="#mechanics">Mechanics</a></li>
-    <li><a href="https://rune-race.onrender.com/"
-   target="_blank"
-   rel="noopener noreferrer"
-   class="btn-primary">
-    ⚡ Play Now — Free
-</a></li>
-  </ul>
-  <div class="nav-hamburger" id="hamburger">
-    <span></span><span></span><span></span>
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lb-close"><i class="bi bi-x-lg"></i></button>
+  <img src="" id="lb-img" alt="">
+</div>
+
+<!-- STICKY NAV -->
+<nav class="sticky-nav">
+  <div class="sticky-logo">⚡ Rune Race</div>
+  <div class="sticky-links">
+    <a href="#about" class="sticky-link">About</a>
+    <a href="#features" class="sticky-link">Features</a>
+    <a href="#mechanics" class="sticky-link">Mechanics</a>
+
   </div>
+<a 
+  href="https://rune-race.onrender.com/" 
+  target="_blank" 
+  rel="noopener noreferrer"
+  class="cta-big cta-green"
+>
+  <i class="bi bi-controller"></i> Play Free
+</a>
 </nav>
 
-<!-- ═══════════════════════════════════════════
-     HERO SECTION
-═══════════════════════════════════════════ -->
+<div class="landing-page">
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
 <section class="hero" id="hero">
-  <div class="hero-bg" id="hero-bg"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <div class="hero-badge">🎮 Online Multiplayer Board Game</div>
-    <h1 class="hero-title">
-      <span class="rune">Rune</span> <span class="race">Race</span>
-    </h1>
-    <p class="hero-tagline">"Where Luck Meets Strategy, and Every Rune Tells a Lie."</p>
-    <p class="hero-desc">An online multiplayer board game inspired by the traditional Vietnamese game Cá Ngựa — now reimagined with magical Rune cards, strategic traps, and a unique disguise system.</p>
-    <div class="hero-ctas">
-<a href="https://rune-race.onrender.com/"
-   target="_blank"
-   rel="noopener noreferrer"
-   class="btn-primary">
-    ⚡ Play Now — Free
+  <div class="logo-board reveal">
+    <div class="game-title">Rune Race</div>
+    <div class="game-tagline">
+      <i class="bi bi-globe-asia-australia"></i> Online Multiplayer Board Game
+    </div>
+  </div>
+  <div class="pawn-parade reveal delay-1">
+    <div class="pawn-figure">
+      <div class="pawn-head" style="background:linear-gradient(135deg,#4FC870,#2E9452)"></div>
+      <div class="pawn-neck" style="background:#2E9452"></div>
+      <div class="pawn-body" style="background:#2E9452"></div>
+      <div class="pawn-shadow-el"></div>
+    </div>
+    <div class="pawn-figure">
+      <div class="pawn-head" style="background:linear-gradient(135deg,#5BA8FF,#2E78D0)"></div>
+      <div class="pawn-neck" style="background:#2E78D0"></div>
+      <div class="pawn-body" style="background:#2E78D0"></div>
+      <div class="pawn-shadow-el"></div>
+    </div>
+    <div class="pawn-figure">
+      <div class="pawn-head" style="background:linear-gradient(135deg,#FFD740,#E8A000)"></div>
+      <div class="pawn-neck" style="background:#E8A000"></div>
+      <div class="pawn-body" style="background:#E8A000"></div>
+      <div class="pawn-shadow-el"></div>
+    </div>
+    <div class="pawn-figure">
+      <div class="pawn-head" style="background:linear-gradient(135deg,#FF6B60,#D93025)"></div>
+      <div class="pawn-neck" style="background:#D93025"></div>
+      <div class="pawn-body" style="background:#D93025"></div>
+      <div class="pawn-shadow-el"></div>
+    </div>
+  </div>
+  <div class="hero-tagline-box reveal delay-2">
+    🎭 "Where Luck Meets Strategy, and Every Rune Tells a Lie."
+  </div>
+  <p class="hero-desc reveal delay-3">
+    An online multiplayer board game inspired by Vietnam's beloved Cá Ngựa — reimagined with magical Rune cards, strategic traps, simultaneous play, and a disguise system that turns every match into a social deduction experience.
+  </p>
+  <div class="hero-ctas reveal delay-4">
+<a 
+  href="https://rune-race.onrender.com/" 
+  target="_blank" 
+  rel="noopener noreferrer"
+  class="cta-big cta-green"
+>
+  <i class="bi bi-controller"></i> Play Free Now
 </a>
-      <a href="#gallery" class="btn-secondary">🎬 Watch Gameplay</a>
-      <a href="#about" class="btn-secondary">Learn More ↓</a>
-    </div>
+    <a href="#gallery" class="cta-big cta-blue"><i class="bi bi-play-circle"></i> Watch Gameplay</a>
+    <a href="#about" class="cta-big cta-yellow"><i class="bi bi-info-circle"></i> Learn More</a>
   </div>
-  <div class="hero-scroll">
+  <div class="scroll-hint">
     <span>Scroll</span>
-    <div class="scroll-dot"></div>
+    <div class="scroll-arrow"><i class="bi bi-chevron-double-down"></i></div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     ABOUT SECTION
-═══════════════════════════════════════════ -->
-<section class="about" id="about">
-  <div class="section-inner">
-    <div class="about-grid">
-      <div class="about-image-stack reveal">
-        <img src="assets/hero.jpg" alt="Rune Race Game" class="about-img-main" onerror="this.style.background='linear-gradient(135deg,#1a2235,#111827)';this.removeAttribute('src')">
-        <div class="about-img-bg"></div>
-        <div class="about-rune-badge">
-          <span class="stat-num">4</span>
-          <span class="stat-label">Players Per Match</span>
-        </div>
-      </div>
-      <div class="about-text reveal reveal-delay-2">
-        <div class="section-eyebrow">About The Game</div>
-        <h2>The Ancient Race, <span style="color:var(--primary)">Reborn Digital</span></h2>
-        <p>Rune Race takes the beloved Vietnamese Cá Ngựa (Horse Racing / Ludo) game and transforms it into a modern online multiplayer experience packed with depth, drama, and delicious strategy.</p>
-        <p>While the classic game relies purely on dice rolls, Rune Race layers in a <strong style="color:var(--cyan)">strategic Rune card system</strong>, simultaneous card placement, and a groundbreaking disguise mechanic that turns every move into psychological warfare.</p>
-        <p>Accessible enough for the whole family, deep enough for competitive minds — Rune Race is the party game that never plays the same way twice.</p>
-        <div class="about-tags">
-          <span class="tag">🎲 Board Game Roots</span>
-          <span class="tag">🃏 Rune Cards</span>
-          <span class="tag">🎭 Bluffing System</span>
-          <span class="tag">🌏 Multiplayer Online</span>
-          <span class="tag">⚔️ Strategy Depth</span>
-          <span class="tag">👨‍👩‍👧 Family Friendly</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════
-     FEATURES SECTION
-═══════════════════════════════════════════ -->
-<section class="features" id="features">
+<!-- ═══════════════════ ABOUT ═══════════════════ -->
+<section class="section" id="about">
   <div class="section-inner">
     <div class="section-header reveal">
-      <div class="section-eyebrow">Why Rune Race</div>
-      <h2 class="section-title">What Makes Us <span class="highlight">Different</span></h2>
-      <p class="section-subtitle">We didn't just digitize Cá Ngựa — we reimagined every mechanic for a modern, strategic multiplayer experience.</p>
+      <div class="section-eyebrow"><i class="bi bi-info-circle-fill"></i> About The Game</div>
+      <div class="section-title">The Ancient Race, <span class="hi-blue">Reborn</span></div>
+      <p class="section-sub">Inspired by Vietnam's Cá Ngựa — modernized for online multiplayer with strategy, bluffing, and magic.</p>
+    </div>
+    <div class="about-grid">
+      <div class="about-img-wrap reveal">
+        <img src="assets/hero.jpg" alt="Rune Race board" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="about-img-placeholder" style="display:none">🎲</div>
+        <div class="about-badge">
+          <span class="about-badge-num">4</span>
+          <span class="about-badge-lbl">Players Per Match</span>
+        </div>
+      </div>
+      <div class="about-text reveal delay-2">
+        <div class="panel p-blue">
+          <div class="panel-head">
+            <div class="panel-icon icon-blue"><i class="bi bi-controller"></i></div>
+            <div>
+              <div class="panel-title">What Is Rune Race?</div>
+              <div class="panel-subtitle">Cá Ngựa · reimagined for the internet age</div>
+            </div>
+          </div>
+          <div class="about-bullets">
+            <div class="about-bullet">
+              <div class="about-bullet-icon">🏛️</div>
+              <div>
+                <h4>Rooted in Tradition</h4>
+                <p>Built on the beloved Vietnamese Cá Ngựa (Ludo) game — familiar enough to learn in minutes, deep enough to master over hundreds of matches.</p>
+              </div>
+            </div>
+            <div class="about-bullet">
+              <div class="about-bullet-icon">🌐</div>
+              <div>
+                <h4>Built for the Internet</h4>
+                <p>Real-time online multiplayer with room codes, quick-play matchmaking, and a full 3D board rendered in your browser.</p>
+              </div>
+            </div>
+            <div class="about-bullet">
+              <div class="about-bullet-icon">⚖️</div>
+              <div>
+                <h4>Accessible Yet Deep</h4>
+                <p>Casual enough for family game nights, strategic enough for competitive ranked play — every session feels different.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FEATURES ═══════════════════ -->
+<section class="section" id="features">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow"><i class="bi bi-stars"></i> Why Rune Race</div>
+      <div class="section-title">What Makes Us <span class="hi-green">Different</span></div>
+      <p class="section-sub">We didn't just digitize Cá Ngựa — we reimagined every mechanic for a modern, strategic multiplayer experience.</p>
     </div>
     <div class="features-grid">
-      <div class="feature-card reveal reveal-delay-1">
-        <div class="feature-icon purple">🏛️</div>
-        <h3 class="feature-title">Traditional Board Game Roots</h3>
-        <p class="feature-desc">Built on the beloved Cá Ngựa (Vietnamese Ludo) formula — familiar enough to onboard instantly, yet transformed beyond recognition with new mechanics.</p>
+      <div class="feature-card reveal delay-1" style="--fc-color:#4A9CF5">
+        <div class="fc-icon" style="background:linear-gradient(135deg,#C8E8FF,#A0D0FF)">🏛️</div>
+        <div class="fc-title">Traditional Board Game Roots</div>
+        <p class="fc-desc">Built on the beloved Cá Ngựa formula — familiar enough to onboard instantly, yet transformed beyond recognition with new mechanics.</p>
       </div>
-      <div class="feature-card reveal reveal-delay-2">
-        <div class="feature-icon cyan">✨</div>
-        <h3 class="feature-title">Strategic Rune System</h3>
-        <p class="feature-desc">Draw, hold, and deploy magical Rune cards that can protect your pieces, devastate opponents, or swing the entire race in a single play.</p>
+      <div class="feature-card reveal delay-2" style="--fc-color:#52D475">
+        <div class="fc-icon" style="background:linear-gradient(135deg,#C8FFD8,#A0F0B8)">✨</div>
+        <div class="fc-title">Strategic Rune System</div>
+        <p class="fc-desc">Draw, hold, and deploy magical Rune cards that protect your pieces, devastate opponents, or swing the entire race in one play.</p>
       </div>
-      <div class="feature-card reveal reveal-delay-3">
-        <div class="feature-icon gold">⚡</div>
-        <h3 class="feature-title">Simultaneous Card Placement</h3>
-        <p class="feature-desc">All players choose and reveal their Rune cards at the same moment — no waiting, no predictability, pure tension with every round.</p>
+      <div class="feature-card reveal delay-3" style="--fc-color:#FFD740">
+        <div class="fc-icon" style="background:linear-gradient(135deg,#FFF3C0,#FFE080)">⚡</div>
+        <div class="fc-title">Simultaneous Card Placement</div>
+        <p class="fc-desc">All players choose and reveal Rune cards at the same moment — no waiting, no predictability, pure tension with every round.</p>
       </div>
-      <div class="feature-card reveal reveal-delay-1">
-        <div class="feature-icon purple">🧠</div>
-        <h3 class="feature-title">Bluff & Mind Games</h3>
-        <p class="feature-desc">Read your opponents. Misdirect them. Every card play is a statement — but is it true? The meta-game of bluffing runs as deep as you let it.</p>
+      <div class="feature-card reveal delay-1" style="--fc-color:#A487FF">
+        <div class="fc-icon" style="background:linear-gradient(135deg,#E8E0FF,#D0C0FF)">🧠</div>
+        <div class="fc-title">Bluff & Mind Games</div>
+        <p class="fc-desc">Read opponents. Misdirect them. Every card play is a statement — but is it true? The meta-game of bluffing runs as deep as you let it.</p>
       </div>
-      <div class="feature-card reveal reveal-delay-2">
-        <div class="feature-icon cyan">🎭</div>
-        <h3 class="feature-title">Unique Disguise Mechanic</h3>
-        <p class="feature-desc">Disguise yourself as another player while deploying traps. Frames them, creates chaos, and turns the table with cinematic drama.</p>
+      <div class="feature-card reveal delay-2" style="--fc-color:#E8463A">
+        <div class="fc-icon" style="background:linear-gradient(135deg,#FFD8D6,#FFC0BC)">🎭</div>
+        <div class="fc-title">Unique Disguise Mechanic</div>
+        <p class="fc-desc">Disguise yourself as another player while deploying traps — frame your friends, break alliances, and create cinematic drama.</p>
       </div>
-      <div class="feature-card reveal reveal-delay-3">
-        <div class="feature-icon gold">🏆</div>
-        <h3 class="feature-title">Family & Competitive Depth</h3>
-        <p class="feature-desc">Casual sessions for families and friends, ranked competitive play for serious strategists. One game, infinite layers of engagement.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════
-     GALLERY SECTION
-═══════════════════════════════════════════ -->
-<section class="gallery" id="gallery">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-eyebrow">Gameplay Showcase</div>
-      <h2 class="section-title">See It In <span class="highlight">Action</span></h2>
-      <p class="section-subtitle">A 3D rendered world, vibrant UI, real-time multiplayer — Rune Race is as beautiful as it is strategic.</p>
-    </div>
-    <div class="gallery-grid">
-      <div class="gallery-item gi-1 reveal" onclick="openLightbox('assets/gameplay-1.png')">
-        <img src="assets/gameplay-1.png" alt="3D Game Board" onerror="this.parentElement.style.background='linear-gradient(135deg,#1a2235,#0d1a3a)';this.remove()">
-      </div>
-      <div class="gallery-item gi-2 reveal reveal-delay-1" onclick="openLightbox('assets/hero.jpg')">
-        <img src="assets/hero.jpg" alt="Game Cover Art" onerror="this.parentElement.style.background='linear-gradient(135deg,#2a1535,#1a0d2a)';this.remove()">
-      </div>
-      <div class="gallery-item gi-3 reveal reveal-delay-1" onclick="openLightbox('assets/gameplay-2.jpg')">
-        <img src="assets/gameplay-2.jpg" alt="Lobby Screen" onerror="this.parentElement.style.background='linear-gradient(135deg,#0d1a2a,#1a2235)';this.remove()">
-      </div>
-      <div class="gallery-item gi-4 reveal reveal-delay-2" onclick="openLightbox('assets/gameplay-3.jpg')">
-        <img src="assets/gameplay-3.jpg" alt="Game Menu" onerror="this.parentElement.style.background='linear-gradient(135deg,#1a2a0d,#0d1a0d)';this.remove()">
-      </div>
-      <div class="gallery-item gi-5 reveal reveal-delay-3" onclick="openLightbox('assets/gameplay-4.jpg')">
-        <img src="assets/gameplay-4.jpg" alt="Room Creation" onerror="this.parentElement.style.background='linear-gradient(135deg,#2a200d,#1a150d)';this.remove()">
+      <div class="feature-card reveal delay-3" style="--fc-color:#52D475">
+        <div class="fc-icon" style="background:linear-gradient(135deg,#C8FFD8,#A0F0B8)">🏆</div>
+        <div class="fc-title">Family & Competitive Depth</div>
+        <p class="fc-desc">Casual sessions for families and friends, ranked competitive play for serious strategists — one game, infinite layers of engagement.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     MECHANICS / RUNE CARDS
-═══════════════════════════════════════════ -->
-<section class="mechanics" id="mechanics">
+<!-- ═══════════════════ GALLERY ═══════════════════ -->
+<section class="gallery-section section-inner" id="gallery" style="position:relative;z-index:10;padding:80px 20px;max-width:1200px;margin:0 auto;">
+  <div class="section-header reveal">
+    <div class="section-eyebrow"><i class="bi bi-images"></i> Gameplay Showcase</div>
+    <div class="section-title">See It In <span class="hi-blue">Action</span></div>
+    <p class="section-sub">3D rendered world, vibrant UI, real-time multiplayer — Rune Race is as beautiful as it is strategic.</p>
+  </div>
+  <div class="gallery-grid reveal">
+    <div class="gallery-item gi1" onclick="openLb('assets/gameplay-1.png')">
+      <img src="assets/gameplay-1.png" alt="3D Game Board" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="placeholder" style="display:none">🎲</div>
+    </div>
+    <div class="gallery-item gi2" onclick="openLb('assets/hero.jpg')">
+      <img src="assets/hero.jpg" alt="Game Cover" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="placeholder" style="display:none">🏆</div>
+    </div>
+    <div class="gallery-item gi3" onclick="openLb('assets/gameplay-2.jpg')">
+      <img src="assets/gameplay-2.jpg" alt="Lobby" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="placeholder" style="display:none">🏠</div>
+    </div>
+    <div class="gallery-item gi4" onclick="openLb('assets/gameplay-3.jpg')">
+      <img src="assets/gameplay-3.jpg" alt="Game Menu" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="placeholder" style="display:none">🌙</div>
+    </div>
+    <div class="gallery-item gi5" onclick="openLb('assets/gameplay-5.jpg')">
+      <img src="assets/gameplay-5.jpg" alt="Room Creation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="placeholder" style="display:none">🎮</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ RUNE MECHANICS ═══════════════════ -->
+<section class="section" id="mechanics">
   <div class="section-inner">
     <div class="section-header reveal">
-      <div class="section-eyebrow">Core Mechanics</div>
-      <h2 class="section-title">The <span class="highlight">Rune System</span></h2>
-      <p class="section-subtitle">Three families of cards shape every match. Know them, wield them, and never reveal your true hand.</p>
+      <div class="section-eyebrow"><i class="bi bi-suit-diamond-fill"></i> Core Mechanics</div>
+      <div class="section-title">The <span class="hi-gold">Rune System</span></div>
+      <p class="section-sub">Three families of cards shape every match. Know them, wield them, and never reveal your true hand.</p>
     </div>
-    <div class="mechanics-tabs reveal">
-      <button class="tab-btn active" onclick="switchTab('all', this)">All Runes</button>
-      <button class="tab-btn" onclick="switchTab('support', this)">✨ Support</button>
-      <button class="tab-btn" onclick="switchTab('trap', this)">⚠️ Trap</button>
-      <button class="tab-btn" onclick="switchTab('special', this)">⭐ Special</button>
+    <div class="rune-tabs reveal">
+      <button class="rune-tab active" onclick="filterRunes('all',this)"><i class="bi bi-grid-fill"></i> All Runes</button>
+      <button class="rune-tab" onclick="filterRunes('support',this)"><i class="bi bi-shield-fill-check"></i> Support</button>
+      <button class="rune-tab" onclick="filterRunes('trap',this)"><i class="bi bi-exclamation-triangle-fill"></i> Trap</button>
+      <button class="rune-tab" onclick="filterRunes('special',this)"><i class="bi bi-stars"></i> Special</button>
     </div>
-    <div class="rune-cards-grid" id="rune-grid">
+    <div class="rune-grid" id="rune-grid">
 
       <!-- SUPPORT -->
-      <div class="rune-card support reveal reveal-delay-1" data-type="support">
+      <div class="rune-card reveal delay-1" data-type="support" style="--rc-color:#4A9CF5">
         <div class="rune-card-header">
-          <div class="rune-symbol">🕊️</div>
+          <div class="rune-symbol" style="background:linear-gradient(135deg,#C8E8FF,#A0D0FF)">🕊️</div>
           <div>
-            <div class="rune-card-type">Support Rune</div>
-            <div class="rune-card-name">Escape Stable</div>
+            <div class="rune-type" style="color:#2E78D0">Support Rune</div>
+            <div class="rune-name">Escape Stable</div>
           </div>
         </div>
-        <p class="rune-card-desc">Immediately release a piece from your stable onto the board — no dice roll required. Perfect for getting into the race when fortune refuses to cooperate.</p>
+        <p class="rune-desc">Immediately release a piece from your stable onto the board — no dice roll required. Perfect for getting into the race when fortune refuses to cooperate.</p>
       </div>
 
-      <div class="rune-card support reveal reveal-delay-2" data-type="support">
+      <div class="rune-card reveal delay-2" data-type="support" style="--rc-color:#4A9CF5">
         <div class="rune-card-header">
-          <div class="rune-symbol">⚡</div>
+          <div class="rune-symbol" style="background:linear-gradient(135deg,#C8E8FF,#A0D0FF)">⚡</div>
           <div>
-            <div class="rune-card-type">Support Rune</div>
-            <div class="rune-card-name">Double Steps</div>
+            <div class="rune-type" style="color:#2E78D0">Support Rune</div>
+            <div class="rune-name">Double Steps</div>
           </div>
         </div>
-        <p class="rune-card-desc">Your chosen piece moves double the distance of your dice roll this turn. Close the gap on leaders or secure a last-second victory with one dramatic surge.</p>
+        <p class="rune-desc">Your chosen piece moves double the distance of your dice roll this turn. Close the gap on leaders or secure a last-second victory with one dramatic surge.</p>
       </div>
 
-      <div class="rune-card support reveal reveal-delay-3" data-type="support">
+      <div class="rune-card reveal delay-3" data-type="support" style="--rc-color:#4A9CF5">
         <div class="rune-card-header">
-          <div class="rune-symbol">🛡️</div>
+          <div class="rune-symbol" style="background:linear-gradient(135deg,#C8E8FF,#A0D0FF)">🛡️</div>
           <div>
-            <div class="rune-card-type">Support Rune</div>
-            <div class="rune-card-name">Shield</div>
+            <div class="rune-type" style="color:#2E78D0">Support Rune</div>
+            <div class="rune-name">Shield</div>
           </div>
         </div>
-        <p class="rune-card-desc">Protect one of your pieces from the next Trap card that targets it. Your opponent played a Freeze? Not today. The Shield absorbs it entirely.</p>
+        <p class="rune-desc">Protect one piece from the next Trap card that targets it. Your opponent played a Freeze? Not today. The Shield absorbs it entirely, no questions asked.</p>
       </div>
 
       <!-- TRAP -->
-      <div class="rune-card trap reveal reveal-delay-1" data-type="trap">
+      <div class="rune-card reveal delay-1" data-type="trap" style="--rc-color:#E8463A">
         <div class="rune-card-header">
-          <div class="rune-symbol">❄️</div>
+          <div class="rune-symbol" style="background:linear-gradient(135deg,#FFD8D6,#FFC0BC)">❄️</div>
           <div>
-            <div class="rune-card-type">Trap Rune</div>
-            <div class="rune-card-name">Freeze</div>
+            <div class="rune-type" style="color:#D93025">Trap Rune</div>
+            <div class="rune-name">Freeze</div>
           </div>
         </div>
-        <p class="rune-card-desc">Lock a targeted opponent's piece in place for one full round. They can't move it, can't protect it — they can only watch and hope you don't capitalize.</p>
+        <p class="rune-desc">Lock a targeted opponent's piece in place for one full round. They can't move it, can't protect it — they can only watch and hope you don't capitalize.</p>
       </div>
 
-      <div class="rune-card trap reveal reveal-delay-2" data-type="trap">
+      <div class="rune-card reveal delay-2" data-type="trap" style="--rc-color:#E8463A">
         <div class="rune-card-header">
-          <div class="rune-symbol">🏠</div>
+          <div class="rune-symbol" style="background:linear-gradient(135deg,#FFD8D6,#FFC0BC)">🏠</div>
           <div>
-            <div class="rune-card-type">Trap Rune</div>
-            <div class="rune-card-name">Return Home</div>
+            <div class="rune-type" style="color:#D93025">Trap Rune</div>
+            <div class="rune-name">Return Home</div>
           </div>
         </div>
-        <p class="rune-card-desc">Send a target piece all the way back to its stable. Brutal when used against a piece inches from the finish line. The most feared card in any match.</p>
+        <p class="rune-desc">Send a target piece all the way back to its stable. Brutal when used against a piece inches from the finish line — the most feared card in any match.</p>
       </div>
 
-      <div class="rune-card trap reveal reveal-delay-3" data-type="trap">
+      <div class="rune-card reveal delay-3" data-type="trap" style="--rc-color:#E8463A">
         <div class="rune-card-header">
-          <div class="rune-symbol">⬅️</div>
+          <div class="rune-symbol" style="background:linear-gradient(135deg,#FFD8D6,#FFC0BC)">⬅️</div>
           <div>
-            <div class="rune-card-type">Trap Rune</div>
-            <div class="rune-card-name">Move Backward</div>
+            <div class="rune-type" style="color:#D93025">Trap Rune</div>
+            <div class="rune-name">Move Backward</div>
           </div>
         </div>
-        <p class="rune-card-desc">Force a target piece to retreat a set number of squares. A precision strike — surgical when timed correctly, devastating when it knocks someone off a safe tile.</p>
+        <p class="rune-desc">Force a target piece to retreat a set number of squares. A precision strike — surgical when timed correctly, devastating when it knocks someone off a safe tile.</p>
       </div>
 
       <!-- SPECIAL -->
-      <div class="rune-card special reveal reveal-delay-1" data-type="special">
+      <div class="rune-card reveal delay-1" data-type="special" style="--rc-color:#A487FF">
         <div class="rune-card-header">
-          <div class="rune-symbol">🔄</div>
+          <div class="rune-symbol" style="background:linear-gradient(135deg,#E8E0FF,#D0C0FF)">🔄</div>
           <div>
-            <div class="rune-card-type">Special Rune</div>
-            <div class="rune-card-name">Position Swap</div>
+            <div class="rune-type" style="color:#6B3FD8">Special Rune</div>
+            <div class="rune-name">Position Swap</div>
           </div>
         </div>
-        <p class="rune-card-desc">Instantly swap positions between any two pieces on the board — yours and an opponent's, or two opponents' pieces. The most chaotic and dramatic card in the deck.</p>
+        <p class="rune-desc">Instantly swap positions between any two pieces on the board — yours and an opponent's, or two opponents' pieces. The most chaotic card in the deck.</p>
       </div>
 
-      <div class="rune-card special reveal reveal-delay-2" data-type="special" style="grid-column: span 2;">
+      <div class="rune-card reveal delay-2" data-type="special" style="--rc-color:#A487FF;grid-column:span 2">
         <div class="rune-card-header">
-          <div class="rune-symbol">🎭</div>
+          <div class="rune-symbol" style="background:linear-gradient(135deg,#E8E0FF,#D0C0FF)">🎭</div>
           <div>
-            <div class="rune-card-type">Special Rune · Signature</div>
-            <div class="rune-card-name">Disguise</div>
+            <div class="rune-type" style="color:#6B3FD8">Special Rune · Signature</div>
+            <div class="rune-name">Disguise</div>
           </div>
         </div>
-        <p class="rune-card-desc">When playing a Trap card, you may disguise your identity as another player. The victim believes someone else attacked them — chaos, betrayal, and broken alliances ensue. The heart of Rune Race's psychological warfare. Refuse to use Disguise for 5 turns? Earn a free Support Rune as your reward for playing it straight.</p>
+        <p class="rune-desc">When playing a Trap card, disguise your identity as another player. The victim believes someone else attacked them — chaos, betrayal, and broken alliances ensue. Refuse Disguise for 5 turns straight? Earn a free Support Rune as your reward for playing it straight.</p>
       </div>
 
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     DISGUISE SYSTEM
-═══════════════════════════════════════════ -->
-<section class="disguise" id="disguise">
+<!-- ═══════════════════ DISGUISE ═══════════════════ -->
+<section class="section" id="disguise">
   <div class="section-inner">
     <div class="section-header reveal">
-      <div class="section-eyebrow">Signature Feature</div>
-      <h2 class="section-title">The <span class="highlight">Disguise System</span></h2>
-      <p class="section-subtitle">Rune Race's most unique innovation — turning a board game into a social deception experience.</p>
+      <div class="section-eyebrow"><i class="bi bi-incognito"></i> Signature Feature</div>
+      <div class="section-title">The <span class="hi-red">Disguise System</span></div>
+      <p class="section-sub">Rune Race's most unique innovation — turning a board game into a social deception experience.</p>
     </div>
     <div class="disguise-grid">
-      <div class="disguise-visual reveal">
-        <div class="disguise-card-showcase">
-          <div class="disguise-mask">🎭</div>
-          <div class="disguise-card-title">Wear Another Face</div>
-          <div class="disguise-card-subtitle">Deploy traps as any player — frame your friends, break alliances, rewrite history</div>
+      <div class="disguise-showcase reveal">
+        <div class="disguise-mask-area">
+          <span class="disguise-emoji">🎭</span>
+          <div class="disguise-showcase-title">Wear Another Face</div>
+          <div class="disguise-showcase-sub">Deploy traps as any player — frame friends, break alliances</div>
         </div>
-        <div class="disguise-stats">
-          <div class="d-stat">
-            <span class="d-stat-num">5</span>
-            <span class="d-stat-label">Turns to earn bonus</span>
-          </div>
-          <div class="d-stat">
-            <span class="d-stat-num">∞</span>
-            <span class="d-stat-label">Possible betrayals</span>
-          </div>
-          <div class="d-stat">
-            <span class="d-stat-num">4</span>
-            <span class="d-stat-label">Identities to steal</span>
-          </div>
-          <div class="d-stat">
-            <span class="d-stat-num">🃏</span>
-            <span class="d-stat-label">Free card reward</span>
-          </div>
+        <div class="disguise-stats-grid">
+          <div class="d-stat"><span class="d-stat-num">5</span><div class="d-stat-lbl">Turns to Bonus</div></div>
+          <div class="d-stat"><span class="d-stat-num">∞</span><div class="d-stat-lbl">Possible Betrayals</div></div>
+          <div class="d-stat"><span class="d-stat-num">4</span><div class="d-stat-lbl">Identities to Steal</div></div>
+          <div class="d-stat"><span class="d-stat-num">🃏</span><div class="d-stat-lbl">Free Card Reward</div></div>
         </div>
       </div>
-      <div class="disguise-content reveal reveal-delay-2">
-        <div class="section-eyebrow" style="text-align:left;">How It Works</div>
-        <h2>Deception Is A <span style="color:var(--primary)">Strategy</span></h2>
-        <p>When you play a Trap card, you have the option to disguise yourself as another player. The targeted player sees a different attacker — suspicion falls on the wrong person.</p>
-        <p>Every table conversation, every accusation, every alliance becomes suspect. Who really sent that Freeze card? The tension is delicious.</p>
-        <div class="disguise-pillars">
-          <div class="pillar">
-            <div class="pillar-icon">🎭</div>
-            <div>
-              <h4>Drama by Design</h4>
-              <p>Every match generates moments of shock and revelation — perfectly designed for content creation and social play.</p>
-            </div>
-          </div>
-          <div class="pillar">
-            <div class="pillar-icon">🧠</div>
-            <div>
-              <h4>Bluffing & Psychology</h4>
-              <p>Read who disguised themselves based on play patterns. Master the meta-game beyond the board itself.</p>
-            </div>
-          </div>
-          <div class="pillar">
-            <div class="pillar-icon">💬</div>
-            <div>
-              <h4>Social Interaction</h4>
-              <p>Fuels real-world conversations, arguments, laughter, and betrayals that persist long after the game ends.</p>
-            </div>
-          </div>
-          <div class="pillar">
-            <div class="pillar-icon">🎁</div>
-            <div>
-              <h4>Honest Play Rewards</h4>
-              <p>Refuse disguise for 5 consecutive turns and receive a free Support Rune — the game rewards both deception and integrity.</p>
-            </div>
-          </div>
+      <div class="disguise-pillars reveal delay-2">
+        <div class="pillar">
+          <div class="pillar-icon">🎭</div>
+          <div><h4>Drama by Design</h4><p>Every match generates moments of shock and revelation — perfectly designed for social play and content creation.</p></div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">🧠</div>
+          <div><h4>Bluffing & Psychology</h4><p>Read who disguised themselves based on play patterns. Master the meta-game that exists beyond the board itself.</p></div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">💬</div>
+          <div><h4>Social Interaction</h4><p>Fuels real-world conversations, arguments, and laughter that persist long after the game ends.</p></div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">🎁</div>
+          <div><h4>Honest Play Rewards</h4><p>Refuse disguise for 5 consecutive turns and receive a free Support Rune — the game rewards both deception and integrity.</p></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     AUDIENCE
-═══════════════════════════════════════════ -->
-<section class="audience" id="audience">
+<!-- ═══════════════════ AUDIENCE ═══════════════════ -->
+<section class="section" id="audience">
   <div class="section-inner">
     <div class="section-header reveal">
-      <div class="section-eyebrow">Who Plays</div>
-      <h2 class="section-title">Built For <span class="highlight">Everyone</span></h2>
-      <p class="section-subtitle">From family game nights to competitive ranked play — Rune Race has a mode for every player.</p>
+      <div class="section-eyebrow"><i class="bi bi-people-fill"></i> Who Plays</div>
+      <div class="section-title">Built For <span class="hi-green">Everyone</span></div>
+      <p class="section-sub">From family game nights to competitive ranked play — Rune Race has a mode for every player.</p>
     </div>
     <div class="audience-grid">
-      <div class="audience-card reveal reveal-delay-1">
+      <div class="audience-card reveal delay-1">
         <span class="audience-emoji">🧒</span>
         <div class="audience-name">Kids</div>
-        <p class="audience-desc">Familiar Ludo rules they already know, with magical cards that feel like superpowers</p>
+        <p class="audience-desc">Familiar Ludo rules with magical cards that feel like superpowers</p>
       </div>
-      <div class="audience-card reveal reveal-delay-2">
+      <div class="audience-card reveal delay-2">
         <span class="audience-emoji">🎓</span>
         <div class="audience-name">Students</div>
-        <p class="audience-desc">Quick sessions that fit between classes, deep enough for dorm-room rivalries</p>
+        <p class="audience-desc">Quick sessions between classes, deep enough for dorm-room rivalries</p>
       </div>
-      <div class="audience-card reveal reveal-delay-3">
+      <div class="audience-card reveal delay-3">
         <span class="audience-emoji">🎮</span>
         <div class="audience-name">Casual Gamers</div>
-        <p class="audience-desc">Jump in anytime, learn in minutes, still feel clever after every session</p>
+        <p class="audience-desc">Jump in anytime, learn in minutes, still feel clever every session</p>
       </div>
-      <div class="audience-card reveal reveal-delay-1">
+      <div class="audience-card reveal delay-1">
         <span class="audience-emoji">👨‍👩‍👧‍👦</span>
         <div class="audience-name">Families</div>
-        <p class="audience-desc">The digital game night you can actually play with grandparents and kids alike</p>
+        <p class="audience-desc">The digital game night you can actually play with grandparents and kids</p>
       </div>
-      <div class="audience-card reveal reveal-delay-2">
+      <div class="audience-card reveal delay-2">
         <span class="audience-emoji">👥</span>
         <div class="audience-name">Friend Groups</div>
-        <p class="audience-desc">Creates the kind of betrayals and laughter that fuel inside jokes for years</p>
+        <p class="audience-desc">Creates betrayals and laughter that fuel inside jokes for years</p>
       </div>
-      <div class="audience-card reveal reveal-delay-3">
+      <div class="audience-card reveal delay-3">
         <span class="audience-emoji">🏆</span>
         <div class="audience-name">Strategy Players</div>
-        <p class="audience-desc">Master the card meta, read opponents, build winning systems — the skill ceiling is real</p>
+        <p class="audience-desc">Master the card meta, read opponents, build winning systems</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     COMPARISON
-═══════════════════════════════════════════ -->
-<section class="comparison" id="comparison">
+<!-- ═══════════════════ COMPARISON ═══════════════════ -->
+<section class="section" id="comparison">
   <div class="section-inner">
     <div class="section-header reveal">
-      <div class="section-eyebrow">Competitive Advantages</div>
-      <h2 class="section-title">Rune Race vs <span class="highlight">The Field</span></h2>
-      <p class="section-subtitle">We respect our origins — but Rune Race is an entirely different experience.</p>
+      <div class="section-eyebrow"><i class="bi bi-bar-chart-line-fill"></i> Competitive Advantages</div>
+      <div class="section-title">Rune Race vs <span class="hi-gold">The Field</span></div>
+      <p class="section-sub">We respect our origins — but Rune Race is an entirely different experience.</p>
     </div>
-    <div class="reveal">
-      <table class="comparison-table">
+    <div class="compare-panel reveal">
+      <table class="compare-table">
         <thead>
           <tr>
             <th>Feature</th>
             <th>Traditional Ludo</th>
             <th>Classic Cá Ngựa</th>
-            <th class="highlight-col">⚡ Rune Race</th>
+            <th class="col-rune">⚡ Rune Race</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Online Multiplayer</td>
-            <td><span class="cross">✗</span></td>
-            <td><span class="cross">✗</span></td>
-            <td class="col-rune"><span class="check">✓</span></td>
-          </tr>
-          <tr>
-            <td>Strategic Card System</td>
-            <td><span class="cross">✗</span></td>
-            <td><span class="cross">✗</span></td>
-            <td class="col-rune"><span class="check">✓</span></td>
-          </tr>
-          <tr>
-            <td>Simultaneous Play</td>
-            <td><span class="cross">✗</span></td>
-            <td><span class="cross">✗</span></td>
-            <td class="col-rune"><span class="check">✓</span></td>
-          </tr>
-          <tr>
-            <td>Bluffing / Disguise System</td>
-            <td><span class="cross">✗</span></td>
-            <td><span class="cross">✗</span></td>
-            <td class="col-rune"><span class="check">✓</span></td>
-          </tr>
-          <tr>
-            <td>3D Rendered Board</td>
-            <td><span class="cross">✗</span></td>
-            <td><span class="cross">✗</span></td>
-            <td class="col-rune"><span class="check">✓</span></td>
-          </tr>
-          <tr>
-            <td>Skill-Based Progression</td>
-            <td><span class="cross">✗</span></td>
-            <td><span class="cross">✗</span></td>
-            <td class="col-rune"><span class="check">✓</span></td>
-          </tr>
-          <tr>
-            <td>Family Friendly</td>
-            <td><span class="check">✓</span></td>
-            <td><span class="check">✓</span></td>
-            <td class="col-rune"><span class="check">✓</span></td>
-          </tr>
-          <tr>
-            <td>Cultural Heritage</td>
-            <td><span class="partial">〜</span></td>
-            <td><span class="check">✓</span></td>
-            <td class="col-rune"><span class="check">✓</span></td>
-          </tr>
-          <tr>
-            <td>Room Code System</td>
-            <td><span class="cross">✗</span></td>
-            <td><span class="cross">✗</span></td>
-            <td class="col-rune"><span class="check">✓</span></td>
-          </tr>
-          <tr>
-            <td>Real-Time Updates</td>
-            <td><span class="cross">✗</span></td>
-            <td><span class="cross">✗</span></td>
-            <td class="col-rune"><span class="check">✓</span></td>
-          </tr>
+          <tr><td>Online Multiplayer</td><td><span class="check-n">✗</span></td><td><span class="check-n">✗</span></td><td class="col-rune-cell"><span class="check-y">✓</span></td></tr>
+          <tr><td>Strategic Card System</td><td><span class="check-n">✗</span></td><td><span class="check-n">✗</span></td><td class="col-rune-cell"><span class="check-y">✓</span></td></tr>
+          <tr><td>Simultaneous Play</td><td><span class="check-n">✗</span></td><td><span class="check-n">✗</span></td><td class="col-rune-cell"><span class="check-y">✓</span></td></tr>
+          <tr><td>Bluffing / Disguise System</td><td><span class="check-n">✗</span></td><td><span class="check-n">✗</span></td><td class="col-rune-cell"><span class="check-y">✓</span></td></tr>
+          <tr><td>3D Rendered Board</td><td><span class="check-n">✗</span></td><td><span class="check-n">✗</span></td><td class="col-rune-cell"><span class="check-y">✓</span></td></tr>
+          <tr><td>Real-time Room Codes</td><td><span class="check-n">✗</span></td><td><span class="check-n">✗</span></td><td class="col-rune-cell"><span class="check-y">✓</span></td></tr>
+          <tr><td>Family Friendly</td><td><span class="check-y">✓</span></td><td><span class="check-y">✓</span></td><td class="col-rune-cell"><span class="check-y">✓</span></td></tr>
+          <tr><td>Cultural Heritage</td><td><span class="check-p">〜</span></td><td><span class="check-y">✓</span></td><td class="col-rune-cell"><span class="check-y">✓</span></td></tr>
         </tbody>
       </table>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     TECH STACK
-═══════════════════════════════════════════ -->
-<section class="tech" id="tech">
+<!-- ═══════════════════ TECH STACK ═══════════════════ -->
+<section class="section" id="tech">
   <div class="section-inner">
     <div class="section-header reveal">
-      <div class="section-eyebrow">Technology Stack</div>
-      <h2 class="section-title">Built With <span class="highlight">Modern Tech</span></h2>
-      <p class="section-subtitle">Production-grade infrastructure designed for real-time, scalable, immersive gameplay.</p>
+      <div class="section-eyebrow"><i class="bi bi-cpu-fill"></i> Technology Stack</div>
+      <div class="section-title">Built With <span class="hi-blue">Modern Tech</span></div>
+      <p class="section-sub">Production-grade infrastructure for real-time, scalable, immersive gameplay.</p>
     </div>
     <div class="tech-layers">
-      <div class="tech-layer reveal reveal-delay-1">
-        <div class="tech-layer-label">🖥️ Frontend</div>
-        <div class="tech-items">
-          <div class="tech-badge"><span class="t-icon">⚛️</span> React</div>
-          <div class="tech-badge"><span class="t-icon">⚡</span> Vite</div>
-          <div class="tech-badge"><span class="t-icon">🔷</span> TypeScript</div>
-          <div class="tech-badge"><span class="t-icon">🎲</span> React Three Fiber</div>
+      <div class="tech-layer reveal delay-1">
+        <div class="tech-layer-label"><i class="bi bi-display"></i> Frontend</div>
+        <div class="tech-badges">
+          <div class="tech-badge"><span>⚛️</span> React</div>
+          <div class="tech-badge"><span>⚡</span> Vite</div>
+          <div class="tech-badge"><span>🔷</span> TypeScript</div>
+          <div class="tech-badge"><span>🎲</span> React Three Fiber</div>
         </div>
       </div>
-      <div class="tech-layer reveal reveal-delay-2">
-        <div class="tech-layer-label">⚙️ Backend</div>
-        <div class="tech-items">
-          <div class="tech-badge"><span class="t-icon">🟢</span> Node.js</div>
-          <div class="tech-badge"><span class="t-icon">🚀</span> Fastify</div>
-          <div class="tech-badge"><span class="t-icon">🔌</span> Socket.IO</div>
+      <div class="tech-layer reveal delay-2">
+        <div class="tech-layer-label"><i class="bi bi-server"></i> Backend</div>
+        <div class="tech-badges">
+          <div class="tech-badge"><span>🟢</span> Node.js</div>
+          <div class="tech-badge"><span>🚀</span> Fastify</div>
+          <div class="tech-badge"><span>🔌</span> Socket.IO</div>
         </div>
       </div>
-      <div class="tech-layer reveal reveal-delay-3">
-        <div class="tech-layer-label">🗄️ Database</div>
-        <div class="tech-items">
-          <div class="tech-badge"><span class="t-icon">🌿</span> Supabase</div>
+      <div class="tech-layer reveal delay-3">
+        <div class="tech-layer-label"><i class="bi bi-database-fill"></i> Database</div>
+        <div class="tech-badges">
+          <div class="tech-badge"><span>🌿</span> Supabase</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     FINAL CTA
-═══════════════════════════════════════════ -->
+
+<!-- ═══════════════════ FINAL CTA ═══════════════════ -->
 <section class="cta-final" id="play">
-  <div class="section-inner">
-    <div class="reveal">
-      <div class="cta-rune-deco">⚡</div>
-      <h2>Ready to <span style="color:var(--primary)">Race</span>?</h2>
-      <p>Jump into a match free, invite your friends with a room code, and discover which of them you can never trust again.</p>
-      <div class="cta-buttons">
-        <a href="#" class="btn-primary btn-gold">⚡ Play Free Now</a>
-        <a href="#" class="btn-primary">💬 Join Discord</a>
-        <a href="#about" class="btn-secondary">📖 Learn More</a>
-      </div>
+  <div class="cta-final-panel reveal">
+    <span class="cta-emoji">⚡</span>
+    <div class="cta-title">Ready to Race?</div>
+    <p class="cta-sub">Jump into a match free, invite friends with a room code, and discover which of them you can never trust again.</p>
+    <div class="cta-buttons">
+<a 
+  href="https://rune-race.onrender.com/" 
+  target="_blank" 
+  rel="noopener noreferrer"
+  class="cta-big cta-green"
+>
+  <i class="bi bi-controller"></i> Play Free Now
+</a>
+      <a href="#" class="cta-big cta-blue"><i class="bi bi-discord"></i> Join Discord</a>
+      <a href="#about" class="cta-big cta-yellow"><i class="bi bi-book-fill"></i> Learn More</a>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     FOOTER
-═══════════════════════════════════════════ -->
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <div class="nav-logo" style="font-size:1.6rem;">⚡ Rune Race</div>
+      <div class="logo-board" style="display:inline-block;padding:8px 20px 10px">
+        <div class="game-title" style="font-size:24px">Rune Race</div>
+      </div>
       <p>An online multiplayer board game inspired by Vietnam's beloved Cá Ngựa — rebuilt with strategy, bluffing, and magical rune cards for the modern age.</p>
       <div class="footer-social">
-        <a href="#" class="social-btn" title="Discord">💬</a>
-        <a href="#" class="social-btn" title="Twitter">🐦</a>
-        <a href="#" class="social-btn" title="YouTube">📺</a>
-        <a href="#" class="social-btn" title="GitHub">🐙</a>
-        <a href="#" class="social-btn" title="TikTok">🎵</a>
+        <a href="#" class="social-btn" title="Discord"><i class="bi bi-discord"></i></a>
+        <a href="#" class="social-btn" title="Twitter"><i class="bi bi-twitter-x"></i></a>
+        <a href="#" class="social-btn" title="YouTube"><i class="bi bi-youtube"></i></a>
+        <a href="#" class="social-btn" title="GitHub"><i class="bi bi-github"></i></a>
+        <a href="#" class="social-btn" title="TikTok"><i class="bi bi-tiktok"></i></a>
       </div>
     </div>
     <div class="footer-col">
@@ -2003,183 +1349,47 @@
   </div>
   <div class="footer-bottom">
     <p>© 2024 Rune Race. All rights reserved. Inspired by Vietnamese Cá Ngựa.</p>
-    <p style="color:var(--primary);">Built with ❤️ in Vietnam 🇻🇳</p>
+    <p>Built with ❤️ in Vietnam 🇻🇳</p>
   </div>
 </footer>
 
+</div><!-- end landing-page -->
+
 <script>
-  // ═══════════════════════════════════════
-  // PARTICLES
-  // ═══════════════════════════════════════
-  const canvas = document.getElementById('particles-canvas');
-  const ctx = canvas.getContext('2d');
-  let particles = [];
+// DAY/NIGHT
+const DAY=30000,NIGHT=30000,DUSK=4200,DAWN=4200;
+function createStars(n){const c=document.querySelector('.stars');if(!c)return;c.innerHTML='';for(let i=0;i<n;i++){const s=document.createElement('div');s.className='star';const sz=Math.random()*2+1;s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.round(Math.random()*100)}%;top:${Math.round(Math.random()*70)}%;animation-delay:${(Math.random()*3).toFixed(2)}s`;c.appendChild(s);}}
+function startNight(){document.body.classList.add('dusk');setTimeout(()=>{createStars(80);document.body.classList.add('night');document.body.classList.remove('dusk');setTimeout(endNight,NIGHT);},DUSK);}
+function endNight(){const s=document.querySelector('.stars');if(s){s.style.transition='opacity 3s ease';s.style.opacity='0';setTimeout(()=>{s.innerHTML='';s.style.transition='';},3200);}document.body.classList.add('dawn');document.body.classList.remove('night');setTimeout(()=>{document.body.classList.remove('dawn');setTimeout(startNight,DAY);},DAWN);}
+setTimeout(startNight,DAY);
 
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
+// LIGHTBOX
+function openLb(src){const lb=document.getElementById('lightbox');document.getElementById('lb-img').src=src;lb.classList.add('open');document.body.style.overflow='hidden';}
+document.getElementById('lb-close').onclick=closeLb;
+document.getElementById('lightbox').onclick=e=>{if(e.target===e.currentTarget)closeLb();};
+function closeLb(){document.getElementById('lightbox').classList.remove('open');document.body.style.overflow='';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
 
-  class Particle {
-    constructor() { this.reset(); }
-    reset() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.size = Math.random() * 2 + 0.5;
-      this.speedX = (Math.random() - 0.5) * 0.4;
-      this.speedY = (Math.random() - 0.5) * 0.4;
-      this.opacity = Math.random() * 0.5 + 0.1;
-      this.color = Math.random() > 0.6 ? '#7C4DFF' : Math.random() > 0.5 ? '#00E5FF' : '#FFD54F';
-    }
-    update() {
-      this.x += this.speedX;
-      this.y += this.speedY;
-      if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
-    }
-    draw() {
-      ctx.save();
-      ctx.globalAlpha = this.opacity;
-      ctx.fillStyle = this.color;
-      ctx.shadowBlur = 8;
-      ctx.shadowColor = this.color;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    }
-  }
-
-  function initParticles() {
-    particles = [];
-    const count = Math.floor((canvas.width * canvas.height) / 14000);
-    for (let i = 0; i < count; i++) particles.push(new Particle());
-  }
-
-  function animateParticles() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => { p.update(); p.draw(); });
-    requestAnimationFrame(animateParticles);
-  }
-
-  resizeCanvas();
-  initParticles();
-  animateParticles();
-  window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
-
-  // ═══════════════════════════════════════
-  // PARALLAX HERO
-  // ═══════════════════════════════════════
-  const heroBg = document.getElementById('hero-bg');
-  window.addEventListener('scroll', () => {
-    const scrollY = window.pageYOffset;
-    if (heroBg) heroBg.style.transform = `scale(1.05) translateY(${scrollY * 0.3}px)`;
+// RUNE TABS
+function filterRunes(type, btn){
+  document.querySelectorAll('.rune-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.rune-card').forEach(c=>{
+    c.style.display=(type==='all'||c.dataset.type===type)?'':'none';
   });
+}
 
-  // ═══════════════════════════════════════
-  // NAV SCROLL EFFECT
-  // ═══════════════════════════════════════
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 80);
-  });
+// SCROLL REVEAL
+const ro=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});
+},{threshold:0.1,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 
-  // ═══════════════════════════════════════
-  // SCROLL REVEAL
-  // ═══════════════════════════════════════
-  const revealEls = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-  revealEls.forEach(el => observer.observe(el));
-
-  // ═══════════════════════════════════════
-  // TAB SYSTEM (RUNE CARDS)
-  // ═══════════════════════════════════════
-  function switchTab(type, btn) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('.rune-card').forEach(card => {
-      const cardType = card.dataset.type;
-      if (type === 'all' || cardType === type) {
-        card.style.display = '';
-      } else {
-        card.style.display = 'none';
-      }
-    });
-  }
-
-  // ═══════════════════════════════════════
-  // LIGHTBOX
-  // ═══════════════════════════════════════
-  function openLightbox(src) {
-    const lb = document.getElementById('lightbox');
-    const img = document.getElementById('lightbox-img');
-    img.src = src;
-    lb.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  document.getElementById('lightbox-close').addEventListener('click', () => {
-    document.getElementById('lightbox').classList.remove('open');
-    document.body.style.overflow = '';
-  });
-
-  document.getElementById('lightbox').addEventListener('click', (e) => {
-    if (e.target === e.currentTarget) {
-      e.currentTarget.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      document.getElementById('lightbox').classList.remove('open');
-      document.body.style.overflow = '';
-    }
-  });
-
-  // ═══════════════════════════════════════
-  // HAMBURGER
-  // ═══════════════════════════════════════
-  document.getElementById('hamburger').addEventListener('click', () => {
-    const links = document.querySelector('.nav-links');
-    if (links.style.display === 'flex') {
-      links.style.display = '';
-    } else {
-      links.style.display = 'flex';
-      links.style.flexDirection = 'column';
-      links.style.position = 'absolute';
-      links.style.top = '70px';
-      links.style.left = '0';
-      links.style.right = '0';
-      links.style.background = 'rgba(11,16,32,0.98)';
-      links.style.padding = '24px';
-      links.style.gap = '20px';
-      links.style.backdropFilter = 'blur(20px)';
-      links.style.borderBottom = '1px solid rgba(255,255,255,0.08)';
-      links.style.zIndex = '99';
-    }
-  });
-
-  // ═══════════════════════════════════════
-  // RUNE GLOW CURSOR TRAIL (subtle)
-  // ═══════════════════════════════════════
-  let mouseX = 0, mouseY = 0;
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-  });
-
-  // Smooth button hover for primary buttons
-  document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
-    btn.addEventListener('mousemove', (e) => {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      btn.style.setProperty('--mouse-x', `${x}px`);
-      btn.style.setProperty('--mouse-y', `${y}px`);
-    });
-  });
+// STICKY NAV scroll effect
+window.addEventListener('scroll',()=>{
+  const nav=document.querySelector('.sticky-nav');
+  if(nav) nav.style.background=window.scrollY>50?'rgba(255,255,255,0.82)':'rgba(255,255,255,0.55)';
+});
 </script>
 </body>
 </html>
