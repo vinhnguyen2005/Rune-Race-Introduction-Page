@@ -30,12 +30,7 @@
 }
 
 html { scroll-behavior: smooth; }
-
-html, body {
-  min-height: 100%;
-  font-family: 'Be Vietnam Pro', sans-serif;
-  overflow-x: hidden;
-}
+html, body { min-height: 100%; font-family: 'Be Vietnam Pro', sans-serif; overflow-x: hidden; }
 
 body {
   background: linear-gradient(180deg, #4EB8F0 0%, #7DD3F8 40%, #A8E8FF 75%, #CBF0FF 100%);
@@ -47,26 +42,23 @@ body {
 body::before {
   content: '';
   position: fixed;
-  top: 30px; right: 80px;
-  width: 70px; height: 70px;
-  background: radial-gradient(circle, #FFE566 40%, #FFD700 70%, rgba(255,220,0,0) 100%);
+  top: 40px; right: 100px;
+  width: 90px; height: 90px;
+  background: radial-gradient(circle, #FFFFFF 0%, #FFF8DC 35%, #FFE566 60%, rgba(255,220,0,0) 100%);
   border-radius: 50%;
-  box-shadow: 0 0 40px 20px rgba(255,230,60,0.35), 0 0 80px 40px rgba(255,200,0,0.15);
+  box-shadow: 0 0 0 8px rgba(255,240,180,0.15), 0 0 30px 15px rgba(255,230,100,0.4), 0 0 80px 40px rgba(255,200,50,0.25), 0 0 140px 70px rgba(255,180,0,0.12);
   animation: sun-pulse 4s ease-in-out infinite;
   z-index: 0;
+  transition: all 5s ease;
 }
-@keyframes sun-pulse {
-  0%,100%{transform:scale(1);opacity:1}
-  50%{transform:scale(1.05);opacity:0.9}
-}
+@keyframes sun-pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.05);opacity:0.9} }
 
-/* Night mode */
 body { transition: background 5s ease; }
 body::before { transition: all 5s ease; }
 body.dusk { background: linear-gradient(180deg,#6fb8da 0%,#356b91 45%,#143a55 100%); }
 body.dusk::before { width:46px;height:46px;background:radial-gradient(circle,#FFF2C6 0%,#FFE4A0 60%,rgba(255,230,170,0) 100%);box-shadow:0 0 18px 4px rgba(255,200,120,0.08);top:34px;right:76px;opacity:0.9; }
 body.night { background: linear-gradient(180deg,#07182b 0%,#0a2540 45%,#071427 100%); }
-body.night::before { width:52px;height:52px;background:radial-gradient(circle,#FFFFFF 0%,#E6F0FF 60%,rgba(230,240,255,0) 100%);box-shadow:0 0 24px 6px rgba(200,220,255,0.12);top:36px;right:72px;transform:none;animation:none;z-index:2; }
+body.night::before { width:80px;height:80px;background:radial-gradient(circle,#FFFFFF 0%,#F0F4FF 50%,rgba(220,230,255,0) 100%);box-shadow:0 0 0 6px rgba(255,255,255,0.08),0 0 30px 15px rgba(200,220,255,0.35),0 0 80px 40px rgba(180,200,255,0.2),0 0 140px 70px rgba(150,180,255,0.1);top:50px;right:110px;transform:none;animation:none; }
 body.dawn { background: linear-gradient(180deg,#7ecff6 0%,#8edfff 40%,#cdeeff 75%,#e7f8ff 100%); }
 body.dawn::before { width:64px;height:64px;background:radial-gradient(circle,#FFE566 40%,#FFD700 70%,rgba(255,220,0,0) 100%);border-radius:50%;box-shadow:0 0 44px 22px rgba(255,230,60,0.25);top:30px;right:80px;animation:sun-pulse 4s ease-in-out infinite;z-index:0; }
 
@@ -75,7 +67,6 @@ body.night .stars { opacity:1; }
 .star { position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(255,255,255,0.95);box-shadow:0 0 6px rgba(255,255,255,0.9);opacity:0;animation:twinkle 2.6s infinite ease-in-out; }
 @keyframes twinkle { 0%,100%{opacity:0;transform:scale(0.8)} 40%{opacity:1;transform:scale(1.2)} 60%{opacity:0.6;transform:scale(1)} }
 
-/* CLOUDS */
 .clouds-layer { position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden;transition:opacity 4s ease,filter 4s ease; }
 body.dusk .clouds-layer { opacity:0.85;filter:brightness(0.85) saturate(0.9); }
 body.night .clouds-layer { opacity:0.6;filter:brightness(0.7) saturate(0.85); }
@@ -91,7 +82,6 @@ body.night .clouds-layer { opacity:0.6;filter:brightness(0.7) saturate(0.85); }
 .c8{width:110px;height:38px;top:42%;animation-duration:48s;animation-delay:-35s}.c8::before{width:55px;height:52px;top:-24px;left:15px}.c8::after{width:44px;height:42px;top:-18px;left:60px}
 @keyframes cloud-drift { from{transform:translateX(-280px)} to{transform:translateX(calc(100vw + 280px))} }
 
-/* HILLS */
 .hills { position:fixed;bottom:0;left:0;right:0;height:120px;z-index:1;pointer-events:none; }
 .hill { position:absolute;bottom:0;border-radius:50% 50% 0 0; }
 .hill1{width:380px;height:100px;background:#4AC76A;left:-40px}
@@ -104,12 +94,7 @@ body.night .clouds-layer { opacity:0.6;filter:brightness(0.7) saturate(0.85); }
 .tree-top{width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-bottom:22px solid #2E8B3A;margin:-8px auto 0}
 .tree-top2{width:0;height:0;border-left:11px solid transparent;border-right:11px solid transparent;border-bottom:18px solid #37A345;margin:-12px auto 0}
 
-/* NAV */
-.top-nav { position:fixed;top:16px;left:16px;display:flex;gap:8px;z-index:20; }
-.nav-btn { background:rgba(255,255,255,0.6);border:2px solid rgba(255,255,255,0.9);border-radius:999px;padding:6px 16px;font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:12px;color:#3B5BA0;cursor:pointer;backdrop-filter:blur(4px);transition:all 0.15s;box-shadow:0 2px 8px rgba(60,100,180,0.15); }
-.nav-btn:hover { background:white;transform:translateY(-2px);box-shadow:0 4px 12px rgba(60,100,180,0.25); }
-
-/* FIXED STICKY NAV (landing page) */
+/* STICKY NAV */
 .sticky-nav {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -123,56 +108,17 @@ body.night .clouds-layer { opacity:0.6;filter:brightness(0.7) saturate(0.85); }
   border-bottom: 2px solid rgba(255,255,255,0.7);
   box-shadow: 0 2px 16px rgba(60,120,200,0.1);
 }
-.sticky-logo {
-  font-family: 'Fredoka One', cursive;
-  font-size: 22px;
-  color: #6B3A00;
-  letter-spacing: 1px;
-}
+.sticky-logo { font-family:'Fredoka One',cursive;font-size:22px;color:#6B3A00;letter-spacing:1px; }
 .sticky-links { display:flex;gap:6px;align-items:center; }
-.sticky-link {
-  font-family: 'Be Vietnam Pro', sans-serif;
-  font-weight: 800;
-  font-size: 13px;
-  color: #3B5BA0;
-  text-decoration: none;
-  padding: 6px 14px;
-  border-radius: 999px;
-  transition: all 0.15s;
-}
-.sticky-link:hover { background: rgba(255,255,255,0.7); }
-.sticky-cta {
-  background: linear-gradient(160deg,#52D475,#28944C);
-  color: white !important;
-  border-radius: 999px;
-  padding: 8px 20px;
-  font-weight: 800;
-  box-shadow: 0 3px 0 #1A6E35;
-  transition: all 0.15s;
-  font-size: 13px;
-  text-decoration: none;
-  font-family: 'Be Vietnam Pro', sans-serif;
-}
+.sticky-link { font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:13px;color:#3B5BA0;text-decoration:none;padding:6px 14px;border-radius:999px;transition:all 0.15s; }
+.sticky-link:hover { background:rgba(255,255,255,0.7); }
+.sticky-cta { background:linear-gradient(160deg,#52D475,#28944C);color:white !important;border-radius:999px;padding:8px 20px;font-weight:800;box-shadow:0 3px 0 #1A6E35;transition:all 0.15s;font-size:13px;text-decoration:none;font-family:'Be Vietnam Pro',sans-serif; }
 .sticky-cta:hover { transform:translateY(-2px);box-shadow:0 5px 0 #1A6E35; }
 
-/* PAGE WRAPPER */
-.landing-page {
-  position: relative;
-  z-index: 10;
-  padding-top: 56px;
-}
+.landing-page { position:relative;z-index:10;padding-top:56px; }
 
-/* =====================
-   PANEL (shared)
-===================== */
-.panel {
-  background: linear-gradient(160deg,#FFFEF5 0%,#FFF8E0 100%);
-  border: 4px solid var(--panel-border);
-  border-radius: 24px;
-  box-shadow: 0 8px 0 var(--panel-shadow), 0 12px 32px rgba(0,0,0,0.12);
-  overflow: hidden;
-  position: relative;
-}
+/* PANEL */
+.panel { background:linear-gradient(160deg,#FFFEF5 0%,#FFF8E0 100%);border:4px solid var(--panel-border);border-radius:24px;box-shadow:0 8px 0 var(--panel-shadow),0 12px 32px rgba(0,0,0,0.12);overflow:hidden;position:relative; }
 .panel::before { content:'';position:absolute;top:0;left:0;right:0;height:5px;border-radius:20px 20px 0 0; }
 .panel.p-blue::before   { background:linear-gradient(90deg,#4A9CF5,#71B8FF); }
 .panel.p-green::before  { background:linear-gradient(90deg,#3BAB5C,#52D475); }
@@ -197,46 +143,31 @@ body.night .clouds-layer { opacity:0.6;filter:brightness(0.7) saturate(0.85); }
 .game-btn::after { content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,0.25) 0%,transparent 50%);border-radius:16px;pointer-events:none; }
 .game-btn:active { transform:translateY(3px) scale(0.98); }
 .game-btn span { position:relative;z-index:1; }
-.btn-blue { background:linear-gradient(160deg,#5BA8FF,#2E78D0);border-bottom:5px solid #1A5BA8;color:white;text-shadow:0 1px 2px rgba(0,0,0,0.2);box-shadow:0 4px 16px rgba(46,120,208,0.35); }
-.btn-blue:hover { background:linear-gradient(160deg,#72B6FF,#3A87E0);transform:translateY(-2px);box-shadow:0 6px 20px rgba(46,120,208,0.45); }
 .btn-green { background:linear-gradient(160deg,#52D475,#28944C);border-bottom:5px solid #1A6E35;color:white;text-shadow:0 1px 2px rgba(0,0,0,0.2);box-shadow:0 4px 16px rgba(40,148,76,0.35); }
 .btn-green:hover { background:linear-gradient(160deg,#65E088,#35AA5C);transform:translateY(-2px);box-shadow:0 6px 20px rgba(40,148,76,0.45); }
-.btn-yellow { background:linear-gradient(160deg,#FFD740,#E8A000);border-bottom:5px solid #B07800;color:#5A3500;text-shadow:0 1px 1px rgba(255,255,255,0.3);box-shadow:0 4px 16px rgba(232,160,0,0.35); }
-.btn-yellow:hover { background:linear-gradient(160deg,#FFE060,#F0B020);transform:translateY(-2px);box-shadow:0 6px 20px rgba(232,160,0,0.45); }
-.btn-icon-emoji,.btn-icon { font-size:18px;line-height:1;display:inline-flex; }
 
-/* =====================
-   HERO
-===================== */
-.hero {
-  min-height: calc(100vh - 56px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px 160px;
-  text-align: center;
-  position: relative;
-}
+/* CTA BIG */
+.cta-big { display:inline-flex;align-items:center;gap:8px;border:none;border-radius:16px;padding:14px 30px;font-family:'Be Vietnam Pro',sans-serif;font-size:16px;font-weight:800;cursor:pointer;text-decoration:none;transition:all 0.15s;letter-spacing:0.5px;position:relative;overflow:hidden; }
+.cta-big::after { content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,0.2) 0%,transparent 50%);border-radius:16px;pointer-events:none; }
+.cta-green { background:linear-gradient(160deg,#52D475,#28944C);border-bottom:5px solid #1A6E35;color:white;text-shadow:0 1px 2px rgba(0,0,0,0.2);box-shadow:0 4px 16px rgba(40,148,76,0.4); }
+.cta-green:hover { transform:translateY(-3px);box-shadow:0 8px 20px rgba(40,148,76,0.5); }
+.cta-blue { background:linear-gradient(160deg,#5BA8FF,#2E78D0);border-bottom:5px solid #1A5BA8;color:white;text-shadow:0 1px 2px rgba(0,0,0,0.2);box-shadow:0 4px 16px rgba(46,120,208,0.4); }
+.cta-blue:hover { transform:translateY(-3px);box-shadow:0 8px 20px rgba(46,120,208,0.5); }
+.cta-yellow { background:linear-gradient(160deg,#FFD740,#E8A000);border-bottom:5px solid #B07800;color:#5A3500;text-shadow:0 1px 1px rgba(255,255,255,0.3);box-shadow:0 4px 16px rgba(232,160,0,0.4); }
+.cta-yellow:hover { transform:translateY(-3px);box-shadow:0 8px 20px rgba(232,160,0,0.5); }
+.cta-purple { background:linear-gradient(160deg,#A487FF,#6B3FD8);border-bottom:5px solid #4A28A8;color:white;text-shadow:0 1px 2px rgba(0,0,0,0.2);box-shadow:0 4px 16px rgba(107,63,216,0.4); }
+.cta-purple:hover { transform:translateY(-3px);box-shadow:0 8px 20px rgba(107,63,216,0.5); }
 
-/* LOGO BOARD */
-.logo-board {
-  background: linear-gradient(160deg,#FFE566 0%,#FFB300 100%);
-  border: 4px solid #CC8800;
-  border-radius: 20px;
-  padding: 12px 40px 14px;
-  box-shadow: 0 6px 0 #A06000, 0 10px 20px rgba(0,0,0,0.2);
-  display: inline-block;
-  position: relative;
-  margin-bottom: 16px;
-}
+/* HERO */
+.hero { min-height:calc(100vh - 56px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px 160px;text-align:center;position:relative; }
+
+.logo-board { background:linear-gradient(160deg,#FFE566 0%,#FFB300 100%);border:4px solid #CC8800;border-radius:20px;padding:12px 40px 14px;box-shadow:0 6px 0 #A06000,0 10px 20px rgba(0,0,0,0.2);display:inline-block;position:relative;margin-bottom:16px; }
 .logo-board::before,.logo-board::after { content:'\f586';position:absolute;font-family:'bootstrap-icons';font-size:20px;font-style:normal;font-weight:400;color:#8B5000;top:50%;transform:translateY(-50%); }
 .logo-board::before { left:-14px; }
 .logo-board::after  { right:-14px; }
 .game-title { font-family:'Fredoka One',cursive;font-size:52px;color:#6B3A00;letter-spacing:2px;line-height:1;text-shadow:2px 3px 0 rgba(255,255,255,0.4); }
 .game-tagline { font-family:'Be Vietnam Pro',sans-serif;font-size:14px;font-weight:800;color:#8B5000;letter-spacing:0.3px;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:6px; }
 
-/* PAWN PARADE */
 .pawn-parade { display:flex;justify-content:center;gap:18px;margin-top:14px; }
 .pawn-figure { display:flex;flex-direction:column;align-items:center;gap:2px;animation:pawn-bounce 1.6s ease-in-out infinite; }
 .pawn-figure:nth-child(1){animation-delay:0s}.pawn-figure:nth-child(2){animation-delay:0.2s}.pawn-figure:nth-child(3){animation-delay:0.4s}.pawn-figure:nth-child(4){animation-delay:0.6s}
@@ -246,399 +177,114 @@ body.night .clouds-layer { opacity:0.6;filter:brightness(0.7) saturate(0.85); }
 .pawn-body { width:20px;height:12px;border-radius:4px 4px 2px 2px;opacity:0.85; }
 .pawn-shadow-el { width:18px;height:5px;border-radius:50%;background:rgba(0,0,0,0.15);margin-top:1px; }
 
-.hero-tagline-box {
-  margin-top: 20px;
-  background: rgba(255,255,255,0.55);
-  border: 2px solid rgba(255,255,255,0.8);
-  border-radius: 16px;
-  padding: 12px 24px;
-  font-family: 'Be Vietnam Pro', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  color: #2A4880;
-  max-width: 480px;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 4px 16px rgba(60,120,200,0.12);
-  font-style: italic;
-}
+.hero-tagline-box { margin-top:20px;background:rgba(255,255,255,0.55);border:2px solid rgba(255,255,255,0.8);border-radius:16px;padding:12px 24px;font-family:'Be Vietnam Pro',sans-serif;font-size:16px;font-weight:700;color:#2A4880;max-width:480px;backdrop-filter:blur(4px);box-shadow:0 4px 16px rgba(60,120,200,0.12);font-style:italic; }
+.hero-desc { margin-top:14px;max-width:520px;font-size:15px;font-weight:600;color:#3B5BA0;line-height:1.6;background:rgba(255,255,255,0.45);border-radius:14px;padding:10px 20px;backdrop-filter:blur(4px); }
+.hero-ctas { display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;justify-content:center; }
 
-.hero-desc {
-  margin-top: 14px;
-  max-width: 520px;
-  font-size: 15px;
-  font-weight: 600;
-  color: #3B5BA0;
-  line-height: 1.6;
-  background: rgba(255,255,255,0.45);
-  border-radius: 14px;
-  padding: 10px 20px;
-  backdrop-filter: blur(4px);
-}
-
-.hero-ctas {
-  display: flex;
-  gap: 12px;
-  margin-top: 24px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.cta-big {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  border: none;
-  border-radius: 16px;
-  padding: 14px 30px;
-  font-family: 'Be Vietnam Pro', sans-serif;
-  font-size: 16px;
-  font-weight: 800;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 0.15s;
-  letter-spacing: 0.5px;
-}
-.cta-big::after { content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,0.2) 0%,transparent 50%);border-radius:16px;pointer-events:none; }
-.cta-big { position:relative; overflow:hidden; }
-.cta-green { background:linear-gradient(160deg,#52D475,#28944C);border-bottom:5px solid #1A6E35;color:white;text-shadow:0 1px 2px rgba(0,0,0,0.2);box-shadow:0 4px 16px rgba(40,148,76,0.4); }
-.cta-green:hover { transform:translateY(-3px);box-shadow:0 8px 20px rgba(40,148,76,0.5); }
-.cta-blue { background:linear-gradient(160deg,#5BA8FF,#2E78D0);border-bottom:5px solid #1A5BA8;color:white;text-shadow:0 1px 2px rgba(0,0,0,0.2);box-shadow:0 4px 16px rgba(46,120,208,0.4); }
-.cta-blue:hover { transform:translateY(-3px);box-shadow:0 8px 20px rgba(46,120,208,0.5); }
-.cta-yellow { background:linear-gradient(160deg,#FFD740,#E8A000);border-bottom:5px solid #B07800;color:#5A3500;text-shadow:0 1px 1px rgba(255,255,255,0.3);box-shadow:0 4px 16px rgba(232,160,0,0.4); }
-.cta-yellow:hover { transform:translateY(-3px);box-shadow:0 8px 20px rgba(232,160,0,0.5); }
-
-.scroll-hint {
-  position: absolute;
-  bottom: 140px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  opacity: 0.7;
-}
+.scroll-hint { position:absolute;bottom:140px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0.7; }
 .scroll-hint span { font-size:11px;font-weight:800;color:#3B5BA0;letter-spacing:2px;text-transform:uppercase; }
 .scroll-arrow { font-size:20px;color:#3B5BA0;animation:bounce-down 1.4s ease-in-out infinite; }
 @keyframes bounce-down { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
 
-/* =====================
-   SECTION SHARED
-===================== */
-.section {
-  position: relative;
-  z-index: 10;
-  padding: 80px 20px;
-}
+/* SECTIONS */
+.section { position:relative;z-index:10;padding:80px 20px; }
+.section-inner { max-width:1100px;margin:0 auto; }
+.section-header { text-align:center;margin-bottom:48px; }
 
-.section-inner { max-width: 1100px; margin: 0 auto; }
+.section-eyebrow { display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.6);border:2px solid rgba(255,255,255,0.9);border-radius:999px;padding:5px 16px;font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:12px;color:#3B5BA0;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;backdrop-filter:blur(4px); }
+.section-title { font-family:'Fredoka One',cursive;font-size:clamp(28px,5vw,42px);color:var(--text-dark);line-height:1.15;letter-spacing:0.5px; }
+.section-title .hi-blue  { color:#2E78D0; }
+.section-title .hi-green { color:#28944C; }
+.section-title .hi-red   { color:#D93025; }
+.section-title .hi-gold  { color:#CC8800; }
+.section-title .hi-purple{ color:#6B3FD8; }
+.section-sub { font-size:15px;font-weight:600;color:#3B5BA0;max-width:540px;margin:10px auto 0;background:rgba(255,255,255,0.45);border-radius:12px;padding:8px 18px;backdrop-filter:blur(4px); }
 
-.section-header { text-align:center; margin-bottom: 48px; }
-
-.section-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(255,255,255,0.6);
-  border: 2px solid rgba(255,255,255,0.9);
-  border-radius: 999px;
-  padding: 5px 16px;
-  font-family: 'Be Vietnam Pro', sans-serif;
-  font-weight: 800;
-  font-size: 12px;
-  color: #3B5BA0;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-  backdrop-filter: blur(4px);
-}
-
-.section-title {
-  font-family: 'Fredoka One', cursive;
-  font-size: clamp(28px, 5vw, 42px);
-  color: var(--text-dark);
-  line-height: 1.15;
-  letter-spacing: 0.5px;
-}
-.section-title .hi-blue  { color: #2E78D0; }
-.section-title .hi-green { color: #28944C; }
-.section-title .hi-red   { color: #D93025; }
-.section-title .hi-gold  { color: #CC8800; }
-
-.section-sub {
-  font-size: 15px;
-  font-weight: 600;
-  color: #3B5BA0;
-  max-width: 540px;
-  margin: 10px auto 0;
-  background: rgba(255,255,255,0.45);
-  border-radius: 12px;
-  padding: 8px 18px;
-  backdrop-filter: blur(4px);
-}
-
-/* =====================
-   ABOUT
-===================== */
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  align-items: center;
-}
-
-.about-img-wrap {
-  position: relative;
-  border-radius: 20px;
-  overflow: hidden;
-  border: 4px solid var(--panel-border);
-  box-shadow: 0 8px 0 var(--panel-shadow), 0 16px 32px rgba(0,0,0,0.15);
-  aspect-ratio: 1;
-}
-
-.about-img-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.about-img-placeholder {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg,#C8E6FF,#A0D8FF);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 60px;
-}
-
-.about-badge {
-  position: absolute;
-  bottom: 14px;
-  right: 14px;
-  background: linear-gradient(160deg,#FFFEF5,#FFF8E0);
-  border: 3px solid var(--panel-border);
-  border-radius: 16px;
-  padding: 10px 16px;
-  box-shadow: 0 4px 0 var(--panel-shadow);
-  text-align: center;
-}
+/* ABOUT */
+.about-grid { display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center; }
+.about-img-wrap { position:relative;border-radius:20px;overflow:hidden;border:4px solid var(--panel-border);box-shadow:0 8px 0 var(--panel-shadow),0 16px 32px rgba(0,0,0,0.15);aspect-ratio:1; }
+.about-img-wrap img { width:100%;height:100%;object-fit:cover;display:block; }
+.about-img-placeholder { width:100%;height:100%;background:linear-gradient(135deg,#C8E6FF,#A0D8FF);display:flex;align-items:center;justify-content:center;font-size:60px; }
+.about-badge { position:absolute;bottom:14px;right:14px;background:linear-gradient(160deg,#FFFEF5,#FFF8E0);border:3px solid var(--panel-border);border-radius:16px;padding:10px 16px;box-shadow:0 4px 0 var(--panel-shadow);text-align:center; }
 .about-badge-num { font-family:'Fredoka One',cursive;font-size:28px;color:#CC8800;display:block;line-height:1; }
-.about-badge-lbl { font-size:11px;font-weight:800;color:var(--text-mid);text-transform:uppercase;letter-spacing:1px; }
-
-.about-text .panel { margin-bottom: 0; }
-
+.about-badge-lbl { font-size:11px;font-weight:800;color:var(--text-mid);text-transform:uppercase;letter-spacing:1px;margin-top:2px; }
 .about-bullets { display:flex;flex-direction:column;gap:10px;padding:14px 20px 18px; }
-.about-bullet {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  background: rgba(255,255,255,0.6);
-  border: 2px solid rgba(255,220,80,0.5);
-  border-radius: 14px;
-  padding: 12px 14px;
-  transition: all 0.15s;
-}
+.about-bullet { display:flex;align-items:flex-start;gap:12px;background:rgba(255,255,255,0.6);border:2px solid rgba(255,220,80,0.5);border-radius:14px;padding:12px 14px;transition:all 0.15s; }
 .about-bullet:hover { background:rgba(255,255,255,0.85);transform:translateX(4px); }
 .about-bullet-icon { font-size:20px;flex-shrink:0;margin-top:1px; }
 .about-bullet h4 { font-family:'Be Vietnam Pro',sans-serif;font-size:14px;font-weight:800;color:var(--text-dark);margin-bottom:2px; }
 .about-bullet p { font-size:12px;font-weight:600;color:var(--text-mid);line-height:1.5; }
 
-/* =====================
-   FEATURE CARDS
-===================== */
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-
-.feature-card {
-  background: linear-gradient(160deg,#FFFEF5,#FFF8E0);
-  border: 3px solid var(--panel-border);
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: 0 5px 0 var(--panel-shadow), 0 8px 20px rgba(0,0,0,0.08);
-  transition: all 0.2s;
-  cursor: default;
-  position: relative;
-  overflow: hidden;
-}
+/* FEATURES */
+.features-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:16px; }
+.feature-card { background:linear-gradient(160deg,#FFFEF5,#FFF8E0);border:3px solid var(--panel-border);border-radius:20px;padding:20px;box-shadow:0 5px 0 var(--panel-shadow),0 8px 20px rgba(0,0,0,0.08);transition:all 0.2s;cursor:default;position:relative;overflow:hidden; }
 .feature-card::before { content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:20px 20px 0 0;background:var(--fc-color,#FFD740); }
 .feature-card:hover { transform:translateY(-6px);box-shadow:0 10px 0 var(--panel-shadow),0 16px 32px rgba(0,0,0,0.14); }
-
-.fc-icon {
-  width:48px;height:48px;border-radius:14px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:22px;margin-bottom:12px;
-  box-shadow:0 3px 0 rgba(0,0,0,0.1);
-}
+.fc-icon { width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px;box-shadow:0 3px 0 rgba(0,0,0,0.1); }
 .fc-title { font-family:'Be Vietnam Pro',sans-serif;font-size:16px;font-weight:800;color:var(--text-dark);margin-bottom:6px; }
 .fc-desc { font-size:13px;font-weight:600;color:var(--text-mid);line-height:1.6; }
 
-/* =====================
-   GALLERY
-===================== */
-.gallery-section { padding: 80px 20px; }
-
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 12px;
-}
-
-.gallery-item {
-  border-radius: 16px;
-  overflow: hidden;
-  border: 3px solid var(--panel-border);
-  box-shadow: 0 5px 0 var(--panel-shadow), 0 8px 20px rgba(0,0,0,0.1);
-  cursor: pointer;
-  transition: all 0.2s;
-  position: relative;
-}
+/* GALLERY */
+.gallery-section { padding:80px 20px;position:relative;z-index:10;max-width:1200px;margin:0 auto; }
+.gallery-grid { display:grid;grid-template-columns:repeat(12,1fr);gap:12px; }
+.gallery-item { border-radius:16px;overflow:hidden;border:3px solid var(--panel-border);box-shadow:0 5px 0 var(--panel-shadow),0 8px 20px rgba(0,0,0,0.1);cursor:pointer;transition:all 0.2s;position:relative; }
 .gallery-item:hover { transform:translateY(-6px) scale(1.01);box-shadow:0 10px 0 var(--panel-shadow),0 16px 32px rgba(0,0,0,0.18); }
 .gallery-item::after { content:'\F52A';font-family:'bootstrap-icons';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2rem;color:white;background:rgba(255,200,60,0.4);opacity:0;transition:opacity 0.2s;backdrop-filter:blur(3px); }
 .gallery-item:hover::after { opacity:1; }
 .gallery-item img { width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s; }
 .gallery-item:hover img { transform:scale(1.04); }
 .gallery-item .placeholder { width:100%;height:100%;background:linear-gradient(135deg,#C8E6FF,#A0D8FF);display:flex;align-items:center;justify-content:center;font-size:3rem; }
+.gi1{grid-column:1/8;height:300px}.gi2{grid-column:8/13;height:300px}.gi3{grid-column:1/5;height:220px}.gi4{grid-column:5/9;height:220px}.gi5{grid-column:9/13;height:220px}
 
-.gi1 { grid-column:1/8;height:300px; }
-.gi2 { grid-column:8/13;height:300px; }
-.gi3 { grid-column:1/5;height:220px; }
-.gi4 { grid-column:5/9;height:220px; }
-.gi5 { grid-column:9/13;height:220px; }
-
-/* =====================
-   RUNE CARDS
-===================== */
-.rune-tabs {
-  display:flex;gap:8px;justify-content:center;margin-bottom:28px;flex-wrap:wrap;
-}
-.rune-tab {
-  display:inline-flex;align-items:center;gap:6px;
-  background:rgba(255,255,255,0.6);border:2px solid rgba(255,255,255,0.9);
-  border-radius:999px;padding:7px 18px;
-  font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:13px;
-  color:#3B5BA0;cursor:pointer;transition:all 0.15s;backdrop-filter:blur(4px);
-  box-shadow:0 2px 8px rgba(60,100,180,0.1);
-}
+/* RUNE CARDS */
+.rune-tabs { display:flex;gap:8px;justify-content:center;margin-bottom:28px;flex-wrap:wrap; }
+.rune-tab { display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.6);border:2px solid rgba(255,255,255,0.9);border-radius:999px;padding:7px 18px;font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:13px;color:#3B5BA0;cursor:pointer;transition:all 0.15s;backdrop-filter:blur(4px);box-shadow:0 2px 8px rgba(60,100,180,0.1); }
 .rune-tab.active { background:white;box-shadow:0 4px 12px rgba(60,100,180,0.2);color:#1A3A7A; }
 .rune-tab:hover:not(.active) { background:rgba(255,255,255,0.8); }
-
 .rune-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:16px; }
-
-.rune-card {
-  background:linear-gradient(160deg,#FFFEF5,#FFF8E0);
-  border:3px solid var(--panel-border);
-  border-radius:20px;
-  padding:20px;
-  box-shadow:0 5px 0 var(--panel-shadow),0 8px 20px rgba(0,0,0,0.08);
-  transition:all 0.2s;
-  position:relative;
-  overflow:hidden;
-}
+.rune-card { background:linear-gradient(160deg,#FFFEF5,#FFF8E0);border:3px solid var(--panel-border);border-radius:20px;padding:20px;box-shadow:0 5px 0 var(--panel-shadow),0 8px 20px rgba(0,0,0,0.08);transition:all 0.2s;position:relative;overflow:hidden; }
 .rune-card::before { content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:20px 20px 0 0;background:var(--rc-color,#FFD740); }
 .rune-card:hover { transform:translateY(-6px);box-shadow:0 10px 0 var(--panel-shadow),0 16px 32px rgba(0,0,0,0.14); }
-
 .rune-card-header { display:flex;align-items:center;gap:12px;margin-bottom:12px; }
 .rune-symbol { width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;box-shadow:0 2px 0 rgba(0,0,0,0.1); }
 .rune-type { font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px; }
 .rune-name { font-family:'Be Vietnam Pro',sans-serif;font-size:15px;font-weight:800;color:var(--text-dark); }
 .rune-desc { font-size:12px;font-weight:600;color:var(--text-mid);line-height:1.6; }
 
-/* =====================
-   DISGUISE SECTION
-===================== */
+/* DISGUISE */
 .disguise-grid { display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start; }
-
-.disguise-showcase {
-  background:linear-gradient(160deg,#FFFEF5,#FFF8E0);
-  border:4px solid var(--panel-border);
-  border-radius:24px;
-  box-shadow:0 8px 0 var(--panel-shadow),0 16px 32px rgba(0,0,0,0.12);
-  overflow:hidden;
-  padding:0;
-}
+.disguise-showcase { background:linear-gradient(160deg,#FFFEF5,#FFF8E0);border:4px solid var(--panel-border);border-radius:24px;box-shadow:0 8px 0 var(--panel-shadow),0 16px 32px rgba(0,0,0,0.12);overflow:hidden;padding:0; }
 .disguise-showcase::before { content:'';display:block;height:5px;background:linear-gradient(90deg,#7C5CE8,#A487FF); }
-
-.disguise-mask-area {
-  text-align:center;
-  padding:32px 20px 20px;
-  border-bottom:3px dashed rgba(255,200,60,0.4);
-}
-.disguise-emoji {
-  font-size:64px;
-  display:block;
-  margin-bottom:12px;
-  animation:float-mask 3s ease-in-out infinite;
-  filter:drop-shadow(0 6px 12px rgba(0,0,0,0.15));
-}
+.disguise-mask-area { text-align:center;padding:32px 20px 20px;border-bottom:3px dashed rgba(255,200,60,0.4); }
+.disguise-emoji { font-size:64px;display:block;margin-bottom:12px;animation:float-mask 3s ease-in-out infinite;filter:drop-shadow(0 6px 12px rgba(0,0,0,0.15)); }
 @keyframes float-mask { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
 .disguise-showcase-title { font-family:'Fredoka One',cursive;font-size:24px;color:#6B3A00;margin-bottom:4px; }
 .disguise-showcase-sub { font-size:13px;font-weight:700;color:var(--text-mid); }
-
 .disguise-stats-grid { display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:3px dashed rgba(255,200,60,0.4); }
 .d-stat { padding:16px;text-align:center;border-right:2px dashed rgba(255,200,60,0.3);border-bottom:2px dashed rgba(255,200,60,0.3); }
 .d-stat:nth-child(2n) { border-right:none; }
 .d-stat:nth-child(3),.d-stat:nth-child(4) { border-bottom:none; }
 .d-stat-num { font-family:'Fredoka One',cursive;font-size:28px;color:#CC8800;display:block;line-height:1; }
 .d-stat-lbl { font-size:10px;font-weight:800;color:var(--text-mid);text-transform:uppercase;letter-spacing:1px;margin-top:2px; }
-
 .disguise-pillars { display:flex;flex-direction:column;gap:12px; }
-
-.pillar {
-  background:linear-gradient(160deg,#FFFEF5,#FFF8E0);
-  border:3px solid var(--panel-border);
-  border-radius:16px;
-  padding:14px 16px;
-  display:flex;align-items:flex-start;gap:12px;
-  box-shadow:0 4px 0 var(--panel-shadow);
-  transition:all 0.15s;
-}
+.pillar { background:linear-gradient(160deg,#FFFEF5,#FFF8E0);border:3px solid var(--panel-border);border-radius:16px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;box-shadow:0 4px 0 var(--panel-shadow);transition:all 0.15s; }
 .pillar:hover { transform:translateX(6px); }
 .pillar-icon { font-size:22px;flex-shrink:0;margin-top:1px; }
 .pillar h4 { font-family:'Be Vietnam Pro',sans-serif;font-size:14px;font-weight:800;color:var(--text-dark);margin-bottom:3px; }
 .pillar p { font-size:12px;font-weight:600;color:var(--text-mid);line-height:1.5; }
 
-/* =====================
-   AUDIENCE
-===================== */
+/* AUDIENCE */
 .audience-grid { display:grid;grid-template-columns:repeat(6,1fr);gap:12px; }
-
-.audience-card {
-  background:linear-gradient(160deg,#FFFEF5,#FFF8E0);
-  border:3px solid var(--panel-border);
-  border-radius:20px;
-  padding:20px 12px;
-  text-align:center;
-  box-shadow:0 5px 0 var(--panel-shadow);
-  transition:all 0.2s;
-  cursor:default;
-}
+.audience-card { background:linear-gradient(160deg,#FFFEF5,#FFF8E0);border:3px solid var(--panel-border);border-radius:20px;padding:20px 12px;text-align:center;box-shadow:0 5px 0 var(--panel-shadow);transition:all 0.2s;cursor:default; }
 .audience-card:hover { transform:translateY(-6px);box-shadow:0 10px 0 var(--panel-shadow); }
 .audience-emoji { font-size:2rem;display:block;margin-bottom:8px;animation:pawn-bounce 2s ease-in-out infinite; }
-.audience-card:nth-child(2) .audience-emoji { animation-delay:0.2s; }
-.audience-card:nth-child(3) .audience-emoji { animation-delay:0.4s; }
-.audience-card:nth-child(4) .audience-emoji { animation-delay:0.6s; }
-.audience-card:nth-child(5) .audience-emoji { animation-delay:0.8s; }
-.audience-card:nth-child(6) .audience-emoji { animation-delay:1.0s; }
+.audience-card:nth-child(2) .audience-emoji{animation-delay:0.2s}.audience-card:nth-child(3) .audience-emoji{animation-delay:0.4s}.audience-card:nth-child(4) .audience-emoji{animation-delay:0.6s}.audience-card:nth-child(5) .audience-emoji{animation-delay:0.8s}.audience-card:nth-child(6) .audience-emoji{animation-delay:1.0s}
 .audience-name { font-family:'Be Vietnam Pro',sans-serif;font-size:14px;font-weight:800;color:var(--text-dark);margin-bottom:5px; }
 .audience-desc { font-size:11px;font-weight:600;color:var(--text-mid);line-height:1.5; }
 
-/* =====================
-   COMPARISON
-===================== */
-.compare-panel {
-  background:linear-gradient(160deg,#FFFEF5,#FFF8E0);
-  border:4px solid var(--panel-border);
-  border-radius:24px;
-  box-shadow:0 8px 0 var(--panel-shadow),0 12px 32px rgba(0,0,0,0.12);
-  overflow:hidden;
-}
+/* COMPARISON */
+.compare-panel { background:linear-gradient(160deg,#FFFEF5,#FFF8E0);border:4px solid var(--panel-border);border-radius:24px;box-shadow:0 8px 0 var(--panel-shadow),0 12px 32px rgba(0,0,0,0.12);overflow:hidden; }
 .compare-panel::before { content:'';display:block;height:5px;background:linear-gradient(90deg,#F5C518,#FFD740); }
-
 .compare-table { width:100%;border-collapse:collapse; }
 .compare-table th,.compare-table td { padding:14px 20px;text-align:center;border-bottom:2px dashed rgba(255,200,60,0.35); }
 .compare-table th:first-child,.compare-table td:first-child { text-align:left; }
@@ -655,73 +301,107 @@ body.night .clouds-layer { opacity:0.6;filter:brightness(0.7) saturate(0.85); }
 .check-p { color:#CC8800;font-size:16px; }
 
 /* =====================
-   TECH STACK
+   TEAM & CONTRIBUTORS
 ===================== */
-.tech-layers { display:flex;flex-direction:column;gap:14px; }
-
-.tech-layer {
-  background:linear-gradient(160deg,#FFFEF5,#FFF8E0);
-  border:3px solid var(--panel-border);
-  border-radius:18px;
-  padding:18px 22px;
-  display:flex;align-items:center;gap:24px;
-  box-shadow:0 5px 0 var(--panel-shadow);
-  transition:all 0.15s;
-}
-.tech-layer:hover { transform:translateX(6px); }
-.tech-layer-label { min-width:110px;font-family:'Be Vietnam Pro',sans-serif;font-size:13px;font-weight:800;color:var(--text-mid);text-transform:uppercase;letter-spacing:1.5px;display:flex;align-items:center;gap:6px;flex-shrink:0; }
-.tech-badges { display:flex;gap:10px;flex-wrap:wrap; }
-.tech-badge {
-  display:inline-flex;align-items:center;gap:7px;
-  background:rgba(255,255,255,0.8);border:2px solid rgba(255,210,60,0.5);
-  border-radius:12px;padding:7px 14px;
-  font-family:'Be Vietnam Pro',sans-serif;font-size:13px;font-weight:800;color:var(--text-dark);
-  box-shadow:0 2px 0 rgba(200,160,0,0.2);
-  transition:all 0.15s;
-}
-.tech-badge:hover { background:white;transform:translateY(-2px);box-shadow:0 4px 0 rgba(200,160,0,0.2); }
-.tech-badge span { font-size:16px; }
-
-/* =====================
-   FINAL CTA
-===================== */
-.cta-final {
-  padding: 100px 20px 200px;
-  text-align: center;
-  position: relative;
-  z-index: 10;
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 
-.cta-final-panel {
-  max-width: 600px;
-  margin: 0 auto;
+.team-card {
   background: linear-gradient(160deg,#FFFEF5,#FFF8E0);
-  border: 4px solid var(--panel-border);
-  border-radius: 28px;
-  box-shadow: 0 10px 0 var(--panel-shadow), 0 20px 40px rgba(0,0,0,0.15);
-  padding: 48px 40px;
+  border: 3px solid var(--panel-border);
+  border-radius: 20px;
+  padding: 24px 20px 20px;
+  text-align: center;
+  box-shadow: 0 6px 0 var(--panel-shadow), 0 10px 24px rgba(0,0,0,0.08);
+  transition: all 0.2s;
   position: relative;
   overflow: hidden;
 }
-.cta-final-panel::before { content:'';position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,#52D475,#5BA8FF,#FFD740,#E8463A);border-radius:28px 28px 0 0; }
+.team-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  border-radius: 20px 20px 0 0;
+  background: var(--tc-color, linear-gradient(90deg,#F5C518,#FFD740));
+}
+.team-card:hover { transform: translateY(-8px); box-shadow: 0 12px 0 var(--panel-shadow), 0 20px 36px rgba(0,0,0,0.14); }
 
+.team-avatar-wrap {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 4px solid var(--panel-border);
+  box-shadow: 0 4px 0 var(--panel-shadow), 0 6px 16px rgba(0,0,0,0.1);
+  overflow: hidden;
+  margin: 0 auto 14px;
+  background: linear-gradient(135deg,#C8E6FF,#A0D8FF);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+.team-avatar-wrap img { width:100%;height:100%;object-fit:cover;display:block; }
+
+.team-name {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+.team-role {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: white;
+  background: var(--tc-pill, linear-gradient(135deg,#FFD740,#E8A800));
+  border-radius: 999px;
+  padding: 3px 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.1);
+}
+.team-email {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #3B5BA0;
+  text-decoration: none;
+  background: rgba(255,255,255,0.7);
+  border: 2px solid rgba(255,220,80,0.5);
+  border-radius: 999px;
+  padding: 5px 12px;
+  transition: all 0.15s;
+  word-break: break-all;
+  max-width: 100%;
+}
+.team-email:hover { background:white;transform:translateY(-2px);box-shadow:0 4px 8px rgba(60,100,180,0.15); }
+
+.contributor-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* FINAL CTA */
+.cta-final { padding:100px 20px 200px;text-align:center;position:relative;z-index:10; }
+.cta-final-panel { max-width:600px;margin:0 auto;background:linear-gradient(160deg,#FFFEF5,#FFF8E0);border:4px solid var(--panel-border);border-radius:28px;box-shadow:0 10px 0 var(--panel-shadow),0 20px 40px rgba(0,0,0,0.15);padding:48px 40px;position:relative;overflow:hidden; }
+.cta-final-panel::before { content:'';position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,#52D475,#5BA8FF,#FFD740,#E8463A);border-radius:28px 28px 0 0; }
 .cta-emoji { font-size:56px;display:block;margin-bottom:16px;animation:float-mask 3s ease-in-out infinite; }
 .cta-title { font-family:'Fredoka One',cursive;font-size:clamp(28px,5vw,40px);color:var(--text-dark);margin-bottom:10px; }
 .cta-sub { font-size:15px;font-weight:600;color:var(--text-mid);margin-bottom:28px;line-height:1.6; }
 .cta-buttons { display:flex;gap:12px;justify-content:center;flex-wrap:wrap; }
 
-/* =====================
-   FOOTER
-===================== */
-footer {
-  position: relative;
-  z-index: 10;
-  background: rgba(255,255,255,0.5);
-  backdrop-filter: blur(10px);
-  border-top: 3px dashed rgba(255,200,60,0.4);
-  padding: 48px 20px 120px;
-}
-
+/* FOOTER */
+footer { position:relative;z-index:10;background:rgba(255,255,255,0.5);backdrop-filter:blur(10px);border-top:3px dashed rgba(255,200,60,0.4);padding:48px 20px 120px; }
 .footer-inner { max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:32px; }
 .footer-brand .game-title { font-size:28px; }
 .footer-brand p { font-size:13px;font-weight:600;color:var(--text-mid);margin:12px 0;line-height:1.7;max-width:260px; }
@@ -734,36 +414,27 @@ footer {
 .footer-bottom { max-width:1100px;margin:0 auto;padding-top:20px;border-top:2px dashed rgba(255,200,60,0.3);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px; }
 .footer-bottom p { font-size:12px;font-weight:700;color:var(--text-mid); }
 
-/* =====================
-   LIGHTBOX
-===================== */
+/* LIGHTBOX */
 .lightbox { position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:200;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.25s;backdrop-filter:blur(8px); }
 .lightbox.open { opacity:1;pointer-events:all; }
 .lightbox img { max-width:90vw;max-height:86vh;object-fit:contain;border-radius:16px;border:4px solid var(--panel-border);box-shadow:0 10px 0 var(--panel-shadow),0 20px 60px rgba(0,0,0,0.5); }
 .lightbox-close { position:absolute;top:20px;right:20px;width:42px;height:42px;border-radius:12px;background:linear-gradient(160deg,#FFFEF5,#FFF8E0);border:3px solid var(--panel-border);box-shadow:0 3px 0 var(--panel-shadow);color:var(--text-dark);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;font-weight:800; }
 .lightbox-close:hover { transform:translateY(-2px);background:white; }
 
-/* =====================
-   SCROLL REVEAL
-===================== */
+/* SCROLL REVEAL */
 .reveal { opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease; }
 .reveal.visible { opacity:1;transform:translateY(0); }
-.delay-1 { transition-delay:0.1s; }
-.delay-2 { transition-delay:0.2s; }
-.delay-3 { transition-delay:0.3s; }
-.delay-4 { transition-delay:0.4s; }
-.delay-5 { transition-delay:0.5s; }
+.delay-1{transition-delay:0.1s}.delay-2{transition-delay:0.2s}.delay-3{transition-delay:0.3s}.delay-4{transition-delay:0.4s}.delay-5{transition-delay:0.5s}
 
-/* =====================
-   RESPONSIVE
-===================== */
+/* RESPONSIVE */
 @media (max-width:1024px) {
   .features-grid { grid-template-columns:repeat(2,1fr); }
   .about-grid { grid-template-columns:1fr; }
   .disguise-grid { grid-template-columns:1fr; }
   .audience-grid { grid-template-columns:repeat(3,1fr); }
   .footer-inner { grid-template-columns:1fr 1fr;gap:28px; }
-  .tech-layer { flex-direction:column;align-items:flex-start;gap:10px; }
+  .team-grid { grid-template-columns:repeat(2,1fr); }
+  .contributor-grid { grid-template-columns:repeat(2,1fr); }
 }
 @media (max-width:768px) {
   .sticky-links { display:none; }
@@ -777,6 +448,11 @@ footer {
   .cta-buttons { flex-direction:column;align-items:center; }
   .hero-ctas { flex-direction:column;align-items:center; }
   .compare-table th,.compare-table td { padding:10px 12px;font-size:12px; }
+  .team-grid { grid-template-columns:1fr; }
+  .contributor-grid { grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:480px) {
+  .contributor-grid { grid-template-columns:1fr; }
 }
 </style>
 </head>
@@ -817,71 +493,34 @@ footer {
     <a href="#about" class="sticky-link">About</a>
     <a href="#features" class="sticky-link">Features</a>
     <a href="#mechanics" class="sticky-link">Mechanics</a>
-
+    <a href="rules.html" class="sticky-link">Game Rules</a>
+    <a href="#team" class="sticky-link">Team</a>
   </div>
-<a 
-  href="https://rune-race.onrender.com/" 
-  target="_blank" 
-  rel="noopener noreferrer"
-  class="cta-big cta-green"
->
-  <i class="bi bi-controller"></i> Play Free
-</a>
+  <a href="https://rune-race.onrender.com/" target="_blank" rel="noopener noreferrer" class="cta-big cta-green" style="font-size:13px;padding:8px 20px;border-bottom-width:3px;">
+    <i class="bi bi-controller"></i> Play Free
+  </a>
 </nav>
 
 <div class="landing-page">
 
-<!-- ═══════════════════ HERO ═══════════════════ -->
+<!-- ═══════ HERO ═══════ -->
 <section class="hero" id="hero">
   <div class="logo-board reveal">
     <div class="game-title">Rune Race</div>
-    <div class="game-tagline">
-      <i class="bi bi-globe-asia-australia"></i> Online Multiplayer Board Game
-    </div>
+    <div class="game-tagline"><i class="bi bi-globe-asia-australia"></i> Online Multiplayer Board Game</div>
   </div>
   <div class="pawn-parade reveal delay-1">
-    <div class="pawn-figure">
-      <div class="pawn-head" style="background:linear-gradient(135deg,#4FC870,#2E9452)"></div>
-      <div class="pawn-neck" style="background:#2E9452"></div>
-      <div class="pawn-body" style="background:#2E9452"></div>
-      <div class="pawn-shadow-el"></div>
-    </div>
-    <div class="pawn-figure">
-      <div class="pawn-head" style="background:linear-gradient(135deg,#5BA8FF,#2E78D0)"></div>
-      <div class="pawn-neck" style="background:#2E78D0"></div>
-      <div class="pawn-body" style="background:#2E78D0"></div>
-      <div class="pawn-shadow-el"></div>
-    </div>
-    <div class="pawn-figure">
-      <div class="pawn-head" style="background:linear-gradient(135deg,#FFD740,#E8A000)"></div>
-      <div class="pawn-neck" style="background:#E8A000"></div>
-      <div class="pawn-body" style="background:#E8A000"></div>
-      <div class="pawn-shadow-el"></div>
-    </div>
-    <div class="pawn-figure">
-      <div class="pawn-head" style="background:linear-gradient(135deg,#FF6B60,#D93025)"></div>
-      <div class="pawn-neck" style="background:#D93025"></div>
-      <div class="pawn-body" style="background:#D93025"></div>
-      <div class="pawn-shadow-el"></div>
-    </div>
+    <div class="pawn-figure"><div class="pawn-head" style="background:linear-gradient(135deg,#4FC870,#2E9452)"></div><div class="pawn-neck" style="background:#2E9452"></div><div class="pawn-body" style="background:#2E9452"></div><div class="pawn-shadow-el"></div></div>
+    <div class="pawn-figure"><div class="pawn-head" style="background:linear-gradient(135deg,#5BA8FF,#2E78D0)"></div><div class="pawn-neck" style="background:#2E78D0"></div><div class="pawn-body" style="background:#2E78D0"></div><div class="pawn-shadow-el"></div></div>
+    <div class="pawn-figure"><div class="pawn-head" style="background:linear-gradient(135deg,#FFD740,#E8A000)"></div><div class="pawn-neck" style="background:#E8A000"></div><div class="pawn-body" style="background:#E8A000"></div><div class="pawn-shadow-el"></div></div>
+    <div class="pawn-figure"><div class="pawn-head" style="background:linear-gradient(135deg,#FF6B60,#D93025)"></div><div class="pawn-neck" style="background:#D93025"></div><div class="pawn-body" style="background:#D93025"></div><div class="pawn-shadow-el"></div></div>
   </div>
-  <div class="hero-tagline-box reveal delay-2">
-    🎭 "Where Luck Meets Strategy, and Every Rune Tells a Lie."
-  </div>
-  <p class="hero-desc reveal delay-3">
-    An online multiplayer board game inspired by Vietnam's beloved Cá Ngựa — reimagined with magical Rune cards, strategic traps, simultaneous play, and a disguise system that turns every match into a social deduction experience.
-  </p>
+  <div class="hero-tagline-box reveal delay-2">🎭 "Where Luck Meets Strategy, and Every Rune Tells a Lie."</div>
+  <p class="hero-desc reveal delay-3">An online multiplayer board game inspired by Vietnam's beloved Cá Ngựa — reimagined with magical Rune cards, strategic traps, simultaneous play, and a disguise system that turns every match into a social deduction experience.</p>
   <div class="hero-ctas reveal delay-4">
-<a 
-  href="https://rune-race.onrender.com/" 
-  target="_blank" 
-  rel="noopener noreferrer"
-  class="cta-big cta-green"
->
-  <i class="bi bi-controller"></i> Play Free Now
-</a>
+    <a href="https://rune-race.onrender.com/" target="_blank" rel="noopener noreferrer" class="cta-big cta-green"><i class="bi bi-controller"></i> Play Free Now</a>
     <a href="#gallery" class="cta-big cta-blue"><i class="bi bi-play-circle"></i> Watch Gameplay</a>
-    <a href="#about" class="cta-big cta-yellow"><i class="bi bi-info-circle"></i> Learn More</a>
+    <a href="rules.html" class="cta-big cta-purple"><i class="bi bi-book-fill"></i> Game Rules</a>
   </div>
   <div class="scroll-hint">
     <span>Scroll</span>
@@ -889,7 +528,7 @@ footer {
   </div>
 </section>
 
-<!-- ═══════════════════ ABOUT ═══════════════════ -->
+<!-- ═══════ ABOUT ═══════ -->
 <section class="section" id="about">
   <div class="section-inner">
     <div class="section-header reveal">
@@ -901,42 +540,18 @@ footer {
       <div class="about-img-wrap reveal">
         <img src="assets/hero.jpg" alt="Rune Race board" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="about-img-placeholder" style="display:none">🎲</div>
-        <div class="about-badge">
-          <span class="about-badge-num">4</span>
-          <span class="about-badge-lbl">Players Per Match</span>
-        </div>
+        <div class="about-badge"><span class="about-badge-num">4</span><span class="about-badge-lbl">Players Per Match</span></div>
       </div>
       <div class="about-text reveal delay-2">
         <div class="panel p-blue">
           <div class="panel-head">
             <div class="panel-icon icon-blue"><i class="bi bi-controller"></i></div>
-            <div>
-              <div class="panel-title">What Is Rune Race?</div>
-              <div class="panel-subtitle">Cá Ngựa · reimagined for the internet age</div>
-            </div>
+            <div><div class="panel-title">What Is Rune Race?</div><div class="panel-subtitle">Cá Ngựa · reimagined for the internet age</div></div>
           </div>
           <div class="about-bullets">
-            <div class="about-bullet">
-              <div class="about-bullet-icon">🏛️</div>
-              <div>
-                <h4>Rooted in Tradition</h4>
-                <p>Built on the beloved Vietnamese Cá Ngựa (Ludo) game — familiar enough to learn in minutes, deep enough to master over hundreds of matches.</p>
-              </div>
-            </div>
-            <div class="about-bullet">
-              <div class="about-bullet-icon">🌐</div>
-              <div>
-                <h4>Built for the Internet</h4>
-                <p>Real-time online multiplayer with room codes, quick-play matchmaking, and a full 3D board rendered in your browser.</p>
-              </div>
-            </div>
-            <div class="about-bullet">
-              <div class="about-bullet-icon">⚖️</div>
-              <div>
-                <h4>Accessible Yet Deep</h4>
-                <p>Casual enough for family game nights, strategic enough for competitive ranked play — every session feels different.</p>
-              </div>
-            </div>
+            <div class="about-bullet"><div class="about-bullet-icon">🏛️</div><div><h4>Rooted in Tradition</h4><p>Built on the beloved Vietnamese Cá Ngựa (Ludo) game — familiar enough to learn in minutes, deep enough to master over hundreds of matches.</p></div></div>
+            <div class="about-bullet"><div class="about-bullet-icon">🌐</div><div><h4>Built for the Internet</h4><p>Real-time online multiplayer with room codes, quick-play matchmaking, and a full 3D board rendered in your browser.</p></div></div>
+            <div class="about-bullet"><div class="about-bullet-icon">⚖️</div><div><h4>Accessible Yet Deep</h4><p>Casual enough for family game nights, strategic enough for competitive ranked play — every session feels different.</p></div></div>
           </div>
         </div>
       </div>
@@ -944,7 +559,7 @@ footer {
   </div>
 </section>
 
-<!-- ═══════════════════ FEATURES ═══════════════════ -->
+<!-- ═══════ FEATURES ═══════ -->
 <section class="section" id="features">
   <div class="section-inner">
     <div class="section-header reveal">
@@ -953,72 +568,33 @@ footer {
       <p class="section-sub">We didn't just digitize Cá Ngựa — we reimagined every mechanic for a modern, strategic multiplayer experience.</p>
     </div>
     <div class="features-grid">
-      <div class="feature-card reveal delay-1" style="--fc-color:#4A9CF5">
-        <div class="fc-icon" style="background:linear-gradient(135deg,#C8E8FF,#A0D0FF)">🏛️</div>
-        <div class="fc-title">Traditional Board Game Roots</div>
-        <p class="fc-desc">Built on the beloved Cá Ngựa formula — familiar enough to onboard instantly, yet transformed beyond recognition with new mechanics.</p>
-      </div>
-      <div class="feature-card reveal delay-2" style="--fc-color:#52D475">
-        <div class="fc-icon" style="background:linear-gradient(135deg,#C8FFD8,#A0F0B8)">✨</div>
-        <div class="fc-title">Strategic Rune System</div>
-        <p class="fc-desc">Draw, hold, and deploy magical Rune cards that protect your pieces, devastate opponents, or swing the entire race in one play.</p>
-      </div>
-      <div class="feature-card reveal delay-3" style="--fc-color:#FFD740">
-        <div class="fc-icon" style="background:linear-gradient(135deg,#FFF3C0,#FFE080)">⚡</div>
-        <div class="fc-title">Simultaneous Card Placement</div>
-        <p class="fc-desc">All players choose and reveal Rune cards at the same moment — no waiting, no predictability, pure tension with every round.</p>
-      </div>
-      <div class="feature-card reveal delay-1" style="--fc-color:#A487FF">
-        <div class="fc-icon" style="background:linear-gradient(135deg,#E8E0FF,#D0C0FF)">🧠</div>
-        <div class="fc-title">Bluff & Mind Games</div>
-        <p class="fc-desc">Read opponents. Misdirect them. Every card play is a statement — but is it true? The meta-game of bluffing runs as deep as you let it.</p>
-      </div>
-      <div class="feature-card reveal delay-2" style="--fc-color:#E8463A">
-        <div class="fc-icon" style="background:linear-gradient(135deg,#FFD8D6,#FFC0BC)">🎭</div>
-        <div class="fc-title">Unique Disguise Mechanic</div>
-        <p class="fc-desc">Disguise yourself as another player while deploying traps — frame your friends, break alliances, and create cinematic drama.</p>
-      </div>
-      <div class="feature-card reveal delay-3" style="--fc-color:#52D475">
-        <div class="fc-icon" style="background:linear-gradient(135deg,#C8FFD8,#A0F0B8)">🏆</div>
-        <div class="fc-title">Family & Competitive Depth</div>
-        <p class="fc-desc">Casual sessions for families and friends, ranked competitive play for serious strategists — one game, infinite layers of engagement.</p>
-      </div>
+      <div class="feature-card reveal delay-1" style="--fc-color:#4A9CF5"><div class="fc-icon" style="background:linear-gradient(135deg,#C8E8FF,#A0D0FF)">🏛️</div><div class="fc-title">Traditional Board Game Roots</div><p class="fc-desc">Built on the beloved Cá Ngựa formula — familiar enough to onboard instantly, yet transformed beyond recognition with new mechanics.</p></div>
+      <div class="feature-card reveal delay-2" style="--fc-color:#52D475"><div class="fc-icon" style="background:linear-gradient(135deg,#C8FFD8,#A0F0B8)">✨</div><div class="fc-title">Strategic Rune System</div><p class="fc-desc">Draw, hold, and deploy magical Rune cards that protect your pieces, devastate opponents, or swing the entire race in one play.</p></div>
+      <div class="feature-card reveal delay-3" style="--fc-color:#FFD740"><div class="fc-icon" style="background:linear-gradient(135deg,#FFF3C0,#FFE080)">⚡</div><div class="fc-title">Simultaneous Card Placement</div><p class="fc-desc">All players choose and reveal Rune cards at the same moment — no waiting, no predictability, pure tension with every round.</p></div>
+      <div class="feature-card reveal delay-1" style="--fc-color:#A487FF"><div class="fc-icon" style="background:linear-gradient(135deg,#E8E0FF,#D0C0FF)">🧠</div><div class="fc-title">Bluff &amp; Mind Games</div><p class="fc-desc">Read opponents. Misdirect them. Every card play is a statement — but is it true? The meta-game of bluffing runs as deep as you let it.</p></div>
+      <div class="feature-card reveal delay-2" style="--fc-color:#E8463A"><div class="fc-icon" style="background:linear-gradient(135deg,#FFD8D6,#FFC0BC)">🎭</div><div class="fc-title">Unique Disguise Mechanic</div><p class="fc-desc">Disguise yourself as another player while deploying traps — frame your friends, break alliances, and create cinematic drama.</p></div>
+      <div class="feature-card reveal delay-3" style="--fc-color:#52D475"><div class="fc-icon" style="background:linear-gradient(135deg,#C8FFD8,#A0F0B8)">🏆</div><div class="fc-title">Family &amp; Competitive Depth</div><p class="fc-desc">Casual sessions for families and friends, ranked competitive play for serious strategists — one game, infinite layers of engagement.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ GALLERY ═══════════════════ -->
-<section class="gallery-section section-inner" id="gallery" style="position:relative;z-index:10;padding:80px 20px;max-width:1200px;margin:0 auto;">
+<!-- ═══════ GALLERY ═══════ -->
+<section class="gallery-section" id="gallery">
   <div class="section-header reveal">
     <div class="section-eyebrow"><i class="bi bi-images"></i> Gameplay Showcase</div>
     <div class="section-title">See It In <span class="hi-blue">Action</span></div>
     <p class="section-sub">3D rendered world, vibrant UI, real-time multiplayer — Rune Race is as beautiful as it is strategic.</p>
   </div>
   <div class="gallery-grid reveal">
-    <div class="gallery-item gi1" onclick="openLb('assets/gameplay-1.png')">
-      <img src="assets/gameplay-1.png" alt="3D Game Board" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="placeholder" style="display:none">🎲</div>
-    </div>
-    <div class="gallery-item gi2" onclick="openLb('assets/hero.jpg')">
-      <img src="assets/hero.jpg" alt="Game Cover" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="placeholder" style="display:none">🏆</div>
-    </div>
-    <div class="gallery-item gi3" onclick="openLb('assets/gameplay-2.jpg')">
-      <img src="assets/gameplay-2.jpg" alt="Lobby" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="placeholder" style="display:none">🏠</div>
-    </div>
-    <div class="gallery-item gi4" onclick="openLb('assets/gameplay-3.jpg')">
-      <img src="assets/gameplay-3.jpg" alt="Game Menu" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="placeholder" style="display:none">🌙</div>
-    </div>
-    <div class="gallery-item gi5" onclick="openLb('assets/gameplay-5.jpg')">
-      <img src="assets/gameplay-5.jpg" alt="Room Creation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="placeholder" style="display:none">🎮</div>
-    </div>
+    <div class="gallery-item gi1" onclick="openLb('assets/gameplay-1.png')"><img src="assets/gameplay-1.png" alt="3D Game Board" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="placeholder" style="display:none">🎲</div></div>
+    <div class="gallery-item gi2" onclick="openLb('assets/hero.jpg')"><img src="assets/hero.jpg" alt="Game Cover" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="placeholder" style="display:none">🏆</div></div>
+    <div class="gallery-item gi3" onclick="openLb('assets/gameplay-2.jpg')"><img src="assets/gameplay-2.jpg" alt="Lobby" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="placeholder" style="display:none">🏠</div></div>
+    <div class="gallery-item gi4" onclick="openLb('assets/gameplay-3.jpg')"><img src="assets/gameplay-3.jpg" alt="Game Menu" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="placeholder" style="display:none">🌙</div></div>
+    <div class="gallery-item gi5" onclick="openLb('assets/gameplay-5.jpg')"><img src="assets/gameplay-5.jpg" alt="Room Creation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="placeholder" style="display:none">🎮</div></div>
   </div>
 </section>
 
-<!-- ═══════════════════ RUNE MECHANICS ═══════════════════ -->
+<!-- ═══════ RUNE MECHANICS ═══════ -->
 <section class="section" id="mechanics">
   <div class="section-inner">
     <div class="section-header reveal">
@@ -1033,103 +609,22 @@ footer {
       <button class="rune-tab" onclick="filterRunes('special',this)"><i class="bi bi-stars"></i> Special</button>
     </div>
     <div class="rune-grid" id="rune-grid">
-
-      <!-- SUPPORT -->
-      <div class="rune-card reveal delay-1" data-type="support" style="--rc-color:#4A9CF5">
-        <div class="rune-card-header">
-          <div class="rune-symbol" style="background:linear-gradient(135deg,#C8E8FF,#A0D0FF)">🕊️</div>
-          <div>
-            <div class="rune-type" style="color:#2E78D0">Support Rune</div>
-            <div class="rune-name">Escape Stable</div>
-          </div>
-        </div>
-        <p class="rune-desc">Immediately release a piece from your stable onto the board — no dice roll required. Perfect for getting into the race when fortune refuses to cooperate.</p>
-      </div>
-
-      <div class="rune-card reveal delay-2" data-type="support" style="--rc-color:#4A9CF5">
-        <div class="rune-card-header">
-          <div class="rune-symbol" style="background:linear-gradient(135deg,#C8E8FF,#A0D0FF)">⚡</div>
-          <div>
-            <div class="rune-type" style="color:#2E78D0">Support Rune</div>
-            <div class="rune-name">Double Steps</div>
-          </div>
-        </div>
-        <p class="rune-desc">Your chosen piece moves double the distance of your dice roll this turn. Close the gap on leaders or secure a last-second victory with one dramatic surge.</p>
-      </div>
-
-      <div class="rune-card reveal delay-3" data-type="support" style="--rc-color:#4A9CF5">
-        <div class="rune-card-header">
-          <div class="rune-symbol" style="background:linear-gradient(135deg,#C8E8FF,#A0D0FF)">🛡️</div>
-          <div>
-            <div class="rune-type" style="color:#2E78D0">Support Rune</div>
-            <div class="rune-name">Shield</div>
-          </div>
-        </div>
-        <p class="rune-desc">Protect one piece from the next Trap card that targets it. Your opponent played a Freeze? Not today. The Shield absorbs it entirely, no questions asked.</p>
-      </div>
-
-      <!-- TRAP -->
-      <div class="rune-card reveal delay-1" data-type="trap" style="--rc-color:#E8463A">
-        <div class="rune-card-header">
-          <div class="rune-symbol" style="background:linear-gradient(135deg,#FFD8D6,#FFC0BC)">❄️</div>
-          <div>
-            <div class="rune-type" style="color:#D93025">Trap Rune</div>
-            <div class="rune-name">Freeze</div>
-          </div>
-        </div>
-        <p class="rune-desc">Lock a targeted opponent's piece in place for one full round. They can't move it, can't protect it — they can only watch and hope you don't capitalize.</p>
-      </div>
-
-      <div class="rune-card reveal delay-2" data-type="trap" style="--rc-color:#E8463A">
-        <div class="rune-card-header">
-          <div class="rune-symbol" style="background:linear-gradient(135deg,#FFD8D6,#FFC0BC)">🏠</div>
-          <div>
-            <div class="rune-type" style="color:#D93025">Trap Rune</div>
-            <div class="rune-name">Return Home</div>
-          </div>
-        </div>
-        <p class="rune-desc">Send a target piece all the way back to its stable. Brutal when used against a piece inches from the finish line — the most feared card in any match.</p>
-      </div>
-
-      <div class="rune-card reveal delay-3" data-type="trap" style="--rc-color:#E8463A">
-        <div class="rune-card-header">
-          <div class="rune-symbol" style="background:linear-gradient(135deg,#FFD8D6,#FFC0BC)">⬅️</div>
-          <div>
-            <div class="rune-type" style="color:#D93025">Trap Rune</div>
-            <div class="rune-name">Move Backward</div>
-          </div>
-        </div>
-        <p class="rune-desc">Force a target piece to retreat a set number of squares. A precision strike — surgical when timed correctly, devastating when it knocks someone off a safe tile.</p>
-      </div>
-
-      <!-- SPECIAL -->
-      <div class="rune-card reveal delay-1" data-type="special" style="--rc-color:#A487FF">
-        <div class="rune-card-header">
-          <div class="rune-symbol" style="background:linear-gradient(135deg,#E8E0FF,#D0C0FF)">🔄</div>
-          <div>
-            <div class="rune-type" style="color:#6B3FD8">Special Rune</div>
-            <div class="rune-name">Position Swap</div>
-          </div>
-        </div>
-        <p class="rune-desc">Instantly swap positions between any two pieces on the board — yours and an opponent's, or two opponents' pieces. The most chaotic card in the deck.</p>
-      </div>
-
-      <div class="rune-card reveal delay-2" data-type="special" style="--rc-color:#A487FF;grid-column:span 2">
-        <div class="rune-card-header">
-          <div class="rune-symbol" style="background:linear-gradient(135deg,#E8E0FF,#D0C0FF)">🎭</div>
-          <div>
-            <div class="rune-type" style="color:#6B3FD8">Special Rune · Signature</div>
-            <div class="rune-name">Disguise</div>
-          </div>
-        </div>
-        <p class="rune-desc">When playing a Trap card, disguise your identity as another player. The victim believes someone else attacked them — chaos, betrayal, and broken alliances ensue. Refuse Disguise for 5 turns straight? Earn a free Support Rune as your reward for playing it straight.</p>
-      </div>
-
+      <div class="rune-card reveal delay-1" data-type="support" style="--rc-color:#4A9CF5"><div class="rune-card-header"><div class="rune-symbol" style="background:linear-gradient(135deg,#C8E8FF,#A0D0FF)">🕊️</div><div><div class="rune-type" style="color:#2E78D0">Support Rune</div><div class="rune-name">Escape Stable</div></div></div><p class="rune-desc">Immediately release a piece from your stable onto the board — no dice roll required. Perfect for getting into the race when fortune refuses to cooperate.</p></div>
+      <div class="rune-card reveal delay-2" data-type="support" style="--rc-color:#4A9CF5"><div class="rune-card-header"><div class="rune-symbol" style="background:linear-gradient(135deg,#C8E8FF,#A0D0FF)">🛡️</div><div><div class="rune-type" style="color:#2E78D0">Support Rune</div><div class="rune-name">Shield</div></div></div><p class="rune-desc">Protect one piece from the next Trap card that targets it. Your opponent played a Freeze? Not today. The Shield absorbs it entirely, no questions asked.</p></div>
+      <div class="rune-card reveal delay-3" data-type="support" style="--rc-color:#4A9CF5"><div class="rune-card-header"><div class="rune-symbol" style="background:linear-gradient(135deg,#C8E8FF,#A0D0FF)">➕</div><div><div class="rune-type" style="color:#2E78D0">Support Rune</div><div class="rune-name">Advance (2/3/4 Steps)</div></div></div><p class="rune-desc">Gain 2, 3, or 4 extra steps on top of your current movement. Stack multiples in a single turn for game-changing surges up the board.</p></div>
+      <div class="rune-card reveal delay-1" data-type="trap" style="--rc-color:#E8463A"><div class="rune-card-header"><div class="rune-symbol" style="background:linear-gradient(135deg,#FFD8D6,#FFC0BC)">❄️</div><div><div class="rune-type" style="color:#D93025">Trap Rune</div><div class="rune-name">Freeze</div></div></div><p class="rune-desc">Lock a targeted opponent's piece in place for two full rounds. They can't move it — they can only watch and hope you don't capitalize.</p></div>
+      <div class="rune-card reveal delay-2" data-type="trap" style="--rc-color:#E8463A"><div class="rune-card-header"><div class="rune-symbol" style="background:linear-gradient(135deg,#FFD8D6,#FFC0BC)">🏠</div><div><div class="rune-type" style="color:#D93025">Trap Rune</div><div class="rune-name">Return Home</div></div></div><p class="rune-desc">Send a piece all the way back to its stable. Brutal against a piece inches from the finish line — the most feared card in any match.</p></div>
+      <div class="rune-card reveal delay-3" data-type="trap" style="--rc-color:#E8463A"><div class="rune-card-header"><div class="rune-symbol" style="background:linear-gradient(135deg,#FFD8D6,#FFC0BC)">⬅️</div><div><div class="rune-type" style="color:#D93025">Trap Rune</div><div class="rune-name">Move Backward (3/4/5)</div></div></div><p class="rune-desc">Force a piece to retreat 3, 4, or 5 squares. A precision strike — surgical when timed correctly, devastating when it knocks someone off a safe tile.</p></div>
+      <div class="rune-card reveal delay-1" data-type="special" style="--rc-color:#A487FF"><div class="rune-card-header"><div class="rune-symbol" style="background:linear-gradient(135deg,#E8E0FF,#D0C0FF)">🔄</div><div><div class="rune-type" style="color:#6B3FD8">Special Rune</div><div class="rune-name">Position Swap</div></div></div><p class="rune-desc">Instantly swap positions between your piece and an opponent's on the shared path. The most chaotic card in the deck — use wisely.</p></div>
+      <div class="rune-card reveal delay-2" data-type="special" style="--rc-color:#A487FF;grid-column:span 2"><div class="rune-card-header"><div class="rune-symbol" style="background:linear-gradient(135deg,#E8E0FF,#D0C0FF)">🎭</div><div><div class="rune-type" style="color:#6B3FD8">Special Rune · Signature</div><div class="rune-name">Disguise System</div></div></div><p class="rune-desc">When placing any marker, display another player's identity as the apparent owner. The victim believes someone else set the trap — chaos, betrayal, and broken alliances ensue. Play 5 honest turns in a row? Earn a free Support Rune as your reward for integrity.</p></div>
+    </div>
+    <div style="text-align:center;margin-top:28px;" class="reveal">
+      <a href="rules.html" class="cta-big cta-purple"><i class="bi bi-book-fill"></i> Read Full Rules</a>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ DISGUISE ═══════════════════ -->
+<!-- ═══════ DISGUISE ═══════ -->
 <section class="section" id="disguise">
   <div class="section-inner">
     <div class="section-header reveal">
@@ -1152,28 +647,16 @@ footer {
         </div>
       </div>
       <div class="disguise-pillars reveal delay-2">
-        <div class="pillar">
-          <div class="pillar-icon">🎭</div>
-          <div><h4>Drama by Design</h4><p>Every match generates moments of shock and revelation — perfectly designed for social play and content creation.</p></div>
-        </div>
-        <div class="pillar">
-          <div class="pillar-icon">🧠</div>
-          <div><h4>Bluffing & Psychology</h4><p>Read who disguised themselves based on play patterns. Master the meta-game that exists beyond the board itself.</p></div>
-        </div>
-        <div class="pillar">
-          <div class="pillar-icon">💬</div>
-          <div><h4>Social Interaction</h4><p>Fuels real-world conversations, arguments, and laughter that persist long after the game ends.</p></div>
-        </div>
-        <div class="pillar">
-          <div class="pillar-icon">🎁</div>
-          <div><h4>Honest Play Rewards</h4><p>Refuse disguise for 5 consecutive turns and receive a free Support Rune — the game rewards both deception and integrity.</p></div>
-        </div>
+        <div class="pillar"><div class="pillar-icon">🎭</div><div><h4>Drama by Design</h4><p>Every match generates moments of shock and revelation — perfectly designed for social play and content creation.</p></div></div>
+        <div class="pillar"><div class="pillar-icon">🧠</div><div><h4>Bluffing &amp; Psychology</h4><p>Read who disguised themselves based on play patterns. Master the meta-game that exists beyond the board itself.</p></div></div>
+        <div class="pillar"><div class="pillar-icon">💬</div><div><h4>Social Interaction</h4><p>Fuels real-world conversations, arguments, and laughter that persist long after the game ends.</p></div></div>
+        <div class="pillar"><div class="pillar-icon">🎁</div><div><h4>Honest Play Rewards</h4><p>Refuse disguise for 5 consecutive turns and receive a free Support Rune — the game rewards both deception and integrity.</p></div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ AUDIENCE ═══════════════════ -->
+<!-- ═══════ AUDIENCE ═══════ -->
 <section class="section" id="audience">
   <div class="section-inner">
     <div class="section-header reveal">
@@ -1182,41 +665,17 @@ footer {
       <p class="section-sub">From family game nights to competitive ranked play — Rune Race has a mode for every player.</p>
     </div>
     <div class="audience-grid">
-      <div class="audience-card reveal delay-1">
-        <span class="audience-emoji">🧒</span>
-        <div class="audience-name">Kids</div>
-        <p class="audience-desc">Familiar Ludo rules with magical cards that feel like superpowers</p>
-      </div>
-      <div class="audience-card reveal delay-2">
-        <span class="audience-emoji">🎓</span>
-        <div class="audience-name">Students</div>
-        <p class="audience-desc">Quick sessions between classes, deep enough for dorm-room rivalries</p>
-      </div>
-      <div class="audience-card reveal delay-3">
-        <span class="audience-emoji">🎮</span>
-        <div class="audience-name">Casual Gamers</div>
-        <p class="audience-desc">Jump in anytime, learn in minutes, still feel clever every session</p>
-      </div>
-      <div class="audience-card reveal delay-1">
-        <span class="audience-emoji">👨‍👩‍👧‍👦</span>
-        <div class="audience-name">Families</div>
-        <p class="audience-desc">The digital game night you can actually play with grandparents and kids</p>
-      </div>
-      <div class="audience-card reveal delay-2">
-        <span class="audience-emoji">👥</span>
-        <div class="audience-name">Friend Groups</div>
-        <p class="audience-desc">Creates betrayals and laughter that fuel inside jokes for years</p>
-      </div>
-      <div class="audience-card reveal delay-3">
-        <span class="audience-emoji">🏆</span>
-        <div class="audience-name">Strategy Players</div>
-        <p class="audience-desc">Master the card meta, read opponents, build winning systems</p>
-      </div>
+      <div class="audience-card reveal delay-1"><span class="audience-emoji">🧒</span><div class="audience-name">Kids</div><p class="audience-desc">Familiar Ludo rules with magical cards that feel like superpowers</p></div>
+      <div class="audience-card reveal delay-2"><span class="audience-emoji">🎓</span><div class="audience-name">Students</div><p class="audience-desc">Quick sessions between classes, deep enough for dorm-room rivalries</p></div>
+      <div class="audience-card reveal delay-3"><span class="audience-emoji">🎮</span><div class="audience-name">Casual Gamers</div><p class="audience-desc">Jump in anytime, learn in minutes, still feel clever every session</p></div>
+      <div class="audience-card reveal delay-1"><span class="audience-emoji">👨‍👩‍👧‍👦</span><div class="audience-name">Families</div><p class="audience-desc">The digital game night you can actually play with grandparents and kids</p></div>
+      <div class="audience-card reveal delay-2"><span class="audience-emoji">👥</span><div class="audience-name">Friend Groups</div><p class="audience-desc">Creates betrayals and laughter that fuel inside jokes for years</p></div>
+      <div class="audience-card reveal delay-3"><span class="audience-emoji">🏆</span><div class="audience-name">Strategy Players</div><p class="audience-desc">Master the card meta, read opponents, build winning systems</p></div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ COMPARISON ═══════════════════ -->
+<!-- ═══════ COMPARISON ═══════ -->
 <section class="section" id="comparison">
   <div class="section-inner">
     <div class="section-header reveal">
@@ -1227,12 +686,7 @@ footer {
     <div class="compare-panel reveal">
       <table class="compare-table">
         <thead>
-          <tr>
-            <th>Feature</th>
-            <th>Traditional Ludo</th>
-            <th>Classic Cá Ngựa</th>
-            <th class="col-rune">⚡ Rune Race</th>
-          </tr>
+          <tr><th>Feature</th><th>Traditional Ludo</th><th>Classic Cá Ngựa</th><th class="col-rune">⚡ Rune Race</th></tr>
         </thead>
         <tbody>
           <tr><td>Online Multiplayer</td><td><span class="check-n">✗</span></td><td><span class="check-n">✗</span></td><td class="col-rune-cell"><span class="check-y">✓</span></td></tr>
@@ -1249,29 +703,112 @@ footer {
   </div>
 </section>
 
+<!-- ═══════ ORGANIZING TEAM ═══════ -->
+<section class="section" id="team">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow"><i class="bi bi-people-fill"></i> Behind the Game</div>
+      <div class="section-title">Organizing <span class="hi-gold">Team</span></div>
+      <p class="section-sub">The dedicated people who designed, built, and brought Rune Race to life.</p>
+    </div>
+    <div class="team-grid">
 
-<!-- ═══════════════════ FINAL CTA ═══════════════════ -->
+      <div class="team-card reveal delay-1" style="--tc-color:linear-gradient(90deg,#5BA8FF,#3A7BE8);--tc-pill:linear-gradient(135deg,#5BA8FF,#2E78D0)">
+        <div class="team-avatar-wrap">
+          <img src="assets/team/nguyen-thanh-vinh.jpg" alt="Nguyễn Thành Vinh" onerror="this.style.display='none';this.parentElement.querySelector('.avatar-fallback').style.display='block'">
+          <span class="avatar-fallback" style="display:none">👤</span>
+        </div>
+        <div class="team-name">Nguyễn Thành Vinh</div>
+        <a href="mailto:nguyenthanhvinh07052005@gmail.com" class="team-email"><i class="bi bi-envelope-fill"></i> nguyenthanhvinh07052005@gmail.com</a>
+      </div>
+
+      <div class="team-card reveal delay-2" style="--tc-color:linear-gradient(90deg,#52D475,#28944C);--tc-pill:linear-gradient(135deg,#52D475,#28944C)">
+        <div class="team-avatar-wrap">
+          <img src="assets/team/bui-viet-dung.jpg" alt="Bùi Việt Dũng" onerror="this.style.display='none';this.parentElement.querySelector('.avatar-fallback').style.display='block'">
+          <span class="avatar-fallback" style="display:none">👤</span>
+        </div>
+        <div class="team-name">Bùi Việt Dũng</div>
+        <a href="mailto:buidungnd.2005@gmail.com" class="team-email"><i class="bi bi-envelope-fill"></i> buidungnd.2005@gmail.com</a>
+      </div>
+
+      <div class="team-card reveal delay-3" style="--tc-color:linear-gradient(90deg,#FF8FAB,#D93070);--tc-pill:linear-gradient(135deg,#FF8FAB,#D93070)">
+        <div class="team-avatar-wrap">
+          <img src="assets/team/le-phuong-linh-nga.jpg" alt="Lê Phương Linh Nga" onerror="this.style.display='none';this.parentElement.querySelector('.avatar-fallback').style.display='block'">
+          <span class="avatar-fallback" style="display:none">👤</span>
+        </div>
+        <div class="team-name">Lê Phương Linh Nga</div>
+        <a href="mailto:lephuonglinhnga1801@gmail.com" class="team-email"><i class="bi bi-envelope-fill"></i> lephuonglinhnga1801@gmail.com</a>
+      </div>
+
+      <div class="team-card reveal delay-1" style="--tc-color:linear-gradient(90deg,#FFD740,#E8A000);--tc-pill:linear-gradient(135deg,#FFD740,#B07800)">
+        <div class="team-avatar-wrap">
+          <img src="assets/team/doan-ha-trang.jpg" alt="Doãn Hà Trang" onerror="this.style.display='none';this.parentElement.querySelector('.avatar-fallback').style.display='block'">
+          <span class="avatar-fallback" style="display:none">👤</span>
+        </div>
+        <div class="team-name">Doãn Hà Trang</div>
+        <a href="mailto:doanthihatrang.gt2004@gmail.com" class="team-email"><i class="bi bi-envelope-fill"></i> doanthihatrang.gt2004@gmail.com</a>
+      </div>
+
+      <div class="team-card reveal delay-2" style="--tc-color:linear-gradient(90deg,#A487FF,#6B3FD8);--tc-pill:linear-gradient(135deg,#A487FF,#6B3FD8)">
+        <div class="team-avatar-wrap">
+          <img src="assets/team/tran-thuy-binh.jpg" alt="Trần Thuỷ Bình" onerror="this.style.display='none';this.parentElement.querySelector('.avatar-fallback').style.display='block'">
+          <span class="avatar-fallback" style="display:none">👤</span>
+        </div>
+        <div class="team-name">Trần Thuỷ Bình</div>
+        <a href="mailto:tpie078@gmail.com" class="team-email"><i class="bi bi-envelope-fill"></i> tpie078@gmail.com</a>
+      </div>
+
+      <div class="team-card reveal delay-3" style="--tc-color:linear-gradient(90deg,#FF6B40,#D93025);--tc-pill:linear-gradient(135deg,#FF6B40,#D93025)">
+        <div class="team-avatar-wrap">
+          <img src="assets/team/nguyen-thi-viet-ha.jpg" alt="Nguyễn Thị Việt Hà" onerror="this.style.display='none';this.parentElement.querySelector('.avatar-fallback').style.display='block'">
+          <span class="avatar-fallback" style="display:none">👤</span>
+        </div>
+        <div class="team-name">Nguyễn Thị Việt Hà</div>
+        <a href="mailto:hantvhs181124@fpt.edu.vn" class="team-email"><i class="bi bi-envelope-fill"></i> hantvhs181124@fpt.edu.vn</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CONTRIBUTORS ═══════ -->
+<section class="section" id="contributors" style="padding-top:0;">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow"><i class="bi bi-heart-fill"></i> With Thanks</div>
+      <div class="section-title">Our <span class="hi-green">Contributors</span></div>
+      <p class="section-sub">Individuals who helped shape Rune Race with their time, ideas, and passion.</p>
+    </div>
+    <div class="contributor-grid">
+
+      <div class="team-card reveal delay-1" style="--tc-color:linear-gradient(90deg,#52D475,#28944C);--tc-pill:linear-gradient(135deg,#52D475,#28944C)">
+        <div class="team-avatar-wrap">
+          <img src="assets/team/thu.jpg" alt="Thư" onerror="this.style.display='none';this.parentElement.querySelector('.avatar-fallback').style.display='block'">
+          <span class="avatar-fallback" style="display:none">👤</span>
+        </div>
+        <div class="team-name">Thư</div>
+        <div class="team-role">Contributor</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FINAL CTA ═══════ -->
 <section class="cta-final" id="play">
   <div class="cta-final-panel reveal">
     <span class="cta-emoji">⚡</span>
     <div class="cta-title">Ready to Race?</div>
     <p class="cta-sub">Jump into a match free, invite friends with a room code, and discover which of them you can never trust again.</p>
     <div class="cta-buttons">
-<a 
-  href="https://rune-race.onrender.com/" 
-  target="_blank" 
-  rel="noopener noreferrer"
-  class="cta-big cta-green"
->
-  <i class="bi bi-controller"></i> Play Free Now
-</a>
+      <a href="https://rune-race.onrender.com/" target="_blank" rel="noopener noreferrer" class="cta-big cta-green"><i class="bi bi-controller"></i> Play Free Now</a>
+      <a href="rules.html" class="cta-big cta-purple"><i class="bi bi-book-fill"></i> Game Rules</a>
       <a href="#" class="cta-big cta-blue"><i class="bi bi-discord"></i> Join Discord</a>
-      <a href="#about" class="cta-big cta-yellow"><i class="bi bi-book-fill"></i> Learn More</a>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<!-- ═══════ FOOTER ═══════ -->
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
@@ -1290,6 +827,7 @@ footer {
       <a href="#features">Features</a>
       <a href="#mechanics">Rune Cards</a>
       <a href="#disguise">Disguise System</a>
+      <a href="rules.html">Game Rules</a>
     </div>
     <div class="footer-col">
       <h4>Players</h4>
@@ -1301,9 +839,9 @@ footer {
     </div>
     <div class="footer-col">
       <h4>Project</h4>
+      <a href="#team">Our Team</a>
       <a href="#">Developer Blog</a>
       <a href="#">Press Kit</a>
-      <a href="#">Investors</a>
       <a href="#">Contact</a>
       <a href="#">Privacy Policy</a>
     </div>
@@ -1314,7 +852,7 @@ footer {
   </div>
 </footer>
 
-</div><!-- end landing-page -->
+</div>
 
 <script>
 // DAY/NIGHT
@@ -1332,24 +870,20 @@ function closeLb(){document.getElementById('lightbox').classList.remove('open');
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
 
 // RUNE TABS
-function filterRunes(type, btn){
+function filterRunes(type,btn){
   document.querySelectorAll('.rune-tab').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  document.querySelectorAll('.rune-card').forEach(c=>{
-    c.style.display=(type==='all'||c.dataset.type===type)?'':'none';
-  });
+  document.querySelectorAll('.rune-card').forEach(c=>{c.style.display=(type==='all'||c.dataset.type===type)?'':'none';});
 }
 
 // SCROLL REVEAL
-const ro=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});
-},{threshold:0.1,rootMargin:'0px 0px -30px 0px'});
+const ro=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -30px 0px'});
 document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 
 // STICKY NAV scroll effect
 window.addEventListener('scroll',()=>{
   const nav=document.querySelector('.sticky-nav');
-  if(nav) nav.style.background=window.scrollY>50?'rgba(255,255,255,0.82)':'rgba(255,255,255,0.55)';
+  if(nav)nav.style.background=window.scrollY>50?'rgba(255,255,255,0.82)':'rgba(255,255,255,0.55)';
 });
 </script>
 </body>
