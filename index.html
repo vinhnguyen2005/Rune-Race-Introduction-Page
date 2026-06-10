@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rune Race – Trò Chơi Board Trực Tuyến</title>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800&family=Fredoka:wght@500;600;700&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -222,7 +224,7 @@ body.night .clouds-layer { opacity:0.5;filter:brightness(0.6); }
   box-shadow: 0 2px 16px rgba(60,120,200,0.1);
   transition: background 0.3s;
 }
-.sticky-logo { font-family:'Fredoka',cursive;font-size:22px;color:#6B3A00;letter-spacing:1px; }
+.sticky-logo { font-family:'Be Vietnam Pro',sans-serif;font-size:22px;color:#6B3A00;letter-spacing:1px; }
 .sticky-links { display:flex;gap:4px;align-items:center; }
 .sticky-link { font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:13px;color:#3B5BA0;text-decoration:none;padding:6px 12px;border-radius:999px;transition:all 0.15s; }
 .sticky-link:hover { background:rgba(255,255,255,0.7); }
@@ -268,7 +270,7 @@ body.night .clouds-layer { opacity:0.5;filter:brightness(0.6); }
 .logo-board::before,.logo-board::after { content:'\f586';position:absolute;font-family:'bootstrap-icons';font-size:20px;font-style:normal;font-weight:400;color:#8B5000;top:50%;transform:translateY(-50%); }
 .logo-board::before { left:-14px; }
 .logo-board::after { right:-14px; }
-.game-title { font-family:'Fredoka',cursive;font-size:52px;color:#6B3A00;letter-spacing:2px;line-height:1;text-shadow:2px 3px 0 rgba(255,255,255,0.4); }
+.game-title { font-family:'Be Vietnam Pro',sans-serif;font-size:52px;color:#6B3A00;letter-spacing:2px;line-height:1;text-shadow:2px 3px 0 rgba(255,255,255,0.4); }
 .game-tagline { font-size:13px;font-weight:800;color:#8B5000;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:6px; }
 .pawn-parade { display:flex;justify-content:center;gap:18px;margin-top:14px; }
 .pawn-figure { display:flex;flex-direction:column;align-items:center;gap:2px;animation:pawn-bounce 1.6s ease-in-out infinite; }
@@ -291,7 +293,7 @@ body.night .clouds-layer { opacity:0.5;filter:brightness(0.6); }
 .section-inner { max-width:1100px;margin:0 auto; }
 .section-header { text-align:center;margin-bottom:48px; }
 .section-eyebrow { display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.6);border:2px solid rgba(255,255,255,0.9);border-radius:999px;padding:5px 16px;font-weight:800;font-size:12px;color:#3B5BA0;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;backdrop-filter:blur(4px); }
-.section-title { font-family:'Fredoka',cursive;font-size:clamp(28px,5vw,42px);color:var(--text-dark);line-height:1.15;letter-spacing:0.5px; }
+.section-title { font-family:'Be Vietnam Pro',sans-serif;font-size:clamp(28px,5vw,42px);font-weight:800;color:var(--text-dark);line-height:1.15;letter-spacing:0.5px; }
 .section-title .hi-blue { color:#2E78D0; }
 .section-title .hi-green { color:#28944C; }
 .section-title .hi-red { color:#D93025; }
@@ -305,7 +307,7 @@ body.night .clouds-layer { opacity:0.5;filter:brightness(0.6); }
 .about-img-wrap img { width:100%;height:100%;object-fit:cover;display:block; }
 .about-img-placeholder { width:100%;height:100%;background:linear-gradient(135deg,#C8E6FF,#A0D8FF);display:flex;align-items:center;justify-content:center;font-size:80px; }
 .about-badge { position:absolute;bottom:14px;right:14px;background:linear-gradient(160deg,#FFFEF5,#FFF8E0);border:3px solid var(--panel-border);border-radius:16px;padding:10px 16px;box-shadow:0 4px 0 var(--panel-shadow);text-align:center; }
-.about-badge-num { font-family:'Fredoka',cursive;font-size:28px;color:#CC8800;display:block;line-height:1; }
+.about-badge-num { font-family:'Be Vietnam Pro',sans-serif;font-size:28px;color:#CC8800;display:block;line-height:1; }
 .about-badge-lbl { font-size:11px;font-weight:800;color:var(--text-mid);text-transform:uppercase;letter-spacing:1px;margin-top:2px; }
 .about-bullets { display:flex;flex-direction:column;gap:10px; }
 .about-bullet { display:flex;align-items:flex-start;gap:12px;background:rgba(255,255,255,0.6);border:2px solid rgba(255,220,80,0.5);border-radius:14px;padding:12px 14px;transition:all 0.15s; }
@@ -326,7 +328,7 @@ body.night .clouds-layer { opacity:0.5;filter:brightness(0.6); }
 /* ═══ SHOWCASE — ANIMATED VISUAL CARDS ═══ */
 .showcase-intro { display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px;align-items:start; }
 .showcase-headline { display:flex;flex-direction:column;gap:12px;justify-content:center; }
-.showcase-headline h3 { font-family:'Fredoka',cursive;font-size:28px;color:var(--text-dark); }
+.showcase-headline h3 { font-family:'Be Vietnam Pro',sans-serif;font-size:28px;color:var(--text-dark); }
 .showcase-headline p { font-size:14px;font-weight:600;color:var(--text-mid);line-height:1.7; }
 .showcase-img { border-radius:20px;overflow:hidden;border:4px solid var(--panel-border);box-shadow:0 8px 0 var(--panel-shadow); }
 .showcase-img img { width:100%;display:block;object-fit:cover; }
@@ -340,7 +342,7 @@ body.night .clouds-layer { opacity:0.5;filter:brightness(0.6); }
 /* LOBBY visual */
 .sc-lobby { background:linear-gradient(135deg,#1a2a4a 0%,#0d1f38 100%); }
 .sc-lobby .room-panel { background:rgba(255,255,255,0.08);border:2px solid rgba(100,180,255,0.3);border-radius:12px;padding:10px 16px;text-align:center;min-width:160px; }
-.sc-lobby .room-code { font-family:'Fredoka',cursive;font-size:26px;color:#FFD740;letter-spacing:4px;text-shadow:0 0 20px rgba(255,215,64,0.5); }
+.sc-lobby .room-code { font-family:'Be Vietnam Pro',sans-serif;font-size:26px;color:#FFD740;letter-spacing:4px;text-shadow:0 0 20px rgba(255,215,64,0.5); }
 .sc-lobby .room-label { font-size:10px;font-weight:800;color:rgba(255,255,255,0.5);letter-spacing:2px;text-transform:uppercase;margin-top:2px; }
 .sc-lobby .avatars-row { display:flex;gap:8px;justify-content:center;margin-top:10px; }
 .sc-lobby .av { width:28px;height:28px;border-radius:50%;border:2px solid rgba(255,255,255,0.3);animation:av-pop 0.4s ease backwards; }
@@ -385,7 +387,7 @@ body.night .clouds-layer { opacity:0.5;filter:brightness(0.6); }
 .sc-disguise .pill-b { background:rgba(91,168,255,0.2);color:#5BA8FF;border:1px solid rgba(91,168,255,0.4);animation:pill-flash 2s 0.5s ease-in-out infinite; }
 .sc-disguise .pill-c { background:rgba(255,107,96,0.2);color:#FF6B60;border:1px solid rgba(255,107,96,0.4);animation:pill-flash 2s 1s ease-in-out infinite; }
 @keyframes pill-flash{0%,100%{opacity:0.5;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
-.sc-disguise .question { position:absolute;left:-8px;bottom:4px;font-size:28px;font-weight:900;color:rgba(255,215,64,0.8);font-family:'Fredoka',cursive;animation:q-bounce 1.5s ease-in-out infinite; }
+.sc-disguise .question { position:absolute;left:-8px;bottom:4px;font-size:28px;font-weight:900;color:rgba(255,215,64,0.8);font-family:'Be Vietnam Pro',sans-serif;animation:q-bounce 1.5s ease-in-out infinite; }
 @keyframes q-bounce{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
 
 .showcase-item-body { padding:14px 16px; }
@@ -416,7 +418,7 @@ body.night .clouds-layer { opacity:0.5;filter:brightness(0.6); }
 
 /* RUNE CARDS */
 .rune-intro { display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;margin-bottom:40px; }
-.rune-intro-text h3 { font-family:'Fredoka',cursive;font-size:26px;color:var(--text-dark);margin-bottom:12px; }
+.rune-intro-text h3 { font-family:'Be Vietnam Pro',sans-serif;font-size:26px;color:var(--text-dark);margin-bottom:12px; }
 .rune-intro-text p { font-size:14px;font-weight:600;color:var(--text-mid);line-height:1.7; }
 .rune-legend { display:flex;flex-direction:column;gap:8px;margin-top:16px; }
 .rune-legend-item { display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:var(--text-dark); }
@@ -449,13 +451,13 @@ body.night .clouds-layer { opacity:0.5;filter:brightness(0.6); }
 .disguise-mask-area { text-align:center;padding:32px 20px 20px;border-bottom:3px dashed rgba(255,200,60,0.4); }
 .disguise-emoji { font-size:64px;display:block;margin-bottom:12px;animation:float-mask 3s ease-in-out infinite;filter:drop-shadow(0 6px 12px rgba(0,0,0,0.15)); }
 @keyframes float-mask { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-.disguise-showcase-title { font-family:'Fredoka',cursive;font-size:24px;color:#6B3A00;margin-bottom:4px; }
+.disguise-showcase-title {font-family:'Be Vietnam Pro',sans-serif;font-size:24px;color:#6B3A00;margin-bottom:4px; }
 .disguise-showcase-sub { font-size:13px;font-weight:700;color:var(--text-mid); }
 .disguise-stats-grid { display:grid;grid-template-columns:1fr 1fr; }
 .d-stat { padding:16px;text-align:center;border-right:2px dashed rgba(255,200,60,0.3);border-bottom:2px dashed rgba(255,200,60,0.3); }
 .d-stat:nth-child(2n) { border-right:none; }
 .d-stat:nth-child(3),.d-stat:nth-child(4) { border-bottom:none; }
-.d-stat-num { font-family:'Fredoka',cursive;font-size:28px;color:#CC8800;display:block;line-height:1; }
+.d-stat-num { font-family:'Be Vietnam Pro',sans-serif;font-size:28px;color:#CC8800;display:block;line-height:1; }
 .d-stat-lbl { font-size:10px;font-weight:800;color:var(--text-mid);text-transform:uppercase;letter-spacing:1px;margin-top:2px; }
 .pillar { background:linear-gradient(160deg,#FFFEF5,#FFF8E0);border:3px solid var(--panel-border);border-radius:16px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;box-shadow:0 4px 0 var(--panel-shadow);transition:all 0.15s;margin-bottom:12px; }
 .pillar:last-child { margin-bottom:0; }
@@ -487,7 +489,7 @@ body.night .clouds-layer { opacity:0.5;filter:brightness(0.6); }
 .turn-step:last-child { padding-bottom:0; }
 .turn-step::before { content:'';position:absolute;left:20px;top:44px;bottom:0;width:2px;background:linear-gradient(180deg,var(--panel-border),transparent);display:block; }
 .turn-step:last-child::before { display:none; }
-.turn-num { width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Fredoka',cursive;font-size:18px;color:white;flex-shrink:0;box-shadow:0 3px 0 rgba(0,0,0,0.15); }
+.turn-num { width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Be Vietnam Pro',sans-serif;font-size:18px;color:white;flex-shrink:0;box-shadow:0 3px 0 rgba(0,0,0,0.15); }
 .turn-content { background:linear-gradient(160deg,#FFFEF5,#FFF8E0);border:3px solid var(--panel-border);border-radius:16px;padding:14px 16px;flex:1;box-shadow:0 4px 0 var(--panel-shadow); }
 .turn-content h4 { font-weight:800;font-size:14px;color:var(--text-dark);margin-bottom:4px; }
 .turn-content p { font-size:12px;font-weight:600;color:var(--text-mid);line-height:1.5; }
@@ -539,7 +541,7 @@ body.dusk .contributor-note .contrib-names { color:#e8f0f8; }
 .cta-final-panel { max-width:600px;margin:0 auto;background:linear-gradient(160deg,#FFFEF5,#FFF8E0);border:4px solid var(--panel-border);border-radius:28px;box-shadow:0 10px 0 var(--panel-shadow),0 20px 40px rgba(0,0,0,0.15);padding:48px 40px;position:relative;overflow:hidden; }
 .cta-final-panel::before { content:'';position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,#52D475,#5BA8FF,#FFD740,#E8463A);border-radius:28px 28px 0 0; }
 .cta-emoji { font-size:56px;display:block;margin-bottom:16px;animation:float-mask 3s ease-in-out infinite; }
-.cta-title { font-family:'Fredoka',cursive;font-size:clamp(28px,5vw,40px);color:var(--text-dark);margin-bottom:10px; }
+.cta-title { font-family:'Be Vietnam Pro',sans-serif;font-size:clamp(28px,5vw,40px);color:var(--text-dark);margin-bottom:10px; }
 .cta-sub { font-size:15px;font-weight:600;color:var(--text-mid);margin-bottom:28px;line-height:1.6; }
 .cta-buttons { display:flex;gap:12px;justify-content:center;flex-wrap:wrap; }
 
@@ -789,7 +791,7 @@ footer { position:relative;z-index:10;background:rgba(255,255,255,0.5);backdrop-
                 <div class="dot"></div><div class="dot"></div>
                 <div class="dot"></div><div class="dot"></div>
               </div>
-              <div style="color:rgba(255,215,64,0.8);font-family:'Fredoka',cursive;font-size:28px">6</div>
+              <div style="color:rgba(255,215,64,0.8);font-family:'Be Vietnam Pro',sans-serif;font-size:28px">6</div>
             </div>
           </div>
         </div>
@@ -1142,34 +1144,40 @@ footer { position:relative;z-index:10;background:rgba(255,255,255,0.5);backdrop-
       <p class="section-sub">Những người đã thiết kế, xây dựng và đưa Rune Race đến tay người chơi.</p>
     </div>
     <div class="team-grid">
+      <div class="team-card reveal delay-3" style="--tc-color:linear-gradient(90deg,#FF8FAB,#D93070)">
+        <div class="team-avatar-wrap"><span>👤</span></div>
+        <div class="team-name">Lê Phương Linh Nga</div>
+        <span class="team-role" style="background:linear-gradient(135deg,#5BA8FF,#2E78D0)">Leader</span><br>
+        <a href="mailto:lephuonglinhnga1801@gmail.com" class="team-email"><i class="bi bi-envelope-fill"></i> lephuonglinhnga1801@gmail.com</a>
+      </div>
       <div class="team-card reveal delay-1" style="--tc-color:linear-gradient(90deg,#5BA8FF,#3A7BE8)">
         <div class="team-avatar-wrap"><span>👤</span></div>
         <div class="team-name">Nguyễn Thành Vinh</div>
+        <span class="team-role" style="background:linear-gradient(135deg,#5BA8FF,#2E78D0)">Developer</span><br>
         <a href="mailto:nguyenthanhvinh07052005@gmail.com" class="team-email"><i class="bi bi-envelope-fill"></i> nguyenthanhvinh07052005@gmail.com</a>
       </div>
       <div class="team-card reveal delay-2" style="--tc-color:linear-gradient(90deg,#52D475,#28944C)">
         <div class="team-avatar-wrap"><span>👤</span></div>
         <div class="team-name">Bùi Việt Dũng</div>
+        <span class="team-role" style="background:linear-gradient(135deg,#5BA8FF,#2E78D0)">Developer</span><br>
         <a href="mailto:buidungnd.2005@gmail.com" class="team-email"><i class="bi bi-envelope-fill"></i> buidungnd.2005@gmail.com</a>
-      </div>
-      <div class="team-card reveal delay-3" style="--tc-color:linear-gradient(90deg,#FF8FAB,#D93070)">
-        <div class="team-avatar-wrap"><span>👤</span></div>
-        <div class="team-name">Lê Phương Linh Nga</div>
-        <a href="mailto:lephuonglinhnga1801@gmail.com" class="team-email"><i class="bi bi-envelope-fill"></i> lephuonglinhnga1801@gmail.com</a>
       </div>
       <div class="team-card reveal delay-1" style="--tc-color:linear-gradient(90deg,#FFD740,#E8A000)">
         <div class="team-avatar-wrap"><span>👤</span></div>
         <div class="team-name">Doãn Hà Trang</div>
+        <span class="team-role" style="background:linear-gradient(135deg,#5BA8FF,#2E78D0)">Marketing</span><br>
         <a href="mailto:doanthihatrang.gt2004@gmail.com" class="team-email"><i class="bi bi-envelope-fill"></i> doanthihatrang.gt2004@gmail.com</a>
       </div>
       <div class="team-card reveal delay-2" style="--tc-color:linear-gradient(90deg,#A487FF,#6B3FD8)">
         <div class="team-avatar-wrap"><span>👤</span></div>
         <div class="team-name">Trần Thuỷ Bình</div>
+        <span class="team-role" style="background:linear-gradient(135deg,#5BA8FF,#2E78D0)">Quality Assurance</span><br>
         <a href="mailto:tpie078@gmail.com" class="team-email"><i class="bi bi-envelope-fill"></i> tpie078@gmail.com</a>
       </div>
       <div class="team-card reveal delay-3" style="--tc-color:linear-gradient(90deg,#FF6B40,#D93025)">
         <div class="team-avatar-wrap"><span>👤</span></div>
         <div class="team-name">Nguyễn Thị Việt Hà</div>
+        <span class="team-role" style="background:linear-gradient(135deg,#5BA8FF,#2E78D0)">Marketing</span><br>
         <a href="mailto:hantvhs181124@fpt.edu.vn" class="team-email"><i class="bi bi-envelope-fill"></i> hantvhs181124@fpt.edu.vn</a>
       </div>
     </div>
@@ -1185,7 +1193,7 @@ footer { position:relative;z-index:10;background:rgba(255,255,255,0.5);backdrop-
     </div>
     <div class="contributor-note reveal">
       <span class="contrib-heart">💛</span>
-      <p>Gửi lời cảm ơn chân thành đến <span class="contrib-names">Minh Khôi, Phúc Lâm, Thư, Ngọc Hân và Quỳnh Anh</span> — những người đã dành thời gian thử nghiệm, góp ý và đồng hành cùng Rune Race từ những ngày đầu. Trò chơi này có hồn hơn nhờ có các bạn. 🎲</p>
+      <p>Gửi lời cảm ơn chân thành đến <span class="contrib-names">Đặng Phúc Khanh, Dương Trọng Khánh</span> — những người đã dành thời gian thử nghiệm, góp ý và đồng hành cùng Rune Race từ những ngày đầu. Trò chơi này có hồn hơn nhờ có các bạn. 🎲</p>
     </div>
   </div>
 </section>
